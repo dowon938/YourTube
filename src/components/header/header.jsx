@@ -1,25 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import Login from '../login/login';
+import styles from './header.module.css';
 
-const Header = ({ authService }) => {
-  const [loginToggle, setLoginToggle] = useState(false);
-  const ontoggle = (event) => {
-    console.log(event.target);
-    loginToggle === false ? setLoginToggle(true) : setLoginToggle(false);
-  };
-
+const Header = ({ authService, setUser }) => {
   useEffect(() => {
-    authService.onAuthChange((user) => user && console.log(user));
+    authService.onAuthChange((user) => {
+      user &&
+        setUser({
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+        });
+    });
   }, authService);
 
   return (
-    <div>
-      <button>YourTube</button>
-      <button onClick={ontoggle}>Login</button>
-      <input type="checkbox" id="login" onChange={ontoggle} />
-      <label htmlFor="login">Login</label>
-      {loginToggle ? <Login authService={authService} /> : <div />}
-    </div>
+    <header className={styles.header}>
+      <div className={styles.logo}>Your🤞🏻Tube</div>
+      <div className={styles.login}>
+        <span className={styles.loginwith}>login with</span>
+        <Login authService={authService} />
+      </div>
+    </header>
   );
 };
 

@@ -1,13 +1,13 @@
-import './app.css';
+import { useState } from 'react';
+import styles from './app.module.css';
 import Header from './components/header/header';
 import Home from './components/home/home';
-import Login from './components/login/login';
 
 function App({ authService, dbService }) {
-  const hi = [];
+  const [user, setUser] = useState({});
   return (
     <div>
-      <Header authService={authService} />
+      <Header authService={authService} setUser={setUser} />
       <Home authService={authService} dbService={dbService} />
     </div>
   );
