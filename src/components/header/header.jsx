@@ -13,11 +13,14 @@ const Header = ({ authService, setUser }) => {
           photoURL: user.photoURL,
         });
     });
-  }, authService);
+  }, [authService]);
 
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>Your🤞🏻Tube</div>
+      <div className={styles.logo}>
+        <span className={styles.your}>Your</span>
+        <span className={styles.tube}>Tube</span>
+      </div>
       <div className={styles.login}>
         <span className={styles.loginwith}>login with</span>
         <Login authService={authService} />

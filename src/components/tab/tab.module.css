@@ -1,0 +1,18 @@
+.tab {
+  font-size: 0.8em;
+  padding: 0.6em;
+  background-color: snow;
+  opacity: 0.8;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  border-radius: 1em 1em 0 0;
+  box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.1);
+}
+.on {
+  /* transform: scale(1.1); */
+  font-size: 0.9em;
+  font-weight: 500;
+  z-index: 1;
+  background-color: snow;
+}

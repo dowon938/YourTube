@@ -1,21 +1,35 @@
 import { firebaseDatabase } from './firebase';
 
 class DbService {
-  addCard(userId, cardId, cards) {
-    firebaseDatabase.ref(`${userId}/cards/${cardId}`).set(cards);
+  addNemo(userId, pageId, nemoId, contents) {
+    firebaseDatabase.ref(`${userId}/pages/${pageId}/nemos/${nemoId}`).set(contents);
   }
-  deleteCard(userId, cardId) {
-    firebaseDatabase.ref(`${userId}/cards/${cardId}`).remove();
+  deleteNemo(userId, pageId, nemoId) {
+    firebaseDatabase.ref(`${userId}/pages/${pageId}/${nemoId}`).remove();
   }
-  readCards(userId, setCards) {
-    const cardsRef = firebaseDatabase.ref(`${userId}/cards`);
-    cardsRef.on('value', (snapshot) => {
-      // const data = snapshot.val();
-      // updateStarCount(postElement, data);
-      // console.log(userId);
-      snapshot.val() && setCards(snapshot.val());
+  addPages(userId, pageId, pageFormat) {
+    firebaseDatabase.ref(`${userId}/pages/${pageId}`).set(pageFormat);
+  }
+  deletePages(userId, pageId) {
+    firebaseDatabase.ref(`${userId}pages/${pageId}`).remove();
+  }
+  readPages(userId, setPages) {
+    const nemosRef = firebaseDatabase.ref(`${userId}/pages`);
+    nemosRef.on('value', (snapshot) => {
+      snapshot.val() && setPages(snapshot.val());
     });
-    return () => cardsRef.off();
+    return () => nemosRef.off();
+  }
+  setArr(userId, selected, arr) {
+    firebaseDatabase.ref(`${userId}/pages/${selected}/order`).set(arr);
+  }
+  readArr(userId, selected, setOrder) {
+    const nemosRef = firebaseDatabase.ref(`${userId}/pages/${selected}/order`);
+    nemosRef.on('value', (snapshot) => {
+      console.log(snapshot.val());
+      snapshot.val() ? setOrder(snapshot.val()) : setOrder([]);
+    });
+    return () => nemosRef.off();
   }
 }
 

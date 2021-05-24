@@ -1,0 +1,90 @@
+.addModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* width: 50vw; */
+  /* height: 75vh; */
+  transform: translate(-50%, -45%);
+  background-color: snow;
+  padding: 1em;
+  border: 4px double grey;
+  border-radius: 1.4em;
+  box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.2);
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(5, auto-fill);
+  gap: 0.4em;
+  /* overflow-y: scroll; */
+}
+.form {
+  /* width: 100%; */
+  height: 2em;
+  display: flex;
+  border-radius: 1em;
+  border: 4px double grey;
+  grid-column: auto/span 3;
+}
+.form input {
+  padding-left: 1em;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  border-radius: 1em 0 0 1em;
+}
+.form button {
+  outline-style: none;
+  width: 3em;
+  height: 100%;
+  border-radius: 0 1em 1em 0;
+  background-color: rgb(209, 200, 190);
+}
+.img {
+  pointer-events: none;
+  border-radius: 50%;
+  /* width: 5.8em; */
+  width: 80%;
+}
+li {
+  list-style: none;
+}
+.chList {
+  cursor: pointer;
+  padding: 0.4em;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.8em;
+  transition: ease-in 180ms;
+}
+.chList:hover {
+  background-color: rgb(209, 200, 190, 0.5);
+}
+.span {
+  pointer-events: none;
+  margin-top: 0.4em;
+  text-align: center;
+  font-size: 0.7em;
+  width: 100%;
+  height: 1.2em;
+  /* height: 1.2em; */
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+}
+.close {
+  cursor: pointer;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: snow;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 4px double grey;
+  transition: ease-in 180ms;
+}
+.close:hover {
+  background-color: rgb(209, 200, 190);
+}

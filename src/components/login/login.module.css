@@ -3,17 +3,17 @@ button {
   border: none;
 }
 
-i {
-  color: grey;
+.container i {
+  color: rgb(116, 107, 95);
   background-color: snow;
-  font-size: 1.4em;
+  font-size: 1.2em;
   padding: 0.2em;
   border-radius: 50%;
   margin: 0.1em;
   cursor: pointer;
   transition: ease-in 180ms;
 }
-i:hover {
+.container i:hover {
   color: indianred;
   transform: scale(1.1);
 }

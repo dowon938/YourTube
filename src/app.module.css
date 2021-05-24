@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;1,400&family=Pacifico&display=swap');
+body {
+  background-color: rgb(252, 245, 235);
+  /* background-color: rgb(247, 237, 223); */
+  /* background-color: rgb(209, 200, 190); */
+}
+/* font-family: 'Open Sans', sans-serif;
+font-family: 'Pacifico', cursive; */
+* {
+  box-sizing: border-box;
+}
