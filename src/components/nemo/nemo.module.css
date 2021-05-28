@@ -1,46 +1,48 @@
 .nemo {
   position: relative;
-  border-radius: 1.4em;
+  background-color: rgb(242, 242, 242);
+  /* border-radius: 1.4em;
   border: 4px double grey;
-  padding: 0.5em;
-  padding-top: 0.4em;
-  /* background-color: snow; */
-  overflow: hidden;
-  box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.1); */
+  /* padding: 0.8em; */
+  padding-top: 0;
+  /* overflow: hidden; */
+  /* overflow-y: scroll; */
   display: flex;
   flex-flow: column;
   justify-content: space-evenly;
-  /* overflow-y: scroll; */
   grid-column: auto/span 3;
   grid-row: auto/span 3;
 }
 .title {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: grey;
   font-size: 0.8em;
-  /* margin-top: 0.8em;
-  margin-left: 1.6em;*/
-  margin-bottom: -0.2em;
-  margin-top: -0.2em;
+  height: 3em;
 }
 .title i {
   margin-left: 0.6em;
-  opacity: 0.5;
+  opacity: 0.8;
   cursor: pointer;
+  transition: ease-in 180ms;
+}
+.title i:hover {
+  color: tomato;
+  transform: scale(1.2);
 }
 .imgs {
+  height: 100%;
+  padding: 0.8em;
   display: grid;
-  padding: 0.5em;
   gap: 0.4em;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   overflow-y: scroll;
+  background-color: rgb(220, 220, 220);
 }
 
 .imgs::-webkit-scrollbar {
   display: none;
-}
-.number {
-  grid-column: auto/span 3;
-  grid-row: auto/span 2;
 }

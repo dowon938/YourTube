@@ -5,7 +5,7 @@ class DbService {
     firebaseDatabase.ref(`${userId}/pages/${pageId}/nemos/${nemoId}`).set(contents);
   }
   deleteNemo(userId, pageId, nemoId) {
-    firebaseDatabase.ref(`${userId}/pages/${pageId}/${nemoId}`).remove();
+    firebaseDatabase.ref(`${userId}/pages/${pageId}/nemos/${nemoId}`).remove();
   }
   addPages(userId, pageId, pageFormat) {
     firebaseDatabase.ref(`${userId}/pages/${pageId}`).set(pageFormat);
@@ -17,6 +17,7 @@ class DbService {
     const nemosRef = firebaseDatabase.ref(`${userId}/pages`);
     nemosRef.on('value', (snapshot) => {
       snapshot.val() && setPages(snapshot.val());
+      // console.log('read');
     });
     return () => nemosRef.off();
   }

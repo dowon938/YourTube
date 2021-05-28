@@ -7,29 +7,41 @@ import styles from './home.module.css';
 const Home = ({ authService, dbService, userId, youtube }) => {
   const [sample, setSample] = useState({});
   const [pages, setPages] = useState({});
-  const [selected, setSelected] = useState('self-develop');
+  const [selected, setSelected] = useState('daily-routine');
   const [order, setOrder] = useState([]);
   const addPage = () => {
     const id = Date.now();
     dbService.addPages(userId, id, {
       pageTitle: '"No Name"',
-      id: id,
+      id: `${id}`,
     });
   };
   const addNemo = (channelId, channelTitle) => {
     const id = Date.now();
-    youtube.bringVideo(channelId).then((video) => {
-      dbService.addNemo('sample', selected, channelId, {
-        nemoTitle: channelTitle,
-        videos: video,
+    youtube
+      .bringVideo(channelId)
+      .then((video) => {
+        const newNemo = {
+          nemoId: channelId,
+          nemoTitle: channelTitle,
+          videos: video,
+        };
+        dbService.addNemo('sample', selected, channelId, newNemo);
+      })
+      .then(() => {
+        const newOrder = [...order, channelId];
+        dbService.setArr('sample', selected, newOrder);
       });
-    });
-    console.log(order);
-    const newOrder = [...order, channelId];
-    setOrder(newOrder);
-    dbService.setArr('sample', selected, newOrder);
   };
-
+  const deleteNemo = (channelId) => {
+    const newOrder = [...order];
+    newOrder.splice(newOrder.indexOf(channelId), 1);
+    dbService.setArr('sample', selected, newOrder);
+    dbService.deleteNemo('sample', selected, channelId);
+  };
+  const changeNemoTitle = (newNemo) => {
+    dbService.addNemo('sample', selected, newNemo.nemoId, newNemo);
+  };
   //샘플만들기
   useEffect(() => {
     const makeSample = () => {
@@ -94,8 +106,11 @@ const Home = ({ authService, dbService, userId, youtube }) => {
         pageId={selected}
         sample={sample}
         pages={pages}
+        order={order}
         youtube={youtube}
         addNemo={addNemo}
+        deleteNemo={deleteNemo}
+        changeNemoTitle={changeNemoTitle}
       />
     </div>
   );

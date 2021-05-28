@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
-import { useState } from 'react/cjs/react.development';
+import { useEffect, useState } from 'react/cjs/react.development';
 import styles from './addNemo.module.css';
 
-const AddNemo = ({ youtube, setModalOn, addNemo }) => {
+const AddNemo = ({ youtube, modalOn, setModalOn, addNemo }) => {
   const formRef = useRef();
   const inputRef = useRef();
   const [list, setList] = useState([]);
@@ -14,12 +14,15 @@ const AddNemo = ({ youtube, setModalOn, addNemo }) => {
     formRef.current.reset();
   };
   const onAdd = (event) => {
-    console.log(event.target.dataset);
     addNemo(event.target.dataset.channelid, event.target.dataset.title);
   };
   const onClose = (event) => {
     setModalOn(false);
   };
+  useEffect(() => {
+    // console.log(inputRef);
+    modalOn && inputRef.current.focus();
+  }, [modalOn]);
   return (
     <div className={styles.addModal}>
       <button onClick={onClose} className={styles.close}>

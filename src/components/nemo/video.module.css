@@ -1,12 +1,7 @@
 .img {
-  /* width: 30%; */
-  /* margin: 0.2em; */
   max-width: 100%;
   height: auto;
-  border-radius: 0.5em;
   transition: ease-in 180ms;
-  filter: grayscale(0.8);
-  opacity: 0.8;
 }
 .img:hover {
   transform: scale(1.1);

@@ -1,14 +1,14 @@
 .header {
   width: 100%;
   padding: 0.4em;
-  /* background-color: indianred; */
-  background-color: rgb(209, 200, 190);
-  /* background-color: rgb(252, 245, 235); */
-  /* background-color: rgb(247, 237, 223); */
+  background-color: rgb(48, 48, 48);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   border-bottom: 2px dashed grey;
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 .logo {
   margin-left: 1em;
@@ -28,18 +28,21 @@
   color: rgb(252, 245, 235);
 }
 .tube {
+  font-size: 1.3em;
   color: rgb(116, 107, 95);
+  color: tomato;
 }
 .login {
   display: flex;
   align-items: flex-end;
   margin-right: 1em;
-  margin-bottom: 0.4em;
+  margin-bottom: 0.6em;
 }
 .loginwith {
   /* color: white; */
   font-family: 'Pacifico', cursive;
   color: rgb(116, 107, 95);
+  color: rgb(252, 245, 235);
   font-size: 1em;
   margin-right: 0.4em;
   margin-bottom: 0.1em;
