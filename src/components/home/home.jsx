@@ -9,6 +9,8 @@ const Home = ({ authService, dbService, userId, youtube }) => {
   const [pages, setPages] = useState({});
   const [selected, setSelected] = useState('daily-routine');
   const [order, setOrder] = useState([]);
+  const [pageEdit, setPageEdit] = useState(false);
+  const isSample = useState(true);
   const addPage = () => {
     const id = Date.now();
     dbService.addPages(userId, id, {
@@ -16,50 +18,71 @@ const Home = ({ authService, dbService, userId, youtube }) => {
       id: `${id}`,
     });
   };
+  const deletePage = (pageId) => {
+    dbService.deletePages(userId, pageId);
+    const newPages = { ...pages };
+    delete newPages[pageId];
+    setPages(newPages);
+  };
+  const changePage = (newPage, pageId) => {
+    const newPages = { ...pages, [pageId]: newPage };
+    dbService.addPages(userId, pageId, newPage);
+    setPages(newPages);
+  };
   const addNemo = (channelId, channelTitle) => {
-    const id = Date.now();
+    // const id = Date.now();
     youtube
       .bringVideo(channelId)
       .then((video) => {
         const newNemo = {
           nemoId: channelId,
           nemoTitle: channelTitle,
+          column: 3,
+          row: 3,
           videos: video,
         };
         dbService.addNemo('sample', selected, channelId, newNemo);
       })
       .then(() => {
-        const newOrder = [...order, channelId];
-        dbService.setArr('sample', selected, newOrder);
+        if (order.indexOf(channelId) === -1) {
+          const newOrder = [...order, channelId];
+          dbService.setOrder('sample', selected, newOrder);
+        }
       });
   };
   const deleteNemo = (channelId) => {
     const newOrder = [...order];
     newOrder.splice(newOrder.indexOf(channelId), 1);
-    dbService.setArr('sample', selected, newOrder);
+    dbService.setOrder('sample', selected, newOrder);
     dbService.deleteNemo('sample', selected, channelId);
   };
   const changeNemoTitle = (newNemo) => {
     dbService.addNemo('sample', selected, newNemo.nemoId, newNemo);
   };
+  const editPage = () => {
+    console.log('hi');
+    setPageEdit((pageEdit) => !pageEdit);
+  };
+  const editOn = pageEdit ? styles.editOn : '';
+
   //샘플만들기
-  useEffect(() => {
-    const makeSample = () => {
-      const sample1 = dbService.addPages('sample', 'self-develop', {
-        id: 'self-develop',
-        pageTitle: 'self-develop',
-      });
-      const sample2 = dbService.addPages('sample', 'work-out', {
-        id: 'work-out',
-        pageTitle: 'work-out',
-      });
-      const sample3 = dbService.addPages('sample', 'daily-routine', {
-        id: 'daily-routine',
-        pageTitle: 'daily-routine',
-      });
-    };
-    // makeSample();
-  }, [userId]);
+  // useEffect(() => {
+  //   const makeSample = () => {
+  //     const sample1 = dbService.addPages('sample', 'self-develop', {
+  //       id: 'self-develop',
+  //       pageTitle: 'self-develop',
+  //     });
+  //     const sample2 = dbService.addPages('sample', 'work-out', {
+  //       id: 'work-out',
+  //       pageTitle: 'work-out',
+  //     });
+  //     const sample3 = dbService.addPages('sample', 'daily-routine', {
+  //       id: 'daily-routine',
+  //       pageTitle: 'daily-routine',
+  //     });
+  //   };
+  //   // makeSample();
+  // }, [userId]);
 
   useEffect(() => {
     const stopRead = dbService.readPages(userId, setPages);
@@ -70,36 +93,45 @@ const Home = ({ authService, dbService, userId, youtube }) => {
     const stopRead = dbService.readPages('sample', setSample);
     console.log('sample');
     return () => stopRead();
-  }, [userId]);
+  }, [dbService]);
   useEffect(() => {
-    const stopRead = dbService.readArr('sample', selected, setOrder);
-    console.log('order', order, selected);
+    const stopRead = dbService.readOrder('sample', selected, setOrder);
+    console.log('order');
     return () => stopRead();
-  }, [userId, selected]);
+  }, [selected, dbService]);
   return (
     <div className={styles.home}>
       <div className={styles.tab}>
         <div className={styles.sampleTab}>
-          {Object.keys(sample).map((page) => (
+          {Object.keys(sample).map((pageId) => (
             <Tab
-              page={sample[page]}
-              key={page}
+              key={pageId}
+              page={sample[pageId]}
               setSelected={setSelected}
               selected={selected}
+              isSample={isSample}
             />
           ))}
         </div>
         <div className={styles.myTab}>
           {pages &&
-            Object.keys(pages).map((key) => (
+            Object.keys(pages).map((pageId) => (
               <Tab
-                page={pages[key]}
-                key={key}
+                key={pageId}
+                page={pages[pageId]}
+                deletePage={deletePage}
+                changePage={changePage}
                 setSelected={setSelected}
                 selected={selected}
+                pageEdit={pageEdit}
               />
             ))}
-          <button onClick={addPage}>+</button>
+          <button onClick={addPage} className={styles.plusPage}>
+            +
+          </button>
+          <button onClick={editPage} className={`${styles.editPage} ${editOn}`}>
+            <i className="far fa-edit"></i>
+          </button>
         </div>
       </div>
       <Page
@@ -107,6 +139,8 @@ const Home = ({ authService, dbService, userId, youtube }) => {
         sample={sample}
         pages={pages}
         order={order}
+        setOrder={setOrder}
+        dbService={dbService}
         youtube={youtube}
         addNemo={addNemo}
         deleteNemo={deleteNemo}

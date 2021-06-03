@@ -23,7 +23,7 @@ class Youtube {
     const response = await this.youtube.get('search', {
       params: {
         part: 'snippet',
-        maxResults: 9,
+        maxResults: 36,
         channelId: channelId,
         order: 'date',
       },

@@ -1,17 +1,19 @@
 .page {
   z-index: 2;
   position: relative;
-  display: grid;
-  grid-auto-columns: auto;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(auto-fill, 1fr);
-  gap: 0.8em;
   padding: 0.8em;
   padding-top: 2.6em;
   background-color: rgb(250, 250, 250);
   margin-bottom: 2em;
 }
-
+.grid {
+  display: grid;
+  grid-auto-columns: auto;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(auto-fill, 1fr);
+  gap: 0.8em;
+  /* display: flex; */
+}
 .display {
   display: block;
   display: none;
@@ -34,5 +36,12 @@
 }
 .edit:hover,
 .plus:hover {
-  background-color: rgb(108, 108, 108);
+  background-color: rgb(124, 124, 124);
+}
+
+.editOn {
+  background-color: tomato;
+}
+.editOn:hover {
+  background-color: indianred;
 }

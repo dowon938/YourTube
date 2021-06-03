@@ -1,18 +1,13 @@
 .nemo {
   position: relative;
   background-color: rgb(242, 242, 242);
-  /* border-radius: 1.4em;
-  border: 4px double grey;
-  box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.1); */
-  /* padding: 0.8em; */
   padding-top: 0;
-  /* overflow: hidden; */
-  /* overflow-y: scroll; */
   display: flex;
   flex-flow: column;
   justify-content: space-evenly;
   grid-column: auto/span 3;
   grid-row: auto/span 3;
+  transition: ease-in 180ms;
 }
 .title {
   display: flex;
@@ -22,16 +17,43 @@
   font-size: 0.8em;
   height: 3em;
 }
-.title i {
+.title:hover {
+  background-color: rgb(188, 188, 188);
+  background-color: tomato;
+  color: rgb(242, 242, 242);
+  cursor: grab;
+}
+.title:hover::before {
+  content: '"drag & drop"';
+  position: absolute;
+  right: 10px;
+  top: 8px;
+}
+.edit {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: grey;
+  top: 0;
+  font-size: 0.8em;
+  height: 3em;
+  left: 0;
+  right: 0;
+  background-color: rgb(242, 242, 242);
+  z-index: 3;
+}
+.edit i {
   margin-left: 0.6em;
   opacity: 0.8;
   cursor: pointer;
   transition: ease-in 180ms;
 }
-.title i:hover {
+.edit i:hover {
   color: tomato;
   transform: scale(1.2);
 }
+
 .imgs {
   height: 100%;
   padding: 0.8em;
@@ -45,4 +67,29 @@
 
 .imgs::-webkit-scrollbar {
   display: none;
+}
+
+.drag {
+  z-index: 10;
+  cursor: se-resize;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  border-top: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-bottom: 10px solid rgb(188, 188, 188);
+  border-right: 10px solid rgb(188, 188, 188);
+  padding: 0;
+  transition: ease-in 180ms;
+}
+.drag:hover {
+  transform: scale(1.1) translate(-5%, -5%);
+  border-bottom: 10px solid tomato;
+  border-right: 10px solid tomato;
+}
+.drag:hover::before {
+  content: 'resize';
+  color: rgb(242, 242, 242);
+  background-color: rgba(150, 150, 150, 0.8);
 }

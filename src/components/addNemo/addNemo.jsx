@@ -42,6 +42,7 @@ const AddNemo = ({ youtube, modalOn, setModalOn, addNemo }) => {
       {list
         ? list.map((ch) => (
             <li
+              key={ch.snippet.channelId}
               className={styles.chList}
               data-channelid={ch.snippet.channelId}
               data-title={ch.snippet.title}

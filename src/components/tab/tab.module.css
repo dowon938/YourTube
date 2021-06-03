@@ -1,15 +1,51 @@
 .tab {
+  cursor: pointer;
+  position: relative;
   font-size: 0.8em;
   padding: 0.4em 0.8em;
   background-color: rgb(88, 88, 88);
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden;
+  margin-right: -30px;
+  transition: ease-in 180ms;
+}
+.tab:hover {
+  background-color: rgb(124, 124, 124);
+}
+.edit {
+  opacity: 0;
+  position: relative;
+  transition: ease-in 180ms;
+}
+.edit i {
+  opacity: 0.6;
+  transition: ease-in 180ms;
+  margin-left: 0.3em;
+  display: inline-block;
+}
+.edit i:hover {
+  color: tomato;
+  opacity: 1;
+  transform: scale(1.2);
+}
+.editOn {
+  margin-right: 0;
+}
+.editOn span {
+  opacity: 1;
 }
 .on {
-  /* transform: scale(1.1); */
   font-size: 0.9em;
   font-weight: 500;
-  z-index: 1;
   background-color: rgb(250, 250, 250);
+}
+.on:hover {
+  background-color: rgb(250, 250, 250);
+}
+.sampleStyle {
+  margin-right: 0;
+}
+
+.form {
+  display: inline;
 }

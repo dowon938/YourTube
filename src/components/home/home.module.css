@@ -12,3 +12,17 @@
   margin: auto;
   margin-top: 2em;
 }
+.plusPage,
+.editPage {
+  z-index: 2;
+}
+.plusPage:hover,
+.editPage:hover {
+  background-color: rgb(220, 220, 220);
+}
+.editOn {
+  background-color: tomato;
+}
+.editOn:hover {
+  background-color: indianred;
+}
