@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Login from '../login/login';
 import styles from './header.module.css';
 import _ from 'lodash';
+import { memo } from 'react/cjs/react.production.min';
 
-const Header = ({ authService, setUser }) => {
+const Header = memo(({ authService, setUser }) => {
   const [headerEm, setHeaderEm] = useState(1);
   const scrollEvent = _.throttle(() => {
     if (window.scrollY < 140) {
@@ -42,6 +43,6 @@ const Header = ({ authService, setUser }) => {
       </div>
     </header>
   );
-};
+});
 
 export default Header;

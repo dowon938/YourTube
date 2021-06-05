@@ -14,7 +14,7 @@ const AddNemo = ({ youtube, modalOn, setModalOn, addNemo }) => {
     formRef.current.reset();
   };
   const onAdd = (event) => {
-    addNemo(event.target.dataset.channelid, event.target.dataset.title);
+    addNemo(event.target.dataset.channelid);
   };
   const onClose = (event) => {
     setModalOn(false);

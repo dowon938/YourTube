@@ -15,5 +15,5 @@
   transition: ease-in 180ms;
 }
 .container:hover {
-  transform: scale(1.08);
+  transform: scale(1.05);
 }

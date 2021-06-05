@@ -9,7 +9,7 @@
 .grid {
   display: grid;
   grid-auto-columns: auto;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(auto-fill, 1fr);
   gap: 0.8em;
   /* display: flex; */

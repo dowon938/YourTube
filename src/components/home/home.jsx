@@ -29,18 +29,25 @@ const Home = ({ authService, dbService, userId, youtube }) => {
     dbService.addPages(userId, pageId, newPage);
     setPages(newPages);
   };
-  const addNemo = (channelId, channelTitle) => {
+  const addNemo = (channelId, paraNemo) => {
     // const id = Date.now();
     youtube
       .bringVideo(channelId)
       .then((video) => {
-        const newNemo = {
-          nemoId: channelId,
-          nemoTitle: channelTitle,
-          column: 3,
-          row: 3,
-          videos: video,
-        };
+        const newNemo = paraNemo
+          ? {
+              ...paraNemo,
+              videos: video,
+            }
+          : {
+              nemoId: channelId,
+              nemoTitle: video[0].snippet.channelTitle,
+              column: 3,
+              row: 3,
+              double: false,
+              videos: video,
+            };
+
         dbService.addNemo('sample', selected, channelId, newNemo);
       })
       .then(() => {
@@ -56,7 +63,7 @@ const Home = ({ authService, dbService, userId, youtube }) => {
     dbService.setOrder('sample', selected, newOrder);
     dbService.deleteNemo('sample', selected, channelId);
   };
-  const changeNemoTitle = (newNemo) => {
+  const changeNemo = (newNemo) => {
     dbService.addNemo('sample', selected, newNemo.nemoId, newNemo);
   };
   const editPage = () => {
@@ -144,7 +151,7 @@ const Home = ({ authService, dbService, userId, youtube }) => {
         youtube={youtube}
         addNemo={addNemo}
         deleteNemo={deleteNemo}
-        changeNemoTitle={changeNemoTitle}
+        changeNemo={changeNemo}
       />
     </div>
   );

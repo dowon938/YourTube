@@ -93,3 +93,21 @@
   color: rgb(242, 242, 242);
   background-color: rgba(150, 150, 150, 0.8);
 }
+
+.refresh {
+  border-radius: 50%;
+}
+.rotate {
+  color: tomato;
+  animation: rotate-keyframes 800ms ease-in-out infinite;
+}
+
+@keyframes rotate-keyframes {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

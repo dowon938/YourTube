@@ -1,8 +1,8 @@
 import React from 'react';
-import { useState } from 'react/cjs/react.development';
+import { memo } from 'react';
 import styles from './video.module.css';
 
-const Video = ({ video, double }) => {
+const Video = memo(({ video, double }) => {
   return (
     <div
       className={styles.container}
@@ -18,6 +18,6 @@ const Video = ({ video, double }) => {
       />
     </div>
   );
-};
+});
 
 export default Video;

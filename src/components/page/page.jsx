@@ -7,7 +7,6 @@ import styles from './page.module.css';
 import { useDrop } from 'react-dnd';
 import { useCallback } from 'react';
 import { ItemTypes } from '../../utils/items';
-import _ from 'lodash';
 
 const Page = ({
   pageId,
@@ -19,7 +18,7 @@ const Page = ({
   youtube,
   addNemo,
   deleteNemo,
-  changeNemoTitle,
+  changeNemo,
 }) => {
   const [findPage, setFindPage] = useState({});
   const [modalOn, setModalOn] = useState(false);
@@ -27,13 +26,13 @@ const Page = ({
   useEffect(() => {
     sample[pageId] ? setFindPage(sample[pageId]) : setFindPage(pages[pageId]);
   }, [pageId, sample, pages]);
-
-  const onclick = (event) => {
+  const onMake = (event) => {
     setModalOn((modalOn) => !modalOn);
   };
   const onEdit = (event) => {
     setEdit((edit) => !edit);
   };
+
   const editOn = edit ? styles.editOn : '';
   //드래그 앤 드랍
   const findNemo = useCallback(
@@ -54,31 +53,37 @@ const Page = ({
     [order, setOrder]
   );
   //드래그 리사이즈
-  const con = _.throttle((column, row, width, height, offset) => {
-    console.log(column, row, width, height, offset);
-  }, 200);
   const [, resizeDrop] = useDrop(
     () => ({
       accept: ItemTypes.Resize,
       canDrop: () => false,
       hover(item, monitor) {
-        const { column, row, width, height, setGrid, double } = monitor.getItem();
+        const {
+          column,
+          row,
+          width: w,
+          height: h,
+          throttleGrid,
+          double,
+        } = monitor.getItem();
         const { x, y } = monitor.getDifferenceFromInitialOffset();
-        let newColumn = column;
-        let newRow = row;
-        if (x > width / (2 * column)) newColumn += Math.round(x / (width / column));
-        if (y > height / (2 * row)) newRow += Math.round(y / (height / row));
-        if (x < -width / (2 * column)) newColumn += Math.round(x / (width / column));
-        if (y < -height / (2 * row)) newRow += Math.round(y / (height / row));
-        if (double) newColumn % 2 === 1 && newColumn++;
-        if (double) newRow % 2 === 1 && newRow++;
-        newColumn < 1 ? (newColumn = 1) : (newColumn = newColumn);
-        newRow < 1 ? (newRow = 1) : (newRow = newRow);
-        newColumn > 6 ? (newColumn = 6) : (newColumn = newColumn);
-        newRow > 6 ? (newRow = 6) : (newRow = newRow);
+        let [nColumn, nRow] = [column, row];
+        const [wPerColumn, hPerRow] = [w / column, h / row];
+        const sensRatio = 0.7;
+        if (x > wPerColumn * sensRatio) nColumn += Math.round(x / wPerColumn);
+        if (y > hPerRow * sensRatio) nRow += Math.round(y / hPerRow);
+        if (x < -wPerColumn * sensRatio) nColumn += Math.round(x / wPerColumn);
+        if (y < -hPerRow * sensRatio) nRow += Math.round(y / hPerRow);
+        if (double) {
+          nColumn % 2 === 1 && nColumn++;
+          nRow % 2 === 1 && nRow++;
+        }
+        nColumn < 1 && (nColumn = 1);
+        nRow < 1 && (nRow = 1);
+        nColumn > 8 && (nColumn = 8);
+        nRow > 8 && (nRow = 8);
 
-        setGrid({ column: newColumn, row: newRow });
-        // con(column, row, width / column, height / row, x);
+        throttleGrid({ column: nColumn, row: nRow });
       },
     }),
     []
@@ -88,7 +93,7 @@ const Page = ({
   return (
     <div ref={drop} className={styles.page}>
       <div className={styles.menuBar}>
-        <button className={styles.plus} onClick={onclick}>
+        <button className={styles.plus} onClick={onMake}>
           + Make box!
         </button>
         <div className={`${styles.edit} ${editOn}`} onClick={onEdit}>
@@ -104,15 +109,18 @@ const Page = ({
               nemoPre={findPage.nemos[chId]}
               edit={edit}
               deleteNemo={deleteNemo}
-              changeNemoTitle={changeNemoTitle}
+              changeNemo={changeNemo}
               moveNemo={moveNemo}
               findNemo={findNemo}
+              addNemo={addNemo}
+              dbService={dbService}
             />
           ))}
       </div>
       {modalOn && (
         <AddNemo
           youtube={youtube}
+          sdfsdf
           modalOn={modalOn}
           setModalOn={setModalOn}
           addNemo={addNemo}
