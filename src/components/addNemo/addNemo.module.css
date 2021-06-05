@@ -6,7 +6,7 @@
   /* width: 50vw; */
   /* height: 75vh; */
   transform: translateX(-50%);
-  background-color: snow;
+  background-color: rgb(242, 242, 242);
   padding: 1em;
   /* border: 4px double grey; */
   /* border-radius: 1.4em; */
@@ -22,8 +22,8 @@
   /* width: 100%; */
   height: 2em;
   display: flex;
-  border-radius: 1em;
-  border: 4px double grey;
+  /* border-radius: 1em; */
+  /* border: 4px double grey; */
   grid-column: auto/span 3;
 }
 .form input {
@@ -74,7 +74,7 @@ li {
   overflow-y: hidden;
   text-overflow: ellipsis;
 }
-.close {
+/* .close {
   cursor: pointer;
   position: absolute;
   top: -10px;
@@ -84,8 +84,14 @@ li {
   height: 30px;
   border-radius: 50%;
   border: 4px double grey;
-  transition: ease-in 180ms;
-}
-.close:hover {
-  background-color: rgb(209, 200, 190);
+} */
+.close {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(88, 88, 88);
+  opacity: 0.8;
 }

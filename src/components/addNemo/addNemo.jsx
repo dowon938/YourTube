@@ -24,40 +24,40 @@ const AddNemo = ({ youtube, modalOn, setModalOn, addNemo }) => {
     modalOn && inputRef.current.focus();
   }, [modalOn]);
   return (
-    <div className={styles.addModal}>
-      <button onClick={onClose} className={styles.close}>
-        x
-      </button>
-      <form ref={formRef} className={styles.form} onSubmit={onSearch}>
-        <input
-          ref={inputRef}
-          type="text"
-          className={styles.text}
-          placeholder="Search Channel Name!"
-        />
-        <button className={styles.submit}>
-          <i className="fas fa-search"></i>
-        </button>
-      </form>
-      {list
-        ? list.map((ch) => (
-            <li
-              key={ch.snippet.channelId}
-              className={styles.chList}
-              data-channelid={ch.snippet.channelId}
-              data-title={ch.snippet.title}
-              onClick={onAdd}
-            >
-              <img
-                className={styles.img}
-                src={ch.snippet.thumbnails.medium.url}
-                alt="channel thumbnails"
-              />
-              <span className={styles.span}>{ch.snippet.title}</span>
-            </li>
-          ))
-        : ''}
-    </div>
+    <>
+      <div onClick={onClose} className={styles.close} />
+      <div className={styles.addModal}>
+        <form ref={formRef} className={styles.form} onSubmit={onSearch}>
+          <input
+            ref={inputRef}
+            type="text"
+            className={styles.text}
+            placeholder="Search Channel Name!"
+          />
+          <button className={styles.submit}>
+            <i className="fas fa-search"></i>
+          </button>
+        </form>
+        {list
+          ? list.map((ch) => (
+              <li
+                key={ch.snippet.channelId}
+                className={styles.chList}
+                data-channelid={ch.snippet.channelId}
+                data-title={ch.snippet.title}
+                onClick={onAdd}
+              >
+                <img
+                  className={styles.img}
+                  src={ch.snippet.thumbnails.medium.url}
+                  alt="channel thumbnails"
+                />
+                <span className={styles.span}>{ch.snippet.title}</span>
+              </li>
+            ))
+          : ''}
+      </div>
+    </>
   );
 };
 
