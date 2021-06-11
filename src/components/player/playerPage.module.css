@@ -1,0 +1,94 @@
+.page {
+  position: relative;
+
+  width: 85vw;
+  max-width: 1200px;
+  height: 90vh;
+  background-color: rgb(250, 250, 250);
+  /* padding: 0.5em; */
+}
+.nemoTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(250, 250, 250);
+  font-size: 0.8em;
+  height: 2.4em;
+  background-color: rgb(124, 124, 124);
+}
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(7, auto);
+  height: 100%;
+}
+.ytPlayer {
+  z-index: 1000;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 0;
+  padding-top: 56%;
+}
+.videoPlayer {
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  transition: ease-in 180ms;
+}
+.videoList,
+.commentList {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0.4em;
+  padding-bottom: 2.4em;
+}
+.videoList::-webkit-scrollbar,
+.commentList::-webkit-scrollbar {
+  cursor: pointer;
+  width: 5px;
+  background-color: rgb(222, 222, 222);
+}
+
+.videoList::-webkit-scrollbar-thumb,
+.commentList::-webkit-scrollbar-thumb {
+  background-color: rgb(188, 188, 188);
+  border-radius: 3px;
+}
+.videoList::-webkit-scrollbar-thumb:hover,
+.commentList::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(128, 128, 128);
+  /* background-color: tomato; */
+}
+.meta {
+  padding: 1em;
+}
+.title {
+  font-size: 1.1em;
+  color: grey;
+
+  font-weight: bold;
+  overflow: hidden;
+  line-height: 1;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.date {
+  font-size: 0.8em;
+  margin-top: 0.5em;
+  color: grey;
+}
+.description {
+  font-size: 0.8em;
+  color: grey;
+  padding-left: 1em;
+  white-space: pre-wrap;
+}
+.description p {
+  margin-top: 0;
+}

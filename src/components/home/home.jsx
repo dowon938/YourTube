@@ -4,7 +4,7 @@ import Page from '../page/page';
 import Tab from '../tab/tab';
 import styles from './home.module.css';
 
-const Home = ({ authService, dbService, userId, youtube }) => {
+const Home = ({ authService, dbService, userId, youtube, onPlayer }) => {
   const [sample, setSample] = useState({});
   const [pages, setPages] = useState({});
   const [selected, setSelected] = useState('daily-routine');
@@ -47,7 +47,6 @@ const Home = ({ authService, dbService, userId, youtube }) => {
               double: false,
               videos: video,
             };
-
         dbService.addNemo('sample', selected, channelId, newNemo);
       })
       .then(() => {
@@ -92,13 +91,14 @@ const Home = ({ authService, dbService, userId, youtube }) => {
   // }, [userId]);
 
   useEffect(() => {
+    !userId && setPages({});
     const stopRead = dbService.readPages(userId, setPages);
-    console.log('effect');
+    console.log('readPage');
     return () => stopRead();
   }, [userId, dbService]);
   useEffect(() => {
     const stopRead = dbService.readPages('sample', setSample);
-    console.log('sample');
+    console.log('readSample');
     return () => stopRead();
   }, [dbService]);
   useEffect(() => {
@@ -152,6 +152,7 @@ const Home = ({ authService, dbService, userId, youtube }) => {
         addNemo={addNemo}
         deleteNemo={deleteNemo}
         changeNemo={changeNemo}
+        onPlayer={onPlayer}
       />
     </div>
   );

@@ -1,0 +1,53 @@
+.playerClose {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(36, 36, 36);
+  opacity: 0.85;
+}
+.left,
+.right {
+  cursor: pointer;
+  z-index: 100;
+  position: fixed;
+  top: 50%;
+  font-size: 1.5em;
+  background-color: transparent;
+  color: rgb(250, 250, 250);
+  transition: ease-in 180ms;
+}
+.left:hover,
+.right:hover {
+  transform: scale(1.2);
+  color: tomato;
+}
+.left {
+  left: 3%;
+}
+.right {
+  right: 3%;
+}
+.player {
+  z-index: 100;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85vw;
+  max-width: 1200px;
+  height: 90vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: whitesmoke;
+  opacity: 1;
+  border-radius: 0.5em;
+}
+.slider {
+  display: flex;
+  position: absolute;
+  background-color: transparent;
+  transition: all 1s cubic-bezier(0.21, 0.01, 0.15, 1);
+}

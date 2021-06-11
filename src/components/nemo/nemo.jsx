@@ -9,13 +9,18 @@ import _ from 'lodash';
 import { memo } from 'react';
 
 const Nemo = memo(
-  ({ nemoPre, edit, deleteNemo, changeNemo, moveNemo, findNemo, dbService, addNemo }) => {
+  ({
+    nemoPre,
+    edit,
+    deleteNemo,
+    changeNemo,
+    moveNemo,
+    findNemo,
+    addNemo,
+    pagePlayer,
+  }) => {
     const [nemo, setNemo] = useState(nemoPre);
     const [inputToggle, setInputToggle] = useState(false);
-    const [grid, setGrid] = useState({
-      column: nemoPre.column,
-      row: nemoPre.row,
-    });
     const [rect, setRect] = useState(null);
     const [videos, setVideos] = useState([...nemoPre.videos]);
     const [double, setDouble] = useState(nemoPre.double);
@@ -39,7 +44,13 @@ const Nemo = memo(
       setInputToggle((inputToggle) => !inputToggle);
     };
     const changeDouble = () => {
-      const newNemo = double ? { ...nemo, double: false } : { ...nemo, double: true };
+      let newColumn = nemoPre.column;
+      let newRow = nemoPre.row;
+      newColumn % 2 === 1 && newColumn++;
+      newRow % 2 === 1 && newRow++;
+      const newNemo = double
+        ? { ...nemo, double: false }
+        : { ...nemo, column: newColumn, row: newRow, double: true };
       setNemo(newNemo);
       changeNemo(newNemo);
       setDouble((double) => !double);
@@ -52,20 +63,22 @@ const Nemo = memo(
         setRotate(false);
       }, 2400);
     };
-
+    //플레이어
+    const nemoPlayer = (videoId) => {
+      videoId && pagePlayer(nemo.nemoId, videoId);
+    };
     useEffect(() => {
-      if (double) {
-        let newColumn = grid.column;
-        let newRow = grid.row;
-        if (double) newColumn % 2 === 1 && newColumn++;
-        if (double) newRow % 2 === 1 && newRow++;
-        setGrid({ column: newColumn, row: newRow });
-      }
-    }, [double, grid.column, grid.row]);
-
+      setNemo(nemoPre);
+      setVideos([...nemoPre.videos]);
+    }, [nemoPre]);
     //드래그 앤 드랍
     const id = nemoPre.nemoId;
     const originalIndex = findNemo(id).index;
+    const throttleMoveNemo = _.throttle(
+      (draggedId, overIndex) => moveNemo(draggedId, overIndex),
+      100
+    );
+    const throttleFindNemo = _.throttle((id) => findNemo(id), 100);
     const [{ isDragging }, dragRef, previewRef] = useDrag(
       () => ({
         type: ItemTypes.Nemo,
@@ -77,28 +90,28 @@ const Nemo = memo(
           const { id: droppedId, originalIndex } = item;
           const didDrop = monitor.didDrop();
           if (!didDrop) {
-            moveNemo(droppedId, originalIndex);
+            throttleMoveNemo(droppedId, originalIndex);
           }
         },
       }),
-      [id, originalIndex, moveNemo]
+      [id, originalIndex, throttleMoveNemo]
     );
+
     const [, dropRef] = useDrop(
       () => ({
         accept: ItemTypes.Nemo,
         canDrop: () => false,
         hover({ id: draggedId }) {
           if (draggedId !== id) {
-            const { index: overIndex } = findNemo(id);
-            moveNemo(draggedId, overIndex);
+            const { index: overIndex } = throttleFindNemo(id);
+            throttleMoveNemo(draggedId, overIndex);
           }
         },
       }),
-      [findNemo, moveNemo]
+      [throttleFindNemo, throttleMoveNemo]
     );
     //드래그 리사이즈
     const throttleGrid = _.throttle((newGrid) => {
-      setGrid(newGrid);
       const { column, row } = newGrid;
       const newNemo = { ...nemo, column: column, row: row };
       setNemo(newNemo);
@@ -108,13 +121,13 @@ const Nemo = memo(
       const width = sonRef.current.clientWidth;
       const height = sonRef.current.clientHeight;
       setRect({ width, height });
-    }, [sonRef, grid]);
-    const [{ isResizing }, resizeRef, resizePreview] = useDrag(
+    }, [sonRef, nemoPre]);
+    const [{ isResizing }, resizeRef] = useDrag(
       () => ({
         type: ItemTypes.Resize,
         item: {
-          column: grid.column,
-          row: grid.row,
+          column: nemoPre.column,
+          row: nemoPre.row,
           width: rect && rect.width,
           height: rect && rect.height,
           throttleGrid,
@@ -124,22 +137,21 @@ const Nemo = memo(
           isResizing: monitor.isDragging(),
         }),
       }),
-      [grid, rect, double, throttleGrid]
+      [nemoPre, rect, double, throttleGrid]
     );
 
     return (
       <div
         id={nemo.nemoId}
-        className={`${styles.nemo} ${styles.number}`}
+        className={styles.nemo}
         ref={(node) => previewRef(dropRef(node))}
         style={{
-          opacity: isDragging ? '0' : '1',
-          gridColumn: `auto/span ${grid.column}`,
-          gridRow: `auto/span ${grid.row}`,
+          opacity: isDragging ? '0.3' : '1',
+          gridColumn: `auto/span ${nemoPre.column}`,
+          gridRow: `auto/span ${nemoPre.row}`,
           border: isResizing ? 'solid 2px tomato' : 'none',
         }}
       >
-        {/* <div ref={sonRef} /> */}
         {edit && (
           <div className={styles.edit}>
             {inputToggle && (
@@ -153,41 +165,64 @@ const Nemo = memo(
               </form>
             )}
             {!inputToggle && (nemo.newTitle ? nemo.newTitle : nemo.nemoTitle)}
-            <i className="far fa-edit" onClick={editTitle} />
-            <i className="fas fa-minus-circle" onClick={onDelete} />
+            <i className="far fa-edit" onClick={editTitle} title="제목을 수정합니다." />
+            <i
+              className="fas fa-minus-circle"
+              onClick={onDelete}
+              title="카드를 삭제합니다."
+            />
             <i
               className={double ? 'fas fa-compress' : 'fas fa-expand'}
               onClick={changeDouble}
+              title={double ? '이미지 크기를 축소합니다.' : '이미지 크기를 확대합니다.'}
             />
-            <i className={`fas fa-redo ${rotate && styles.rotate}`} onClick={onRefresh} />
+            <i
+              className={`fas fa-redo ${rotate && styles.rotate}`}
+              onClick={onRefresh}
+              title="재생목록을 다시 불러옵니다."
+            />
           </div>
         )}
-        <div className={styles.title} ref={dragRef}>
+        <div
+          className={styles.title}
+          ref={dragRef}
+          title="다른 카드 위로 드래그해서 위치를 변경합니다."
+        >
           {!inputToggle && (nemo.newTitle ? nemo.newTitle : nemo.nemoTitle)}
         </div>
         <div
           ref={sonRef}
           className={styles.imgs}
           style={{
-            gridTemplateColumns: `repeat(${grid.column}, 1fr)`,
-            gridTemplateRows: `repeat(${grid.row}, 1fr)`,
+            gridTemplateColumns: `repeat(${nemoPre.column}, 1fr)`,
+            gridTemplateRows: `repeat(${nemoPre.row}, 1fr)`,
           }}
         >
           {double
             ? videos.map(
                 (video, index) =>
-                  index < (grid.column * grid.row) / 4 && (
-                    <Video key={index} video={video} double={double} />
+                  index < (nemoPre.column * nemoPre.row) / 4 && (
+                    <Video
+                      key={index}
+                      video={video}
+                      double={double}
+                      nemoPlayer={nemoPlayer}
+                    />
                   )
               )
             : videos.map(
                 (video, index) =>
-                  index < grid.column * grid.row && (
-                    <Video key={index} video={video} double={double} />
+                  index < nemoPre.column * nemoPre.row && (
+                    <Video
+                      key={index}
+                      video={video}
+                      double={double}
+                      nemoPlayer={nemoPlayer}
+                    />
                   )
               )}
+          <button className={styles.drag} ref={resizeRef}></button>
         </div>
-        <button className={styles.drag} ref={resizeRef}></button>
       </div>
     );
   }

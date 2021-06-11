@@ -40,12 +40,21 @@ class Youtube {
     });
     return response.data;
   }
-
+  async description(id) {
+    const response = await this.youtube.get('videos', {
+      params: {
+        part: 'snippet',
+        id: id,
+      },
+    });
+    return response.data.items[0].snippet;
+  }
   async comments(id) {
     const response = await this.youtube.get('commentThreads', {
       params: {
         textFormat: 'plainText',
         part: 'snippet',
+        order: 'relevance',
         videoId: id,
       },
     });

@@ -19,9 +19,11 @@ const Page = ({
   addNemo,
   deleteNemo,
   changeNemo,
+  onPlayer,
 }) => {
   const [findPage, setFindPage] = useState({});
   const [modalOn, setModalOn] = useState(false);
+  // const [player, setPlayer] = useState(false);
   const [edit, setEdit] = useState(false);
   useEffect(() => {
     sample[pageId] ? setFindPage(sample[pageId]) : setFindPage(pages[pageId]);
@@ -31,6 +33,10 @@ const Page = ({
   };
   const onEdit = (event) => {
     setEdit((edit) => !edit);
+  };
+  //플레이어
+  const pagePlayer = (nemoId, videoId) => {
+    findPage && nemoId && videoId && onPlayer(findPage, nemoId, videoId);
   };
 
   const editOn = edit ? styles.editOn : '';
@@ -50,7 +56,7 @@ const Page = ({
       newOrder.splice(toIndex, 0, nemo);
       dbService.setOrder('sample', pageId, newOrder);
     },
-    [order, setOrder]
+    [order, dbService, findNemo, pageId]
   );
   //드래그 리사이즈
   const [, resizeDrop] = useDrop(
@@ -94,10 +100,10 @@ const Page = ({
     <div ref={drop} className={styles.page}>
       <div className={styles.menuBar}>
         <button className={styles.plus} onClick={onMake}>
-          + Make box!
+          + Make card!
         </button>
         <div className={`${styles.edit} ${editOn}`} onClick={onEdit}>
-          Edit box
+          Edit card
         </div>
       </div>
       <div className={styles.grid} ref={resizeDrop}>
@@ -113,7 +119,7 @@ const Page = ({
               moveNemo={moveNemo}
               findNemo={findNemo}
               addNemo={addNemo}
-              dbService={dbService}
+              pagePlayer={pagePlayer}
             />
           ))}
       </div>

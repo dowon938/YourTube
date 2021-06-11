@@ -8,6 +8,7 @@
   grid-column: auto/span 3;
   grid-row: auto/span 3;
   transition: ease-in 180ms;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.25);
 }
 .title {
   display: flex;
@@ -18,17 +19,16 @@
   height: 3em;
 }
 .title:hover {
-  background-color: rgb(188, 188, 188);
   background-color: tomato;
   color: rgb(242, 242, 242);
   cursor: grab;
 }
-.title:hover::before {
+/* .title:hover::before {
   content: '"drag & drop"';
   position: absolute;
   right: 10px;
   top: 8px;
-}
+} */
 .edit {
   position: absolute;
   display: flex;
@@ -81,7 +81,7 @@
   border-bottom: 10px solid rgb(188, 188, 188);
   border-right: 10px solid rgb(188, 188, 188);
   padding: 0;
-  transition: ease-in 180ms;
+  transition: ease-in 250ms;
 }
 .drag:hover {
   transform: scale(1.1) translate(-5%, -5%);
@@ -89,9 +89,10 @@
   border-right: 10px solid tomato;
 }
 .drag:hover::before {
+  font-size: 0.8em;
+  padding: 0.2em;
   content: 'resize';
   color: rgb(242, 242, 242);
-  background-color: rgba(150, 150, 150, 0.8);
 }
 
 .refresh {

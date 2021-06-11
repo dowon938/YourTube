@@ -13,7 +13,11 @@ button {
   cursor: pointer;
   transition: ease-in 180ms;
 }
-.container i:hover {
+.google:hover {
   color: tomato;
+  transform: scale(1.1);
+}
+.github:hover {
+  color: mediumpurple;
   transform: scale(1.1);
 }

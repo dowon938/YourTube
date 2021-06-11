@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './login.module.css';
 
 const Login = ({ authService, className }) => {
@@ -7,8 +7,16 @@ const Login = ({ authService, className }) => {
   };
   return (
     <div className={(className, styles.container)}>
-      <i className="fab fa-google" onClick={onlogin} data-auth={'Google'}></i>
-      <i className="fab fa-github" onClick={onlogin} data-auth={'Github'}></i>
+      <i
+        className={`fab fa-google ${styles.google}`}
+        onClick={onlogin}
+        data-auth={'Google'}
+      ></i>
+      <i
+        className={`fab fa-github ${styles.github}`}
+        onClick={onlogin}
+        data-auth={'Github'}
+      ></i>
     </div>
   );
 };
