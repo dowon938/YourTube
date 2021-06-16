@@ -42,8 +42,8 @@ const PlayerPage = memo(({ nemo, player, youtube }) => {
   const [description, setDescription] = useState();
 
   useEffect(() => {
-    getComments(currentVideo.id.videoId);
-    getDescription(currentVideo.id.videoId);
+    // getComments(currentVideo.id.videoId);
+    // getDescription(currentVideo.id.videoId);
   }, [currentVideo, getComments, getDescription]);
 
   return (

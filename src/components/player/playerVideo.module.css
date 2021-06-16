@@ -22,7 +22,7 @@
   right: 0;
   transition: ease-in 180ms;
 }
-.container:hover {
+.container:hover .img {
   transform: scale(1.03);
 }
 .title {

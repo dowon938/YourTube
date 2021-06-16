@@ -4,7 +4,7 @@ import YouTube from 'react-youtube';
 import { useState } from 'react/cjs/react.development';
 import styles from './video.module.css';
 
-const Video = memo(({ video, double, nemoPlayer }) => {
+const Video = memo(({ video, double, nemoPlayer, flexRatio }) => {
   const [play, setPlay] = useState(false);
   const [vol, setVol] = useState(50);
   const [YT, setYT] = useState();
@@ -36,8 +36,9 @@ const Video = memo(({ video, double, nemoPlayer }) => {
     <div
       className={styles.flex}
       style={{
-        gridColumn: double ? `auto/span 2` : '',
-        gridRow: double ? `auto/span 2` : '',
+        gridColumn: double ? `auto/span 3` : 'auto/span 2',
+        gridRow: double ? `auto/span 3` : 'auto/span 2',
+        // width: flexRatio + '%',
       }}
     >
       <div className={styles.container}>

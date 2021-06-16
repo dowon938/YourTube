@@ -5,16 +5,27 @@
 .tab {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 .home {
   max-width: 1200px;
   width: 92vw;
   margin: auto;
-  margin-top: 2em;
+  margin-top: 1em;
 }
 .plusPage,
 .editPage {
   z-index: 2;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 10px;
+  margin-left: 6px;
+  border-radius: 14px;
+}
+.editPage i {
+  position: relative;
+  top: -1px;
+  right: -1px;
 }
 .plusPage:hover,
 .editPage:hover {
@@ -23,6 +34,6 @@
 .editOn {
   background-color: tomato;
 }
-.editOn:hover {
-  background-color: indianred;
+.editPage:hover {
+  background-color: tomato;
 }

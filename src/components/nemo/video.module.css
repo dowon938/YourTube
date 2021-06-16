@@ -2,7 +2,7 @@
   position: relative;
   top: 0;
   display: flex;
-  width: 100%;
+  /* width: 33%; */
   flex-flow: column;
   /* background-color: rgb(242, 242, 242); */
 }
@@ -13,6 +13,8 @@
   padding-top: 56%;
   overflow: hidden;
   transition: ease-in 180ms;
+  border: 1px rgb(200, 200, 200, 0.5) solid;
+  border-radius: 4px;
 }
 .img {
   width: 100%;
@@ -25,7 +27,8 @@
 .title {
   padding-top: 0.3em;
   font-size: 0.7em;
-  color: rgb(144, 144, 144);
+  color: rgb(168, 168, 168);
+
   grid-area: title;
 
   font-weight: bold;
@@ -36,8 +39,8 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-.container:hover {
-  transform: scale(1.03);
+.container:hover .img {
+  transform: scale(1.03) translate(-50%, 0);
 }
 .over {
   z-index: 10;

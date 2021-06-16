@@ -42,8 +42,8 @@ const Home = ({ authService, dbService, userId, youtube, onPlayer }) => {
           : {
               nemoId: channelId,
               nemoTitle: video[0].snippet.channelTitle,
-              column: 3,
-              row: 3,
+              column: 4,
+              row: 4,
               double: false,
               videos: video,
             };
@@ -141,19 +141,21 @@ const Home = ({ authService, dbService, userId, youtube, onPlayer }) => {
           </button>
         </div>
       </div>
-      <Page
-        pageId={selected}
-        sample={sample}
-        pages={pages}
-        order={order}
-        setOrder={setOrder}
-        dbService={dbService}
-        youtube={youtube}
-        addNemo={addNemo}
-        deleteNemo={deleteNemo}
-        changeNemo={changeNemo}
-        onPlayer={onPlayer}
-      />
+      <div className={styles.pageGrid}>
+        <Page
+          pageId={selected}
+          sample={sample}
+          pages={pages}
+          order={order}
+          setOrder={setOrder}
+          dbService={dbService}
+          youtube={youtube}
+          addNemo={addNemo}
+          deleteNemo={deleteNemo}
+          changeNemo={changeNemo}
+          onPlayer={onPlayer}
+        />
+      </div>
     </div>
   );
 };

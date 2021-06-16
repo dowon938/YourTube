@@ -44,13 +44,27 @@ const Nemo = memo(
       setInputToggle((inputToggle) => !inputToggle);
     };
     const changeDouble = () => {
-      let newColumn = nemoPre.column;
-      let newRow = nemoPre.row;
-      newColumn % 2 === 1 && newColumn++;
-      newRow % 2 === 1 && newRow++;
+      let nColumn = nemoPre.column;
+      let nRow = nemoPre.row;
+      if (!double) {
+        if (nColumn % 3 !== 0) nColumn = nColumn + (3 - (nColumn % 3));
+        if (nRow % 3 !== 0) nRow = nRow + (3 - (nRow % 3));
+      }
+      if (double) {
+        if (nColumn % 2 !== 0) nColumn = nColumn + (2 - (nColumn % 2));
+        if (nRow % 2 !== 0) nRow = nRow + (2 - (nRow % 2));
+      }
+      if (!double) {
+        nColumn > 9 && (nColumn = 9);
+        nRow > 9 && (nRow = 9);
+      }
+      if (double) {
+        nColumn > 10 && (nColumn = 10);
+        nRow > 10 && (nRow = 10);
+      }
       const newNemo = double
-        ? { ...nemo, double: false }
-        : { ...nemo, column: newColumn, row: newRow, double: true };
+        ? { ...nemo, column: nColumn, row: nRow, double: false }
+        : { ...nemo, column: nColumn, row: nRow, double: true };
       setNemo(newNemo);
       changeNemo(newNemo);
       setDouble((double) => !double);
@@ -147,9 +161,9 @@ const Nemo = memo(
         ref={(node) => previewRef(dropRef(node))}
         style={{
           opacity: isDragging ? '0.3' : '1',
-          gridColumn: `auto/span ${nemoPre.column}`,
+          gridColumn:
+            nemoPre.column === 9 ? `auto/span 10` : `auto/span ${nemoPre.column}`,
           gridRow: `auto/span ${nemoPre.row}`,
-          border: isResizing ? 'solid 2px tomato' : 'none',
         }}
       >
         {edit && (
@@ -196,23 +210,25 @@ const Nemo = memo(
           style={{
             gridTemplateColumns: `repeat(${nemoPre.column}, 1fr)`,
             gridTemplateRows: `repeat(${nemoPre.row}, 1fr)`,
+            border: isResizing ? 'solid 2px tomato' : 'none',
           }}
         >
           {double
             ? videos.map(
                 (video, index) =>
-                  index < (nemoPre.column * nemoPre.row) / 4 && (
+                  index < (nemoPre.column * nemoPre.row) / 9 && (
                     <Video
                       key={index}
                       video={video}
                       double={double}
                       nemoPlayer={nemoPlayer}
+                      flexRatio={100 / parseInt((nemoPre.column * nemoPre.row) / 9)}
                     />
                   )
               )
             : videos.map(
                 (video, index) =>
-                  index < nemoPre.column * nemoPre.row && (
+                  index < (nemoPre.column * nemoPre.row) / 4 && (
                     <Video
                       key={index}
                       video={video}

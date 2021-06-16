@@ -17,7 +17,7 @@ const Tab = ({
   };
   const selectedOn = selected === page.id ? styles.on : '';
   const editOn = pageEdit ? styles.editOn : '';
-  const sampleStyle = isSample ? styles.sampleStyle : '';
+  // const sampleStyle = isSample ? styles.sampleStyle : '';
   const editPage = (e) => {
     setInputToggle((inputToggle) => !inputToggle);
   };
@@ -37,7 +37,7 @@ const Tab = ({
       <div
         data-id={page.id}
         onClick={onSelect}
-        className={`${styles.tab} ${selectedOn} ${editOn} ${sampleStyle}`}
+        className={`${styles.tab} ${selectedOn} ${editOn}`}
       >
         {!inputToggle && (page.newTitle ? page.newTitle : page.pageTitle)}
         {inputToggle && (

@@ -51,12 +51,16 @@
   align-items: center;
 }
 .userIcon {
+  z-index: 11;
   cursor: pointer;
-  color: indianred;
+  color: tomato;
   margin-right: 1.2rem;
+  padding: 2px;
+  transition: ease-in 180ms;
 }
 .userIcon:hover {
-  color: rgb(252, 245, 235);
+  color: indianred;
+  transform: scale(1.1);
 }
 .userImg {
   width: 2em;
@@ -65,18 +69,16 @@
 }
 .userModal::before {
   content: '';
-  position: relative;
-  top: -10px;
   width: 10px;
   height: 10px;
   background-color: rgb(48, 48, 48);
   background-color: tomato;
 }
 .userModal {
-  z-index: 10000;
+  z-index: 10;
   position: absolute;
-  top: 5em;
-  right: 0.5em;
+  top: 5.5em;
+  right: 0.8em;
   background-color: rgb(88, 88, 88);
   box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.2);
 }

@@ -81,13 +81,23 @@ const Page = ({
         if (x < -wPerColumn * sensRatio) nColumn += Math.round(x / wPerColumn);
         if (y < -hPerRow * sensRatio) nRow += Math.round(y / hPerRow);
         if (double) {
-          nColumn % 2 === 1 && nColumn++;
-          nRow % 2 === 1 && nRow++;
+          if (nColumn % 3 !== 0) nColumn = nColumn + (3 - (nColumn % 3));
+          if (nRow % 3 !== 0) nRow = nRow + (3 - (nRow % 3));
+        }
+        if (!double) {
+          if (nColumn % 2 !== 0) nColumn = nColumn + (2 - (nColumn % 2));
+          if (nRow % 2 !== 0) nRow = nRow + (2 - (nRow % 2));
+        }
+        if (double) {
+          nColumn > 9 && (nColumn = 9);
+          nRow > 12 && (nRow = 12);
+        }
+        if (!double) {
+          nColumn > 10 && (nColumn = 10);
+          nRow > 12 && (nRow = 12);
         }
         nColumn < 1 && (nColumn = 1);
         nRow < 1 && (nRow = 1);
-        nColumn > 8 && (nColumn = 8);
-        nRow > 8 && (nRow = 8);
 
         throttleGrid({ column: nColumn, row: nRow });
       },

@@ -3,10 +3,15 @@ import PlayerPage from './playerPage';
 import styles from './player.module.css';
 import { useState } from 'react/cjs/react.development';
 
-const Player = ({ player, setPlayer, findPage, order, youtube }) => {
+const Player = ({ player, setPlayerOn, setPlayer, findPage, order, youtube }) => {
   const [position, setPosition] = useState(order.indexOf(player.nemoId) * 100);
+  const [aniReverse, setAniReverse] = useState(false);
   const closePlayer = () => {
-    setPlayer(false);
+    // setPlayerOn(false);
+    setAniReverse(true);
+    setTimeout(() => {
+      setPlayer(false);
+    }, 500);
   };
   const endPosition = (order.length - 1) * 100;
   const moveLeft = () => {
@@ -25,21 +30,36 @@ const Player = ({ player, setPlayer, findPage, order, youtube }) => {
       <button className={styles.left} onClick={moveLeft}>
         <i className="fas fa-chevron-left" />
       </button>
-      <div className={styles.player} onClick={(e) => e.stopPropagation()}>
+      <div
+        className={`${styles.wrap} ${!aniReverse && styles.rotateWrap} ${
+          aniReverse && styles.wrapReverse
+        }`}
+      >
         <div
-          className={styles.slider}
-          style={{
-            left: -position + '%',
-          }}
+          className={`${styles.player} ${!aniReverse && styles.rotate3D} ${
+            aniReverse && styles.threeReverse
+          }`}
+          onClick={(e) => e.stopPropagation()}
         >
-          {order.map((chId) => (
-            <PlayerPage
-              key={chId}
-              player={player}
-              nemo={findPage.nemos[chId]}
-              youtube={youtube}
-            />
-          ))}
+          <div className={styles.close} onClick={closePlayer}>
+            <i className="fas fa-times-circle"></i>
+          </div>
+          <div
+            className={styles.slider}
+            style={{
+              // left: -position + '%',
+              transform: `translateX (${-position}%)`,
+            }}
+          >
+            {order.map((chId) => (
+              <PlayerPage
+                key={chId}
+                player={player}
+                nemo={findPage.nemos[chId]}
+                youtube={youtube}
+              />
+            ))}
+          </div>
         </div>
       </div>
       <button className={styles.right} onClick={moveRight}>

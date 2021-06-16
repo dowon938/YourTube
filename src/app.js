@@ -12,9 +12,11 @@ import Player from './components/player/player';
 function App({ authService, dbService, youtube }) {
   const [user, setUser] = useState({});
   const [player, setPlayer] = useState(false);
+  const [playerOn, setPlayerOn] = useState(false);
   //플레이어
   const onPlayer = (findPage, nemoId, video) => {
     findPage && nemoId && video && setPlayer({ findPage, nemoId, video });
+    // setTimeout(setPlayerOn(true), 1500);
   };
 
   const logOut = useCallback(() => {
@@ -39,7 +41,8 @@ function App({ authService, dbService, youtube }) {
         <Header authService={authService} user={user} logOut={logOut} />
         <div
           style={{
-            position: player && 'fixed',
+            height: player && '90vh',
+            overflow: player && 'hidden',
           }}
         >
           <Home
@@ -51,15 +54,18 @@ function App({ authService, dbService, youtube }) {
           />
         </div>
       </DndProvider>
+      {/* <div className={`${styles.playerContainer} ${player && styles.On}`}> */}
       {player && (
         <Player
           player={player}
           setPlayer={setPlayer}
+          setPlayerOn={setPlayerOn}
           findPage={player.findPage}
           order={player.findPage.order}
           youtube={youtube}
         />
       )}
+      {/* </div> */}
     </div>
   );
 }

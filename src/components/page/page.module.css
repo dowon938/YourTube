@@ -1,20 +1,21 @@
 .page {
   z-index: 2;
   position: relative;
-  padding: 0.8em;
+  padding: 1em;
+  padding-top: 0.5em;
   /* padding-top: 2.6em; */
   display: flex;
   flex-flow: column;
   background-color: rgb(250, 250, 250);
   margin-bottom: 2em;
+  border-radius: 10px;
 }
 .grid {
   display: grid;
   grid-auto-columns: auto;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(auto-fill, 1fr);
-  gap: 0.8em;
-  /* display: flex; */
+  gap: 1em;
 }
 .display {
   display: block;
@@ -24,17 +25,19 @@
 .menuBar {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 .edit,
 .plus {
   cursor: pointer;
-  padding: 0.5em 0.8em;
+  padding: 0.3em 0.8em;
   font-size: 0.8em;
   transition: ease-in 180ms;
   background-color: rgb(242, 242, 242);
+  color: rgb(168, 168, 168);
   margin-left: 0.4em;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
 }
 .edit:hover,
 .plus:hover {
@@ -43,6 +46,7 @@
 
 .editOn {
   background-color: tomato;
+  color: rgb(242, 242, 242);
 }
 .editOn:hover {
   background-color: indianred;

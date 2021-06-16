@@ -13,7 +13,7 @@ const Header = memo(({ authService, user, logOut }) => {
   };
 
   const scrollEvent = _.throttle(() => {
-    if (window.scrollY > 140) {
+    if (window.scrollY > 200) {
       setPageDown(true);
     } else setPageDown(false);
   }, 200);
