@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
+import { useDrop } from 'react-dnd';
 import { useState } from 'react/cjs/react.development';
+import { ItemTypes } from '../../utils/items';
 import Page from '../page/page';
 import Tab from '../tab/tab';
 import styles from './home.module.css';
 
-const Home = ({ authService, dbService, userId, youtube, onPlayer }) => {
+const Home = ({ authService, dbService, userId, youtube, onPlayer, setPlayer }) => {
   const [sample, setSample] = useState({});
   const [pages, setPages] = useState({});
   const [selected, setSelected] = useState('daily-routine');
@@ -106,55 +108,115 @@ const Home = ({ authService, dbService, userId, youtube, onPlayer }) => {
     console.log('order');
     return () => stopRead();
   }, [selected, dbService]);
+
+  //리사이즈 드랍
+  const [, resizeDrop] = useDrop(
+    () => ({
+      accept: ItemTypes.Resize,
+      canDrop: () => false,
+      hover(item, monitor) {
+        const {
+          column,
+          row,
+          width: w,
+          height: h,
+          throttleGrid,
+          double,
+        } = monitor.getItem();
+        const { x, y } = monitor.getDifferenceFromInitialOffset();
+        let [nColumn, nRow] = [column, row];
+        const [wPerColumn, hPerRow] = [w / column, h / row];
+        const gridRatio = double ? 3 : 2;
+
+        // console.log(nRow, y, hPerRow, Math.round(y / hPerRow));
+        const SENS = 1;
+        nColumn += Math.round((x * SENS) / wPerColumn);
+        nRow += Math.round((y * SENS) / hPerRow);
+
+        // const sensRatio = 0.1;
+        // if (x > wPerColumn * sensRatio) nColumn += Math.round(x / wPerColumn);
+        // if (y > hPerRow * sensRatio) nRow += Math.round(y / hPerRow);
+        // if (x < -wPerColumn * sensRatio) nColumn += Math.round(x / wPerColumn);
+        // if (y < -hPerRow * sensRatio) nRow += Math.round(y / hPerRow);
+
+        // if (double) {
+        //   if (nColumn % 3 !== 0) nColumn = nColumn + (3 - (nColumn % 3));
+        //   if (nRow % 3 !== 0) nRow = nRow + (3 - (nRow % 3));
+        // }
+        // if (!double) {
+        //   if (nColumn % 2 !== 0) nColumn = nColumn + (2 - (nColumn % 2));
+        //   if (nRow % 2 !== 0) nRow = nRow + (2 - (nRow % 2));
+        // }
+        // if (double) {
+        //   nColumn > 9 && (nColumn = 9);
+        //   nRow > 12 && (nRow = 12);
+        // }
+        // if (!double) {
+        //   nColumn > 10 && (nColumn = 10);
+        //   nRow > 12 && (nRow = 12);
+        // }
+        nColumn > 10 && (nColumn = 10);
+        nRow > 12 && (nRow = 12);
+        nColumn < gridRatio && (nColumn = gridRatio);
+        nRow < gridRatio && (nRow = gridRatio);
+
+        throttleGrid({ column: nColumn, row: nRow });
+      },
+    }),
+    []
+  );
   return (
-    <div className={styles.home}>
-      <div className={styles.tab}>
-        <div className={styles.sampleTab}>
-          {Object.keys(sample).map((pageId) => (
-            <Tab
-              key={pageId}
-              page={sample[pageId]}
-              setSelected={setSelected}
-              selected={selected}
-              isSample={isSample}
-            />
-          ))}
-        </div>
-        <div className={styles.myTab}>
-          {pages &&
-            Object.keys(pages).map((pageId) => (
+    <div ref={resizeDrop}>
+      <div className={styles.home}>
+        <div className={styles.tab}>
+          <div className={styles.sampleTab}>
+            {Object.keys(sample).map((pageId) => (
               <Tab
                 key={pageId}
-                page={pages[pageId]}
-                deletePage={deletePage}
-                changePage={changePage}
+                page={sample[pageId]}
                 setSelected={setSelected}
                 selected={selected}
-                pageEdit={pageEdit}
+                isSample={isSample}
               />
             ))}
-          <button onClick={addPage} className={styles.plusPage}>
-            +
-          </button>
-          <button onClick={editPage} className={`${styles.editPage} ${editOn}`}>
-            <i className="far fa-edit"></i>
-          </button>
+          </div>
+          <div className={styles.myTab}>
+            {pages &&
+              Object.keys(pages).map((pageId) => (
+                <Tab
+                  key={pageId}
+                  page={pages[pageId]}
+                  deletePage={deletePage}
+                  changePage={changePage}
+                  setSelected={setSelected}
+                  selected={selected}
+                  pageEdit={pageEdit}
+                />
+              ))}
+            <button onClick={addPage} className={styles.plusPage}>
+              +
+            </button>
+            <button onClick={editPage} className={`${styles.editPage} ${editOn}`}>
+              <i className="far fa-edit"></i>
+            </button>
+          </div>
         </div>
-      </div>
-      <div className={styles.pageGrid}>
-        <Page
-          pageId={selected}
-          sample={sample}
-          pages={pages}
-          order={order}
-          setOrder={setOrder}
-          dbService={dbService}
-          youtube={youtube}
-          addNemo={addNemo}
-          deleteNemo={deleteNemo}
-          changeNemo={changeNemo}
-          onPlayer={onPlayer}
-        />
+        <div className={styles.pageGrid}>
+          <Page
+            pageId={selected}
+            sample={sample}
+            pages={pages}
+            order={order}
+            setOrder={setOrder}
+            dbService={dbService}
+            youtube={youtube}
+            addNemo={addNemo}
+            deleteNemo={deleteNemo}
+            changeNemo={changeNemo}
+            onPlayer={onPlayer}
+            setPlayer={setPlayer}
+          />
+        </div>
       </div>
     </div>
   );

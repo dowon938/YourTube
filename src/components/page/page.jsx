@@ -7,6 +7,7 @@ import styles from './page.module.css';
 import { useDrop } from 'react-dnd';
 import { useCallback } from 'react';
 import { ItemTypes } from '../../utils/items';
+import _ from 'lodash';
 
 const Page = ({
   pageId,
@@ -20,10 +21,10 @@ const Page = ({
   deleteNemo,
   changeNemo,
   onPlayer,
+  setPlayer,
 }) => {
-  const [findPage, setFindPage] = useState({});
+  const [findPage, setFindPage] = useState(false);
   const [modalOn, setModalOn] = useState(false);
-  // const [player, setPlayer] = useState(false);
   const [edit, setEdit] = useState(false);
   useEffect(() => {
     sample[pageId] ? setFindPage(sample[pageId]) : setFindPage(pages[pageId]);
@@ -34,6 +35,17 @@ const Page = ({
   const onEdit = (event) => {
     setEdit((edit) => !edit);
   };
+
+  // useEffect(() => {
+  //   findPage &&
+  //     findPage.order &&
+  //     setPlayer({
+  //       findPage,
+  //       nemoId: findPage.order[0],
+  //       video: findPage.nemos[findPage.order[0]].videos[0],
+  //     });
+  // }, [findPage, setPlayer]);
+
   //플레이어
   const pagePlayer = (nemoId, videoId) => {
     findPage && nemoId && videoId && onPlayer(findPage, nemoId, videoId);
@@ -42,67 +54,21 @@ const Page = ({
   const editOn = edit ? styles.editOn : '';
   //드래그 앤 드랍
   const findNemo = useCallback(
-    (nemoId) => {
+    _.throttle((nemoId) => {
       const nemoIndex = order.indexOf(nemoId);
       return { nemo: nemoId, index: nemoIndex };
-    },
+    }, 10),
     [order]
   );
   const moveNemo = useCallback(
-    (nemoId, toIndex) => {
+    _.throttle((nemoId, toIndex) => {
       const { nemo, index } = findNemo(nemoId);
       let newOrder = order;
       newOrder.splice(index, 1);
       newOrder.splice(toIndex, 0, nemo);
       dbService.setOrder('sample', pageId, newOrder);
-    },
+    }, 20),
     [order, dbService, findNemo, pageId]
-  );
-  //드래그 리사이즈
-  const [, resizeDrop] = useDrop(
-    () => ({
-      accept: ItemTypes.Resize,
-      canDrop: () => false,
-      hover(item, monitor) {
-        const {
-          column,
-          row,
-          width: w,
-          height: h,
-          throttleGrid,
-          double,
-        } = monitor.getItem();
-        const { x, y } = monitor.getDifferenceFromInitialOffset();
-        let [nColumn, nRow] = [column, row];
-        const [wPerColumn, hPerRow] = [w / column, h / row];
-        const sensRatio = 0.7;
-        if (x > wPerColumn * sensRatio) nColumn += Math.round(x / wPerColumn);
-        if (y > hPerRow * sensRatio) nRow += Math.round(y / hPerRow);
-        if (x < -wPerColumn * sensRatio) nColumn += Math.round(x / wPerColumn);
-        if (y < -hPerRow * sensRatio) nRow += Math.round(y / hPerRow);
-        if (double) {
-          if (nColumn % 3 !== 0) nColumn = nColumn + (3 - (nColumn % 3));
-          if (nRow % 3 !== 0) nRow = nRow + (3 - (nRow % 3));
-        }
-        if (!double) {
-          if (nColumn % 2 !== 0) nColumn = nColumn + (2 - (nColumn % 2));
-          if (nRow % 2 !== 0) nRow = nRow + (2 - (nRow % 2));
-        }
-        if (double) {
-          nColumn > 9 && (nColumn = 9);
-          nRow > 12 && (nRow = 12);
-        }
-        if (!double) {
-          nColumn > 10 && (nColumn = 10);
-          nRow > 12 && (nRow = 12);
-        }
-        nColumn < 1 && (nColumn = 1);
-        nRow < 1 && (nRow = 1);
-
-        throttleGrid({ column: nColumn, row: nRow });
-      },
-    }),
-    []
   );
 
   const [, drop] = useDrop(() => ({ accept: ItemTypes.Nemo }));
@@ -116,7 +82,7 @@ const Page = ({
           Edit card
         </div>
       </div>
-      <div className={styles.grid} ref={resizeDrop}>
+      <div className={styles.grid}>
         {findPage &&
           order &&
           order.map((chId) => (

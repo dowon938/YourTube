@@ -1,7 +1,7 @@
 .page {
   position: relative;
 
-  width: 85vw;
+  width: 86vw;
   max-width: 1200px;
   height: 90vh;
   background-color: rgb(250, 250, 250);
@@ -64,7 +64,7 @@
   /* background-color: tomato; */
 }
 .meta {
-  padding: 1em;
+  padding: 0.4em;
 }
 .title {
   font-size: 1.1em;
@@ -86,7 +86,7 @@
 .description {
   font-size: 0.8em;
   color: grey;
-  padding-left: 1em;
+  /* padding-left: 1em; */
   white-space: pre-wrap;
 }
 .description p {

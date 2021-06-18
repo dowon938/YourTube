@@ -4,17 +4,10 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import styles from './playerVideo.module.css';
 
 const PlayerVideo = memo(
-  ({
-    video,
-    changeVideoId,
-    setCurrentVideo,
-    currentVideo,
-    getComments,
-    getDescription,
-  }) => {
+  ({ video, setCurrentVideo, currentVideo, getComments, getDescription }) => {
     const onChange = () => {
-      // getDescription(video.id.videoId);
-      // getComments(video.id.videoId);
+      getDescription(video.id.videoId);
+      getComments(video.id.videoId);
       setCurrentVideo(video);
     };
     const [isCurrent, setIsCurrent] = useState(

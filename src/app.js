@@ -10,13 +10,15 @@ import { useEffect } from 'react';
 import Player from './components/player/player';
 
 function App({ authService, dbService, youtube }) {
+  document.cookie = 'safeCookie1=foo; SameSite=Lax';
+  document.cookie = 'safeCookie2=foo';
+  document.cookie = 'crossCookie=bar; SameSite=None; Secure';
+
   const [user, setUser] = useState({});
   const [player, setPlayer] = useState(false);
-  const [playerOn, setPlayerOn] = useState(false);
   //플레이어
   const onPlayer = (findPage, nemoId, video) => {
     findPage && nemoId && video && setPlayer({ findPage, nemoId, video });
-    // setTimeout(setPlayerOn(true), 1500);
   };
 
   const logOut = useCallback(() => {
@@ -35,6 +37,7 @@ function App({ authService, dbService, youtube }) {
         });
     });
   }, [authService, setUser]);
+
   return (
     <div className={styles.app}>
       <DndProvider backend={HTML5Backend}>
@@ -51,21 +54,19 @@ function App({ authService, dbService, youtube }) {
             youtube={youtube}
             userId={user.uid}
             onPlayer={onPlayer}
+            setPlayer={setPlayer}
           />
         </div>
       </DndProvider>
-      {/* <div className={`${styles.playerContainer} ${player && styles.On}`}> */}
       {player && (
         <Player
           player={player}
           setPlayer={setPlayer}
-          setPlayerOn={setPlayerOn}
           findPage={player.findPage}
           order={player.findPage.order}
           youtube={youtube}
         />
       )}
-      {/* </div> */}
     </div>
   );
 }

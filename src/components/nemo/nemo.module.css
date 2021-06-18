@@ -1,15 +1,12 @@
 .nemo {
   position: relative;
-  /* background-color: rgb(242, 242, 242); */
   padding-top: 0;
   display: flex;
   flex-flow: column;
-  justify-content: space-evenly;
   grid-column: auto/span 3;
   grid-row: auto/span 3;
   transition: ease-in 180ms;
   border-radius: 10px;
-  /* box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.25); */
 }
 .title {
   cursor: grab;
@@ -70,7 +67,7 @@
   /* display: flex;
   flex-wrap: wrap; */
   /* overflow-y: hidden; */
-  background-color: rgb(236, 236, 236);
+  background-color: rgb(226, 226, 226);
   border-radius: 10px;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.25);
 }

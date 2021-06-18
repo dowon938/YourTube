@@ -46,21 +46,22 @@ const Nemo = memo(
     const changeDouble = () => {
       let nColumn = nemoPre.column;
       let nRow = nemoPre.row;
+      // if (!double) {
+      //   if (nColumn % 3 !== 0) nColumn = nColumn + (3 - (nColumn % 3));
+      //   if (nRow % 3 !== 0) nRow = nRow + (3 - (nRow % 3));
+      // }
+      // if (double) {
+      //   if (nColumn % 2 !== 0) nColumn = nColumn + (2 - (nColumn % 2));
+      //   if (nRow % 2 !== 0) nRow = nRow + (2 - (nRow % 2));
+      // }
+      // if (double) {
+      //   nColumn > 10 && (nColumn = 10);
+      //   nRow > 10 && (nRow = 10);
+      // }
+
       if (!double) {
-        if (nColumn % 3 !== 0) nColumn = nColumn + (3 - (nColumn % 3));
-        if (nRow % 3 !== 0) nRow = nRow + (3 - (nRow % 3));
-      }
-      if (double) {
-        if (nColumn % 2 !== 0) nColumn = nColumn + (2 - (nColumn % 2));
-        if (nRow % 2 !== 0) nRow = nRow + (2 - (nRow % 2));
-      }
-      if (!double) {
-        nColumn > 9 && (nColumn = 9);
-        nRow > 9 && (nRow = 9);
-      }
-      if (double) {
-        nColumn > 10 && (nColumn = 10);
-        nRow > 10 && (nRow = 10);
+        nColumn < 3 && (nColumn = 3);
+        nRow < 3 && (nRow = 3);
       }
       const newNemo = double
         ? { ...nemo, column: nColumn, row: nRow, double: false }
@@ -81,18 +82,16 @@ const Nemo = memo(
     const nemoPlayer = (videoId) => {
       videoId && pagePlayer(nemo.nemoId, videoId);
     };
+
     useEffect(() => {
       setNemo(nemoPre);
       setVideos([...nemoPre.videos]);
     }, [nemoPre]);
+
     //드래그 앤 드랍
     const id = nemoPre.nemoId;
     const originalIndex = findNemo(id).index;
-    const throttleMoveNemo = _.throttle(
-      (draggedId, overIndex) => moveNemo(draggedId, overIndex),
-      100
-    );
-    const throttleFindNemo = _.throttle((id) => findNemo(id), 100);
+    // const throttleFindNemo = _.throttle((id) => findNemo(id), 50);
     const [{ isDragging }, dragRef, previewRef] = useDrag(
       () => ({
         type: ItemTypes.Nemo,
@@ -104,26 +103,26 @@ const Nemo = memo(
           const { id: droppedId, originalIndex } = item;
           const didDrop = monitor.didDrop();
           if (!didDrop) {
-            throttleMoveNemo(droppedId, originalIndex);
+            moveNemo(droppedId, originalIndex);
           }
         },
       }),
-      [id, originalIndex, throttleMoveNemo]
+      [id, originalIndex, moveNemo]
     );
-
-    const [, dropRef] = useDrop(
+    const [{ isOver }, dropRef] = useDrop(
       () => ({
         accept: ItemTypes.Nemo,
         canDrop: () => false,
         hover({ id: draggedId }) {
           if (draggedId !== id) {
-            const { index: overIndex } = throttleFindNemo(id);
-            throttleMoveNemo(draggedId, overIndex);
+            const { index: overIndex } = findNemo(id);
+            moveNemo(draggedId, overIndex);
           }
         },
       }),
-      [throttleFindNemo, throttleMoveNemo]
+      [findNemo, moveNemo]
     );
+
     //드래그 리사이즈
     const throttleGrid = _.throttle((newGrid) => {
       const { column, row } = newGrid;
@@ -154,6 +153,7 @@ const Nemo = memo(
       [nemoPre, rect, double, throttleGrid]
     );
 
+    const gridRatio = double ? 3 : 2;
     return (
       <div
         id={nemo.nemoId}
@@ -161,6 +161,7 @@ const Nemo = memo(
         ref={(node) => previewRef(dropRef(node))}
         style={{
           opacity: isDragging ? '0.3' : '1',
+          border: isOver ? 'solid 2px tomato' : 'none',
           gridColumn:
             nemoPre.column === 9 ? `auto/span 10` : `auto/span ${nemoPre.column}`,
           gridRow: `auto/span ${nemoPre.row}`,
@@ -208,35 +209,26 @@ const Nemo = memo(
           ref={sonRef}
           className={styles.imgs}
           style={{
-            gridTemplateColumns: `repeat(${nemoPre.column}, 1fr)`,
-            gridTemplateRows: `repeat(${nemoPre.row}, 1fr)`,
+            gridTemplateColumns: `repeat(${
+              nemoPre.column - (nemoPre.column % gridRatio)
+            }, 1fr)`,
+            gridTemplateRows: `repeat(${nemoPre.row - (nemoPre.row % gridRatio)}, 1fr)`,
             border: isResizing ? 'solid 2px tomato' : 'none',
           }}
         >
-          {double
-            ? videos.map(
-                (video, index) =>
-                  index < (nemoPre.column * nemoPre.row) / 9 && (
-                    <Video
-                      key={index}
-                      video={video}
-                      double={double}
-                      nemoPlayer={nemoPlayer}
-                      flexRatio={100 / parseInt((nemoPre.column * nemoPre.row) / 9)}
-                    />
-                  )
+          {videos.map(
+            (video, index) =>
+              index <
+                parseInt(nemoPre.column / gridRatio) *
+                  parseInt(nemoPre.row / gridRatio) && (
+                <Video
+                  key={index}
+                  video={video}
+                  double={double}
+                  nemoPlayer={nemoPlayer}
+                />
               )
-            : videos.map(
-                (video, index) =>
-                  index < (nemoPre.column * nemoPre.row) / 4 && (
-                    <Video
-                      key={index}
-                      video={video}
-                      double={double}
-                      nemoPlayer={nemoPlayer}
-                    />
-                  )
-              )}
+          )}
           <button className={styles.drag} ref={resizeRef}></button>
         </div>
       </div>

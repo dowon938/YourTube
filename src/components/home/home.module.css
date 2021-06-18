@@ -9,7 +9,9 @@
 }
 .home {
   max-width: 1200px;
-  width: 92vw;
+  width: 88vw;
+  min-height: 90vh;
+  padding-bottom: 180px;
   margin: auto;
   margin-top: 1em;
 }

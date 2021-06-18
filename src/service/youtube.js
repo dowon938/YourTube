@@ -5,6 +5,8 @@ class Youtube {
     this.youtube = axios.create({
       baseURL: 'https://youtube.googleapis.com/youtube/v3',
       params: { key: key },
+      // crossDomain: true,
+      // withCredentials: true,
     });
   }
 
@@ -47,7 +49,7 @@ class Youtube {
         id: id,
       },
     });
-    return response.data.items[0].snippet;
+    return response.data;
   }
   async comments(id) {
     const response = await this.youtube.get('commentThreads', {

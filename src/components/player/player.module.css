@@ -24,6 +24,7 @@
   justify-content: center;
   align-items: center;
   font-size: 0.9em;
+  transition: ease-in 50ms;
 }
 .close:hover {
   /* color: tomato; */
@@ -52,20 +53,18 @@
   right: 3%;
 }
 .wrap {
-  visibility: hidden;
+  visibility: visible;
   backface-visibility: hidden;
   z-index: 100;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 85vw;
+  top: 0;
+  left: 0;
   max-width: 1200px;
+  width: 86vw;
   height: 90vh;
+  margin: 5vh 7vw;
   overflow-x: hidden;
   overflow-y: hidden;
-  /* background-color: whitesmoke; */
-  /* opacity: 1; */
   border-radius: 0.5em;
 }
 .player {
@@ -77,28 +76,12 @@
   transition-property: all;
   transition-duration: 500ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0, 1.5);
-
-  /* z-index: 100;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 85vw;
-  max-width: 1200px;
-  height: 90vh;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  background-color: whitesmoke;
-  opacity: 1;
-  border-radius: 0.5em; */
-  /* transition: all 0.5s cubic-bezier(0.21, 0.01, 0.15, 1); */
 }
 
 .slider {
   display: flex;
   position: absolute;
   transition: all 1s cubic-bezier(0.21, 0.01, 0.15, 1);
-  /* transform: translateX(-100); */
 }
 .wrapReverse {
   animation: rotateWrapReverse 500ms forwards;
@@ -114,37 +97,39 @@
 }
 @keyframes rotateWrap {
   0% {
-    perspective: 1200px;
+    visibility: visible;
+    perspective: 600px;
     opacity: 0;
   }
   50% {
   }
   100% {
-    visibility: visible;
     opacity: 1;
   }
 }
 @keyframes rotateWrapReverse {
   0% {
-    visibility: visible;
-    perspective: 1200px;
+    perspective: 600px;
     opacity: 1;
   }
   50% {
   }
   100% {
+    visibility: hidden;
     opacity: 0;
+    pointer-events: none;
   }
 }
 @keyframes rotateModal {
   0% {
-    transform: translateZ(0px) translateX(-30%) rotateY(90deg);
+    transform: translateZ(0) translateX(-30%) rotateY(90deg);
     transform-style: preserve-3d;
-    transform-origin: 0 100%;
+
     opacity: 0;
   }
   70% {
-    transform: translateZ(0px) translateX(0%) rotateY(0deg);
+    transform: translateZ(0) translateX(0%) rotateY(0deg);
+    transform-origin: 0 100%;
     opacity: 1;
   }
   100% {
@@ -152,11 +137,11 @@
 }
 @keyframes rotateModalReverse {
   0% {
-    transform: translateZ(0px) translateX(0%) rotateY(0deg);
+    transform: translateZ(0) translateX(0%) rotateY(0deg);
     opacity: 1;
   }
   100% {
-    transform: translateZ(0px) translateX(-30%) rotateY(90deg);
+    transform: translateZ(0) translateX(-30%) rotateY(90deg);
     transform-style: preserve-3d;
     transform-origin: 0 100%;
     opacity: 0;
