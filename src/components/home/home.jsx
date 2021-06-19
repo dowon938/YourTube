@@ -9,10 +9,10 @@ import styles from './home.module.css';
 const Home = ({ authService, dbService, userId, youtube, onPlayer, setPlayer }) => {
   const [sample, setSample] = useState({});
   const [pages, setPages] = useState({});
-  const [selected, setSelected] = useState('daily-routine');
+  const [selected, setSelected] = useState({ pageId: 'daily-routine', isSample: true });
   const [order, setOrder] = useState([]);
   const [pageEdit, setPageEdit] = useState(false);
-  const isSample = useState(true);
+  const isSampleTab = useState(true);
   const addPage = () => {
     const id = Date.now();
     dbService.addPages(userId, id, {
@@ -49,23 +49,51 @@ const Home = ({ authService, dbService, userId, youtube, onPlayer, setPlayer }) 
               double: false,
               videos: video,
             };
-        dbService.addNemo('sample', selected, channelId, newNemo);
+        selected.isSample
+          ? setSample({
+              ...sample,
+              [selected.pageId]: {
+                ...sample[selected.pageId],
+                nemos: { ...sample[selected.pageId].nemos, newNemo },
+              },
+            })
+          : dbService.addNemo(userId, selected.pageId, channelId, newNemo);
       })
       .then(() => {
         if (order.indexOf(channelId) === -1) {
           const newOrder = [...order, channelId];
-          dbService.setOrder('sample', selected, newOrder);
+          selected.isSample
+            ? setOrder(newOrder)
+            : dbService.setOrder(userId, selected.pageId, newOrder);
         }
       });
   };
   const deleteNemo = (channelId) => {
     const newOrder = [...order];
     newOrder.splice(newOrder.indexOf(channelId), 1);
-    dbService.setOrder('sample', selected, newOrder);
-    dbService.deleteNemo('sample', selected, channelId);
+    selected.isSample
+      ? setOrder(newOrder)
+      : dbService.setOrder(userId, selected.pageId, newOrder);
+    selected.isSample
+      ? setSample({
+          ...sample,
+          [selected.pageId]: {
+            ...sample[selected.pageId],
+            nemos: { ...sample[selected.pageId].nemos, [channelId]: undefined },
+          },
+        })
+      : dbService.deleteNemo(userId, selected.pageId, channelId);
   };
   const changeNemo = (newNemo) => {
-    dbService.addNemo('sample', selected, newNemo.nemoId, newNemo);
+    selected.isSample
+      ? setSample({
+          ...sample,
+          [selected.pageId]: {
+            ...sample[selected.pageId],
+            nemos: { ...sample[selected.pageId].nemos, [newNemo.nemoId]: newNemo },
+          },
+        })
+      : dbService.addNemo(userId, selected.pageId, newNemo.nemoId, newNemo);
   };
   const editPage = () => {
     console.log('hi');
@@ -104,10 +132,12 @@ const Home = ({ authService, dbService, userId, youtube, onPlayer, setPlayer }) 
     return () => stopRead();
   }, [dbService]);
   useEffect(() => {
-    const stopRead = dbService.readOrder('sample', selected, setOrder);
+    const stopRead = selected.isSample
+      ? dbService.readOrder('sample', selected.pageId, setOrder)
+      : dbService.readOrder(userId, selected.pageId, setOrder);
     console.log('order');
     return () => stopRead();
-  }, [selected, dbService]);
+  }, [userId, selected, dbService]);
 
   //리사이즈 드랍
   const [, resizeDrop] = useDrop(
@@ -176,7 +206,7 @@ const Home = ({ authService, dbService, userId, youtube, onPlayer, setPlayer }) 
                 page={sample[pageId]}
                 setSelected={setSelected}
                 selected={selected}
-                isSample={isSample}
+                isSampleTab={isSampleTab}
               />
             ))}
           </div>
@@ -203,7 +233,9 @@ const Home = ({ authService, dbService, userId, youtube, onPlayer, setPlayer }) 
         </div>
         <div className={styles.pageGrid}>
           <Page
-            pageId={selected}
+            userId={userId}
+            pageId={selected.pageId}
+            isSample={selected.isSample}
             sample={sample}
             pages={pages}
             order={order}

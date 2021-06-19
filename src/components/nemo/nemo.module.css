@@ -8,8 +8,18 @@
   transition: ease-in 180ms;
   border-radius: 10px;
 }
+.dropRef {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* background-color: teal; */
+  width: 80%;
+  height: 80%;
+}
 .title {
-  cursor: grab;
+  position: relative;
+  cursor: move;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,6 +80,7 @@
   background-color: rgb(226, 226, 226);
   border-radius: 10px;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.25);
+  z-index: 2;
 }
 
 .imgs::-webkit-scrollbar {

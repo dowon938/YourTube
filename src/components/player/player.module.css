@@ -58,11 +58,12 @@
   z-index: 100;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
   max-width: 1200px;
   width: 86vw;
   height: 90vh;
-  margin: 5vh 7vw;
+  margin: 5vh 0;
+  transform: translateX(-51%);
   overflow-x: hidden;
   overflow-y: hidden;
   border-radius: 0.5em;

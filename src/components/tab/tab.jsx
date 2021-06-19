@@ -9,13 +9,13 @@ const Tab = ({
   setSelected,
   selected,
   pageEdit,
-  isSample,
+  isSampleTab,
 }) => {
   const [inputToggle, setInputToggle] = useState(false);
   const onSelect = () => {
-    setSelected(page.id);
+    setSelected({ pageId: page.id, isSample: isSampleTab ? true : false });
   };
-  const selectedOn = selected === page.id ? styles.on : '';
+  const selectedOn = selected.pageId === page.id ? styles.on : '';
   const editOn = pageEdit ? styles.editOn : '';
   // const sampleStyle = isSample ? styles.sampleStyle : '';
   const editPage = (e) => {
@@ -50,7 +50,7 @@ const Tab = ({
             />
           </form>
         )}
-        {!isSample && (
+        {!isSampleTab && (
           <span
             className={`${styles.edit} ${selectedOn}`}
             // onClick={(e) => e.stopPropagation()}

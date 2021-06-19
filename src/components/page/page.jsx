@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react/cjs/react.development';
 import AddNemo from '../addNemo/addNemo';
 import Nemo from '../nemo/nemo';
 import styles from './page.module.css';
-import { useDrop } from 'react-dnd';
-import { useCallback } from 'react';
-import { ItemTypes } from '../../utils/items';
 import _ from 'lodash';
+import { useDrop } from 'react-dnd';
+import { ItemTypes } from '../../utils/items';
 
 const Page = ({
+  userId,
   pageId,
+  isSample,
   sample,
   pages,
   order,
@@ -53,27 +54,23 @@ const Page = ({
 
   const editOn = edit ? styles.editOn : '';
   //드래그 앤 드랍
-  const findNemo = useCallback(
-    _.throttle((nemoId) => {
-      const nemoIndex = order.indexOf(nemoId);
-      return { nemo: nemoId, index: nemoIndex };
-    }, 10),
-    [order]
-  );
+  const throttleSetOrder = _.throttle((newOrder) => {
+    isSample ? setOrder(newOrder) : dbService.setOrder(userId, pageId, newOrder);
+  }, 1000);
   const moveNemo = useCallback(
-    _.throttle((nemoId, toIndex) => {
-      const { nemo, index } = findNemo(nemoId);
-      let newOrder = order;
+    (nemoId, toIndex) => {
+      const index = order.indexOf(nemoId);
+      let newOrder = [...order];
       newOrder.splice(index, 1);
-      newOrder.splice(toIndex, 0, nemo);
-      dbService.setOrder('sample', pageId, newOrder);
-    }, 20),
-    [order, dbService, findNemo, pageId]
+      newOrder.splice(toIndex, 0, nemoId);
+      throttleSetOrder(newOrder);
+    },
+    [order, throttleSetOrder]
   );
 
   const [, drop] = useDrop(() => ({ accept: ItemTypes.Nemo }));
   return (
-    <div ref={drop} className={styles.page}>
+    <div className={styles.page} ref={drop}>
       <div className={styles.menuBar}>
         <button className={styles.plus} onClick={onMake}>
           + Make card!
@@ -85,15 +82,16 @@ const Page = ({
       <div className={styles.grid}>
         {findPage &&
           order &&
-          order.map((chId) => (
+          order.map((chId, index) => (
             <Nemo
               key={chId}
+              index={index}
+              id={chId}
               nemoPre={findPage.nemos[chId]}
               edit={edit}
               deleteNemo={deleteNemo}
               changeNemo={changeNemo}
               moveNemo={moveNemo}
-              findNemo={findNemo}
               addNemo={addNemo}
               pagePlayer={pagePlayer}
             />
