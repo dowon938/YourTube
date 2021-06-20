@@ -186,7 +186,7 @@ const Home = ({ authService, dbService, userId, youtube, onPlayer, setPlayer }) 
         //   nRow > 12 && (nRow = 12);
         // }
         nColumn > 10 && (nColumn = 10);
-        nRow > 12 && (nRow = 12);
+        nRow > 10 && (nRow = 10);
         nColumn < gridRatio && (nColumn = gridRatio);
         nRow < gridRatio && (nRow = gridRatio);
 

@@ -8,6 +8,7 @@ const Video = memo(({ video, double, nemoPlayer, flexRatio }) => {
   const [play, setPlay] = useState(false);
   const [vol, setVol] = useState(50);
   const [YT, setYT] = useState();
+  const [playing, setPlaying] = useState(false);
   const onPlay = () => {
     setPlay((play) => !play);
   };
@@ -31,6 +32,7 @@ const Video = memo(({ video, double, nemoPlayer, flexRatio }) => {
   };
   const onChange = (e) => {
     setVol(YT.getVolume());
+    YT.getPlayerState() === 1 ? setPlaying(true) : setPlaying(false);
   };
   return (
     <div
@@ -41,7 +43,7 @@ const Video = memo(({ video, double, nemoPlayer, flexRatio }) => {
         // width: flexRatio + '%',
       }}
     >
-      <div className={styles.container}>
+      <div className={styles.container} style={{ border: playing && 'solid 2px tomato' }}>
         {play && (
           <div>
             <YouTube
@@ -69,7 +71,7 @@ const Video = memo(({ video, double, nemoPlayer, flexRatio }) => {
           <div
             className={styles.overIcon}
             style={{
-              fontSize: double ? `1.5em` : '0.8em',
+              fontSize: double ? `1.5em` : '1.1em',
             }}
           >
             <i className="fas fa-play-circle" onClick={onPlay} />
@@ -82,7 +84,16 @@ const Video = memo(({ video, double, nemoPlayer, flexRatio }) => {
           alt="thumnail"
         />
       </div>
-      <div className={styles.title}>{video.snippet.title}</div>
+      <div className={styles.title}>
+        {playing && (
+          <i
+            className="fas fa-circle"
+            // className="fas fa-volume-up"
+            style={{ color: 'tomato', marginRight: '0.5em', fontSize: '0.3em' }}
+          />
+        )}
+        {video.snippet.title}
+      </div>
     </div>
   );
 });

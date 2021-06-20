@@ -4,7 +4,6 @@ import { useEffect } from 'react/cjs/react.development';
 import AddNemo from '../addNemo/addNemo';
 import Nemo from '../nemo/nemo';
 import styles from './page.module.css';
-import _ from 'lodash';
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from '../../utils/items';
 
@@ -27,6 +26,7 @@ const Page = ({
   const [findPage, setFindPage] = useState(false);
   const [modalOn, setModalOn] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [someDragging, setSomeDragging] = useState(false);
   useEffect(() => {
     sample[pageId] ? setFindPage(sample[pageId]) : setFindPage(pages[pageId]);
   }, [pageId, sample, pages]);
@@ -54,18 +54,15 @@ const Page = ({
 
   const editOn = edit ? styles.editOn : '';
   //드래그 앤 드랍
-  const throttleSetOrder = _.throttle((newOrder) => {
-    isSample ? setOrder(newOrder) : dbService.setOrder(userId, pageId, newOrder);
-  }, 1000);
   const moveNemo = useCallback(
     (nemoId, toIndex) => {
       const index = order.indexOf(nemoId);
       let newOrder = [...order];
       newOrder.splice(index, 1);
       newOrder.splice(toIndex, 0, nemoId);
-      throttleSetOrder(newOrder);
+      isSample ? setOrder(newOrder) : dbService.setOrder(userId, pageId, newOrder);
     },
-    [order, throttleSetOrder]
+    [order, setOrder, dbService, isSample, pageId, userId]
   );
 
   const [, drop] = useDrop(() => ({ accept: ItemTypes.Nemo }));
@@ -73,10 +70,10 @@ const Page = ({
     <div className={styles.page} ref={drop}>
       <div className={styles.menuBar}>
         <button className={styles.plus} onClick={onMake}>
-          + Make card!
+          + 네모 만들기!
         </button>
         <div className={`${styles.edit} ${editOn}`} onClick={onEdit}>
-          Edit card
+          네모 수정하기
         </div>
       </div>
       <div className={styles.grid}>
@@ -94,6 +91,8 @@ const Page = ({
               moveNemo={moveNemo}
               addNemo={addNemo}
               pagePlayer={pagePlayer}
+              someDragging={someDragging}
+              setSomeDragging={setSomeDragging}
             />
           ))}
       </div>

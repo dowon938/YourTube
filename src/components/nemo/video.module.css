@@ -26,11 +26,10 @@
 }
 .title {
   padding-top: 0.3em;
-  font-size: 0.7em;
+  font-size: 0.8em;
   color: rgb(168, 168, 168);
 
-  grid-area: title;
-
+  transition: ease-in 180ms;
   font-weight: bold;
   overflow: hidden;
   line-height: 1.1;
@@ -63,9 +62,13 @@
 .container:hover .over {
   opacity: 0.7;
 }
+.container:hover .closePlay {
+  opacity: 1;
+}
 .overIcon {
   display: flex;
   justify-content: space-evenly;
+  z-index: 30;
 }
 .over i {
   cursor: pointer;
@@ -93,6 +96,7 @@
   align-items: center;
 }
 .closePlay {
+  opacity: 0;
   z-index: 12;
   position: absolute;
   font-size: 1.2em;
@@ -118,8 +122,9 @@
   position: absolute;
   /* cursor: pointer; */
   bottom: 15px;
-  left: 23%;
-  width: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
   height: 3px;
 
   appearance: none;
