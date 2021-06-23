@@ -4,7 +4,7 @@ import styles from './player.module.css';
 import { useState } from 'react/cjs/react.development';
 import { useEffect } from 'react/cjs/react.development';
 
-const Player = ({ player, setPlayer, findPage, order, youtube }) => {
+const Player = ({ player, setPlayer, findPage, order, youtube, darkTheme }) => {
   const [position, setPosition] = useState(order.indexOf(player.nemoId) * 100);
   const [aniReverse, setAniReverse] = useState(false);
   const closePlayer = () => {
@@ -53,6 +53,7 @@ const Player = ({ player, setPlayer, findPage, order, youtube }) => {
                 player={player}
                 nemo={findPage.nemos[chId]}
                 youtube={youtube}
+                darkTheme={darkTheme}
               />
             ))}
           </div>

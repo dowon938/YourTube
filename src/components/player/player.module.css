@@ -1,3 +1,5 @@
+@value mainColor,mainHover,Lgrey1,Lgrey2,Lgrey3,Lgrey4,Dgrey1,Dgrey2,Dgrey3,Dgrey4,lineGrey,fontGrey,fontHover,hoverGrey,vWhite,vBlack,vTrans from '/src/common/colors.css';
+
 .playerClose {
   z-index: 99;
   position: fixed;
@@ -24,11 +26,12 @@
   justify-content: center;
   align-items: center;
   font-size: 0.9em;
-  transition: ease-in 50ms;
+  transition: ease-in 100ms;
 }
 .close:hover {
   /* color: tomato; */
   background-color: rgb(124, 124, 124);
+  color: goldenrod;
 }
 .left,
 .right {

@@ -1,0 +1,144 @@
+.container {
+  position: relative;
+  width: 4em;
+  height: 4em;
+  margin-right: 0.3rem;
+  border-radius: 1em;
+  overflow: hidden;
+  transform: scale(0.8);
+  opacity: 0.75;
+  cursor: pointer;
+  transition: ease-in-out 250ms;
+}
+.container:hover {
+  transform: scale(0.85);
+  opacity: 1;
+}
+.mountain1 {
+  position: absolute;
+  bottom: -2.3em;
+  left: -0.5em;
+  background-color: rgb(40, 192, 115);
+  width: 3em;
+  height: 3em;
+  transform: rotate(55deg);
+  border-radius: 0.5em;
+}
+.mountain2 {
+  position: absolute;
+  bottom: -3em;
+  right: -1em;
+  background-color: rgb(40, 192, 115);
+  width: 4em;
+  height: 4em;
+  transform: rotate(55deg);
+  border-radius: 1em;
+  box-shadow: -2px -2px 5px 0px rgba(0, 0, 0, 0.25);
+}
+
+.moon,
+.moon2 {
+  position: absolute;
+  left: 10%;
+  top: 13%;
+}
+.sun,
+.sun2 {
+  position: absolute;
+  left: 12%;
+  top: 16%;
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 0.3em;
+  background-color: rgb(255, 119, 0);
+}
+.sun {
+  z-index: 2;
+}
+.sun2 {
+  filter: blur(1.5px);
+  z-index: 0;
+}
+.moon {
+  font-size: 1.1em;
+  transform: rotate(-30deg);
+  color: rgb(229, 222, 68);
+}
+.moon2 {
+  font-size: 1.1em;
+  transform: rotate(-30deg);
+  color: rgb(229, 222, 68);
+  filter: blur(1px);
+}
+.umbrella {
+  position: absolute;
+  bottom: 0.2em;
+  right: 0.2em;
+  font-size: 1.8em;
+  color: crimson;
+  z-index: 1;
+  /* color: #79d2e8; */
+}
+.sea,
+.sand {
+  position: absolute;
+  bottom: -0.63em;
+  right: 0;
+  font-size: 4.5em;
+  color: rgb(37, 197, 219);
+}
+.sand {
+  color: rgb(255, 217, 152);
+  bottom: -0.73em;
+  z-index: 2;
+}
+.sandBottom {
+  background-color: rgb(255, 217, 152);
+  width: 4em;
+  height: 0.7em;
+  position: absolute;
+  bottom: -0.2em;
+  left: 0;
+  z-index: 4;
+}
+
+.moon,
+.moon2,
+.mountain1,
+.mountain2,
+.sun,
+.sun2,
+.umbrella,
+.sea,
+.sand,
+.sandBottom {
+  transition: ease-in-out 400ms;
+}
+
+.Go {
+  animation: Go ease-in-out 800ms forwards;
+}
+.Come {
+  animation: Come ease-in-out 700ms forwards;
+}
+
+@keyframes Go {
+  0% {
+  }
+  70% {
+    transform: translate(600%, 0%);
+  }
+  100% {
+    transform: translate(600%, 0%);
+  }
+}
+@keyframes Come {
+  0% {
+    transform: translate(-200%, 0%);
+  }
+  100% {
+  }
+}
+.h {
+  color: rgb(209, 176, 111);
+}

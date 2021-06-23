@@ -1,7 +1,9 @@
+@value mainColor from '/src/common/colors.css';
+
 .header {
   width: 100%;
   padding: 0.4em;
-  background-color: rgb(48, 48, 48);
+  background-color: rgb(68, 68, 68);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -9,9 +11,10 @@
   position: sticky;
   top: 0;
   z-index: 3;
+  transition: ease-in-out 100ms;
 }
 .logo {
-  margin-left: 1em;
+  margin-left: 0.5em;
   font-size: 1.6em;
   font-family: 'Pacifico', cursive;
   transition: ease-in 180ms;
@@ -20,7 +23,7 @@
   transform: scale(1.1);
 }
 .logo:hover .tube {
-  color: indianred;
+  /* color: rgb(29, 153, 91); */
 }
 .your {
   color: rgb(252, 245, 235);
@@ -28,7 +31,7 @@
 .tube {
   font-size: 1.3em;
   color: rgb(116, 107, 95);
-  color: tomato;
+  color: mainColor;
 }
 .login {
   display: flex;
@@ -45,72 +48,24 @@
   margin-right: 0.4em;
   margin-bottom: 0.1em;
 }
+.right {
+  display: flex;
+  align-items: center;
+}
 .logOn {
-  margin-top: 0.4em;
+  /* margin-top: 0.4em; */
   display: flex;
   align-items: center;
 }
 .userIcon {
   z-index: 11;
   cursor: pointer;
-  color: tomato;
-  margin-right: 1.2rem;
+  color: mainColor;
+  margin-right: 0.5rem;
   padding: 2px;
   transition: ease-in 180ms;
 }
 .userIcon:hover {
-  color: indianred;
+  color: mainColor;
   transform: scale(1.1);
-}
-.userImg {
-  width: 2em;
-  height: 2em;
-  border-radius: 50%;
-}
-.userModal::before {
-  content: '';
-  width: 10px;
-  height: 10px;
-  background-color: rgb(48, 48, 48);
-  background-color: tomato;
-}
-.userModal {
-  z-index: 10;
-  position: absolute;
-  top: 5.5em;
-  right: 0.8em;
-  background-color: rgb(88, 88, 88);
-  box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.2);
-}
-.userFlex {
-  display: flex;
-  padding: 1em;
-  flex-flow: column;
-  align-items: flex-end;
-  color: rgb(250, 250, 250);
-}
-.userFlex span {
-  margin-top: 0.5em;
-}
-.userFlex2 {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5em;
-}
-.logOut {
-  cursor: pointer;
-}
-.logOut:hover {
-  background-color: tomato;
-}
-.triangle {
-  position: absolute;
-  top: -30px;
-  right: 1.4em;
-  background-color: transparent;
-  border-top: 10px solid transparent;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 20px solid rgb(88, 88, 88);
 }

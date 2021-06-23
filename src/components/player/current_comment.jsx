@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './current_comment.module.css';
 
-const CurrentComment = ({ comment }) => {
+const CurrentComment = ({ comment, darkTheme }) => {
   return (
     <div className={styles.comment}>
       <img

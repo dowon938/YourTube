@@ -1,3 +1,5 @@
+@value mainColor,mainHover,Lgrey1,Lgrey2,Lgrey3,Lgrey4,Dgrey1,Dgrey2,Dgrey3,Dgrey4,lineGrey,fontGrey,fontHover,hoverGrey,vWhite,vBlack,vTrans from '/src/common/colors.css';
+
 .sampleTab,
 .myTab {
   display: flex;
@@ -14,29 +16,43 @@
   padding-bottom: 180px;
   margin: auto;
   margin-top: 1em;
+  transition: ease-in 180ms;
   /* transform: translateY(-25%) scale(0.5); */
 }
 .plusPage,
 .editPage {
+  position: relative;
   z-index: 2;
   width: 28px;
   height: 28px;
   margin-bottom: 10px;
   margin-left: 6px;
   border-radius: 14px;
+  transition: ease-in 180ms;
 }
 .editPage i {
   position: relative;
   top: -1px;
   right: -1px;
 }
-.plusPage:hover,
-.editPage:hover {
-  background-color: rgb(220, 220, 220);
+.hv {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(250, 250, 250);
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0;
+  transition: ease-in 180ms;
 }
+
 .editOn {
-  background-color: tomato;
+  background-color: mainColor;
 }
-.editPage:hover {
-  background-color: tomato;
+.editPage:hover .hv,
+.plusPage:hover .hv {
+  /* background-color: tomato; */
+  opacity: 0.4;
 }

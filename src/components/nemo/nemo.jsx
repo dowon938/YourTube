@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useRef, useState } from 'react/cjs/react.development';
 import styles from './nemo.module.css';
 import Video from './video';
+import { COLORS } from '../../common/colors';
 
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from '../../utils/items';
@@ -21,6 +22,7 @@ const Nemo = memo(
     pagePlayer,
     someDragging,
     setSomeDragging,
+    darkTheme,
   }) => {
     const [nemo, setNemo] = useState(nemoPre);
     const [inputToggle, setInputToggle] = useState(false);
@@ -29,6 +31,7 @@ const Nemo = memo(
     const [double, setDouble] = useState(nemoPre.double);
     const [rotate, setRotate] = useState(false);
 
+    const spanRef = useRef();
     const sonRef = useRef();
     const editTitle = () => {
       setInputToggle((inputToggle) => !inputToggle);
@@ -148,7 +151,7 @@ const Nemo = memo(
       const width = sonRef.current.clientWidth;
       const height = sonRef.current.clientHeight;
       setRect({ width, height });
-    }, [sonRef, nemoPre]);
+    }, [sonRef]);
     const [{ isResizing }, resizeRef] = useDrag(
       () => ({
         type: ItemTypes.Resize,
@@ -180,7 +183,13 @@ const Nemo = memo(
         }}
       >
         {edit && (
-          <div className={styles.edit}>
+          <div
+            className={styles.edit}
+            style={{
+              backgroundColor: darkTheme ? COLORS.Dgrey4 : COLORS.Lgrey4,
+              color: darkTheme ? COLORS.vWhite : COLORS.fontGrey,
+            }}
+          >
             <i
               className="fas fa-arrows-alt"
               ref={dragRef}
@@ -201,7 +210,7 @@ const Nemo = memo(
                 />
               </form>
             )}
-            {!inputToggle && (nemo.newTitle ? nemo.newTitle : nemo.nemoTitle)}
+            {!inputToggle && (nemo.newTitle || nemo.nemoTitle || '제목을 지어주세요!')}
             <i className="far fa-edit" onClick={editTitle} title="제목을 수정합니다." />
             <i
               className="fas fa-minus-circle"
@@ -224,9 +233,24 @@ const Nemo = memo(
           className={styles.title}
           ref={dragRef}
           title="다른 카드 옆으로 드래그해서 위치를 변경합니다."
+          onMouseEnter={(e) => {
+            spanRef.current.style.color = COLORS.vWhite;
+          }}
+          onMouseLeave={(e) => {
+            spanRef.current.style.color = darkTheme ? COLORS.vWhite : COLORS.fontGrey;
+          }}
         >
           {/* <div ref={dropRef} className={styles.dropRef}></div> */}
-          {!inputToggle && (nemo.newTitle ? nemo.newTitle : nemo.nemoTitle)}
+          {!inputToggle && (
+            <span
+              ref={spanRef}
+              style={{
+                color: darkTheme ? COLORS.vWhite : COLORS.fontGrey,
+              }}
+            >
+              {nemo.newTitle || nemo.nemoTitle || '제목을 지어주세요!'}
+            </span>
+          )}
         </div>
         <div
           ref={sonRef}
@@ -236,7 +260,8 @@ const Nemo = memo(
               nemoPre.column - (nemoPre.column % gridRatio)
             }, 1fr)`,
             gridTemplateRows: `repeat(${nemoPre.row - (nemoPre.row % gridRatio)}, 1fr)`,
-            border: isResizing ? 'solid 2px tomato' : 'none',
+            border: isResizing ? `solid 2px ${COLORS.mainColorL}` : 'none',
+            backgroundColor: darkTheme ? COLORS.Dgrey3 : COLORS.Lgrey3,
           }}
         >
           {videos.map(
@@ -249,10 +274,20 @@ const Nemo = memo(
                   video={video}
                   double={double}
                   nemoPlayer={nemoPlayer}
+                  darkTheme={darkTheme}
                 />
               )
           )}
-          <button className={styles.drag} ref={resizeRef}></button>
+          <button
+            className={styles.drag}
+            ref={resizeRef}
+            style={{
+              borderBottomColor: darkTheme ? COLORS.Dgrey2 : COLORS.Lgrey2,
+              borderRightColor: darkTheme ? COLORS.Dgrey2 : COLORS.Lgrey2,
+            }}
+          >
+            <div className={styles.before}></div>
+          </button>
           <div
             ref={dropLeft}
             className={`${styles.drop} ${styles.left}`}

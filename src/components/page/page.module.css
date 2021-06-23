@@ -1,3 +1,5 @@
+@value mainColor,mainHover,Lgrey1,Lgrey2,Lgrey3,Lgrey4,Dgrey1,Dgrey2,Dgrey3,Dgrey4,lineGrey,fontGrey,fontHover,hoverGrey,vWhite,vBlack,vTrans from '/src/common/colors.css';
+
 .page {
   z-index: 2;
   position: relative;
@@ -6,15 +8,16 @@
   /* padding-top: 2.6em; */
   display: flex;
   flex-flow: column;
-  background-color: rgb(250, 250, 250);
+  background-color: vWhite;
   border-radius: 10px;
+  transition: ease-in 180ms;
 }
 .grid {
   display: grid;
   grid-auto-columns: auto;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(auto-fill, 1fr);
-  gap: 1em;
+  gap: 0.5em 1em;
 }
 .display {
   display: block;
@@ -28,25 +31,42 @@
 }
 .edit,
 .plus {
+  position: relative;
   cursor: pointer;
   padding: 0.3em 0.8em;
   font-size: 0.8em;
   transition: ease-in 180ms;
-  background-color: rgb(242, 242, 242);
-  color: rgb(168, 168, 168);
+  background-color: Lgrey4;
+  color: rgb(144, 144, 144);
   margin-left: 0.4em;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
 }
-.edit:hover,
-.plus:hover {
-  background-color: rgb(124, 124, 124);
-}
 
 .editOn {
-  background-color: tomato;
+  background-color: mainColor;
   color: rgb(242, 242, 242);
 }
 .editOn:hover {
-  background-color: indianred;
+  background-color: mainHover;
+}
+
+.hv {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(90, 90, 90);
+  border-radius: 10px;
+  z-index: 0;
+  opacity: 0;
+  transition: ease-in 180ms;
+}
+.dk {
+  background-color: rgb(250, 250, 250);
+}
+.edit:hover .hv,
+.plus:hover .hv {
+  opacity: 0.4;
 }

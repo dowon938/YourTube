@@ -3,8 +3,9 @@ import { memo } from 'react';
 import YouTube from 'react-youtube';
 import { useState } from 'react/cjs/react.development';
 import styles from './video.module.css';
+import { COLORS } from '../../common/colors';
 
-const Video = memo(({ video, double, nemoPlayer, flexRatio }) => {
+const Video = memo(({ video, double, nemoPlayer, flexRatio, darkTheme }) => {
   const [play, setPlay] = useState(false);
   const [vol, setVol] = useState(50);
   const [YT, setYT] = useState();
@@ -43,7 +44,15 @@ const Video = memo(({ video, double, nemoPlayer, flexRatio }) => {
         // width: flexRatio + '%',
       }}
     >
-      <div className={styles.container} style={{ border: playing && 'solid 2px tomato' }}>
+      <div
+        className={styles.container}
+        style={{
+          border:
+            (playing && `solid 3px ${COLORS.mainColorL}`) ||
+            (darkTheme && '1px rgb(50, 50, 50, 0.5) solid') ||
+            '1px rgb(200, 200, 200, 0.5) solid',
+        }}
+      >
         {play && (
           <div>
             <YouTube
@@ -74,8 +83,14 @@ const Video = memo(({ video, double, nemoPlayer, flexRatio }) => {
               fontSize: double ? `1.5em` : '1.1em',
             }}
           >
-            <i className="fas fa-play-circle" onClick={onPlay} />
-            <i className="far fa-clone" onClick={() => nemoPlayer(video)} />
+            <div className={styles.iconFlex}>
+              <i className="fas fa-play-circle" onClick={onPlay} />
+              <span>재생</span>
+            </div>
+            <div className={styles.iconFlex}>
+              <i className="far fa-clone" onClick={() => nemoPlayer(video)} />
+              <span>새 창에서 재생</span>
+            </div>
           </div>
         </div>
         <img
@@ -84,12 +99,19 @@ const Video = memo(({ video, double, nemoPlayer, flexRatio }) => {
           alt="thumnail"
         />
       </div>
-      <div className={styles.title}>
+      <div
+        className={styles.title}
+        style={{ color: darkTheme ? COLORS.Lgrey2 : COLORS.fontGrey }}
+      >
         {playing && (
           <i
             className="fas fa-circle"
             // className="fas fa-volume-up"
-            style={{ color: 'tomato', marginRight: '0.5em', fontSize: '0.3em' }}
+            style={{
+              color: `${COLORS.mainColorL}`,
+              marginRight: '0.5em',
+              fontSize: '0.3em',
+            }}
           />
         )}
         {video.snippet.title}

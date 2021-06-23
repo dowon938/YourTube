@@ -1,3 +1,5 @@
+@value mainColor,mainHover,Lgrey1,Lgrey2,Lgrey3,Lgrey4,Dgrey1,Dgrey2,Dgrey3,Dgrey4,lineGrey,fontGrey,fontHover,hoverGrey,vWhite,vBlack,vTrans from '/src/common/colors.css';
+
 .flex {
   position: relative;
   top: 0;
@@ -13,7 +15,6 @@
   padding-top: 56%;
   overflow: hidden;
   transition: ease-in 180ms;
-  border: 1px rgb(200, 200, 200, 0.5) solid;
   border-radius: 4px;
 }
 .img {
@@ -27,7 +28,7 @@
 .title {
   padding-top: 0.3em;
   font-size: 0.8em;
-  color: rgb(168, 168, 168);
+  color: rgb(144, 144, 144);
 
   transition: ease-in 180ms;
   font-weight: bold;
@@ -41,6 +42,7 @@
 .container:hover .img {
   transform: scale(1.03) translate(-49%, 0);
 }
+
 .over {
   z-index: 10;
   opacity: 0;
@@ -65,6 +67,7 @@
 .container:hover .closePlay {
   opacity: 1;
 }
+
 .overIcon {
   display: flex;
   justify-content: space-evenly;
@@ -78,7 +81,17 @@
 }
 .over i:hover {
   transform: scale(1.1);
-  color: tomato;
+  color: mainColor;
+}
+.iconFlex {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.iconFlex span {
+  font-size: 0.5em;
+  margin-top: 0.5em;
+  color: rgb(250, 250, 250);
 }
 .videoPlayer {
   z-index: 11;
@@ -109,7 +122,7 @@
   transition: ease-in 180ms;
 }
 .closePlay:hover {
-  color: tomato;
+  color: mainColor;
   background-color: rgb(48, 48, 48);
 }
 .container:hover .volume {
@@ -134,12 +147,15 @@
   background: #e5e4e3;
   border-radius: 0; /* iOS */
 }
+.volume:hover {
+  transform: translateX(-50%) scaleY(2.5);
+}
 .volume::-webkit-slider-thumb {
   appearance: none;
   height: 5px;
   width: 5px;
   cursor: pointer;
   border-radius: 0%;
-  background: tomato;
-  box-shadow: -100vw 0 0 100vw tomato;
+  background: mainColor;
+  box-shadow: -100vw 0 0 100vw mainColor;
 }

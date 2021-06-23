@@ -6,7 +6,7 @@ import CurrentComment from './current_comment';
 import { memo } from 'react/cjs/react.production.min';
 import YouTube from 'react-youtube';
 
-const PlayerPage = memo(({ nemo, player, youtube }) => {
+const PlayerPage = memo(({ nemo, player, youtube, darkTheme }) => {
   const [currentVideo, setCurrentVideo] = useState(
     nemo.nemoId === player.nemoId ? player.video : nemo.videos[0]
   );
@@ -116,7 +116,7 @@ const PlayerPage = memo(({ nemo, player, youtube }) => {
           )}
           {comments &&
             comments.map((comment, index) => (
-              <CurrentComment comment={comment} key={index} />
+              <CurrentComment comment={comment} key={index} darkTheme={darkTheme} />
             ))}
         </div>
       </div>

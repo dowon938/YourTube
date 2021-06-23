@@ -1,3 +1,5 @@
+@value mainColor,mainHover,Lgrey1,Lgrey2,Lgrey3,Lgrey4,Dgrey1,Dgrey2,Dgrey3,Dgrey4,lineGrey,fontGrey,fontHover,hoverGrey,vWhite,vBlack,vTrans from '/src/common/colors.css';
+
 .nemo {
   position: relative;
   padding-top: 0;
@@ -37,16 +39,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgb(168, 168, 168);
+  color: rgb(144, 144, 144);
   font-size: 0.8em;
   padding-bottom: 1em;
   height: 3em;
   transition: ease-in 250ms;
   margin-bottom: -10px;
   border-radius: 10px 10px 0px 0px;
+  z-index: 2;
 }
 .title:hover {
-  background-color: tomato;
+  background-color: mainColor;
   color: rgb(242, 242, 242);
 }
 
@@ -77,7 +80,7 @@
   transition: ease-in 180ms;
 }
 .edit i:hover {
-  color: tomato;
+  color: mainColor;
   transform: scale(1.2);
 }
 
@@ -88,13 +91,11 @@
   gap: 0.4em;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  /* display: flex;
-  flex-wrap: wrap; */
-  /* overflow-y: hidden; */
   background-color: rgb(226, 226, 226);
   border-radius: 10px;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.25);
   z-index: 2;
+  transition: ease-in 180ms;
 }
 
 .imgs::-webkit-scrollbar {
@@ -119,22 +120,32 @@
   padding: 0;
   transition: ease-in 250ms;
 }
-.drag:hover {
-  transform: scale(1.1) translate(-4%, -4%);
-  border-bottom: 14px solid tomato;
-  border-right: 14px solid tomato;
+.before {
+  position: absolute;
+  top: -14.5px;
+  left: -14.5px;
+  border-top: 14px solid transparent;
+  border-left: 14px solid transparent;
+  border-bottom: 14px solid mainColor;
+  border-right: 14px solid mainColor;
+  border-bottom-right-radius: 10px;
+  transition: ease-in 250ms;
+  opacity: 0;
 }
-.drag:active {
+.drag:hover .before {
   transform: scale(1.1) translate(-4%, -4%);
-  border-bottom: 14px solid tomato;
-  border-right: 14px solid tomato;
+  opacity: 1;
+}
+.drag:active .before {
+  transform: scale(1.1) translate(-4%, -4%);
+  opacity: 1;
 }
 
 .refresh {
   border-radius: 50%;
 }
 .rotate {
-  color: tomato;
+  color: mainColor;
   animation: rotate-keyframes 800ms ease-in-out infinite;
 }
 

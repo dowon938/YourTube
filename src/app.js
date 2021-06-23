@@ -8,14 +8,15 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useCallback } from 'react';
 import { useEffect } from 'react';
 import Player from './components/player/player';
+import { COLORS } from './common/colors';
 
 function App({ authService, dbService, youtube }) {
-  document.cookie = 'safeCookie1=foo; SameSite=Lax';
-  document.cookie = 'safeCookie2=foo';
-  document.cookie = 'crossCookie=bar; SameSite=None; Secure';
-
   const [user, setUser] = useState({});
   const [player, setPlayer] = useState(false);
+  const [dbTheme, setDbTheme] = useState();
+  const [darkTheme, setDarkTheme] = useState(
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+  );
   //플레이어
   const onPlayer = (findPage, nemoId, video) => {
     findPage && nemoId && video && setPlayer({ findPage, nemoId, video });
@@ -38,10 +39,31 @@ function App({ authService, dbService, youtube }) {
     });
   }, [authService, setUser]);
 
+  useEffect(() => {
+    const stopRead = dbService.readTheme(user.uid, setDbTheme);
+    return () => stopRead();
+  }, [dbService, user.uid, setDbTheme]);
+  useEffect(() => {
+    dbTheme !== null
+      ? setDarkTheme(dbTheme)
+      : setDarkTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }, [dbTheme, setDarkTheme]);
   return (
-    <div className={styles.app}>
+    <div
+      className={styles.app}
+      style={{
+        backgroundColor: darkTheme ? COLORS.Dgrey2 : COLORS.Lgrey2,
+      }}
+    >
       <DndProvider backend={HTML5Backend}>
-        <Header authService={authService} user={user} logOut={logOut} />
+        <Header
+          authService={authService}
+          user={user}
+          logOut={logOut}
+          darkTheme={darkTheme}
+          setDarkTheme={setDarkTheme}
+          dbService={dbService}
+        />
         <div
           style={{
             height: player && '90vh',
@@ -55,6 +77,7 @@ function App({ authService, dbService, youtube }) {
             userId={user.uid}
             onPlayer={onPlayer}
             setPlayer={setPlayer}
+            darkTheme={darkTheme}
           />
         </div>
       </DndProvider>
@@ -65,6 +88,7 @@ function App({ authService, dbService, youtube }) {
           findPage={player.findPage}
           order={player.findPage.order}
           youtube={youtube}
+          darkTheme={darkTheme}
         />
       )}
     </div>

@@ -1,0 +1,51 @@
+.userModal::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+}
+.userModal {
+  z-index: 10;
+  position: absolute;
+  top: 5.5em;
+  right: 1.2em;
+  background-color: rgb(88, 88, 88);
+  box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.2);
+}
+.userFlex {
+  display: flex;
+  padding: 1em;
+  flex-flow: column;
+  align-items: flex-end;
+  color: rgb(250, 250, 250);
+}
+.userFlex span {
+  margin-top: 0.5em;
+}
+.userFlex2 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5em;
+}
+.logOut {
+  cursor: pointer;
+}
+.logOut:hover {
+  background-color: mainColor;
+}
+.triangle {
+  position: absolute;
+  top: -30px;
+  right: 4.8em;
+  background-color: transparent;
+  border-top: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid rgb(88, 88, 88);
+}
+
+.userImg {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+}

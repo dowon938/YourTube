@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
 import styles from './addNemo.module.css';
 
-const AddNemo = ({ youtube, modalOn, setModalOn, addNemo }) => {
+const AddNemo = ({ youtube, modalOn, setModalOn, addNemo, darkTheme }) => {
   const formRef = useRef();
   const inputRef = useRef();
   const [list, setList] = useState([]);
