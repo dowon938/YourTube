@@ -6,7 +6,6 @@ import Nemo from '../nemo/nemo';
 import styles from './page.module.css';
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from '../../utils/items';
-import { COLORS } from '../../common/colors';
 
 const Page = memo(
   ({
@@ -23,7 +22,6 @@ const Page = memo(
     deleteNemo,
     changeNemo,
     onPlayer,
-    setPlayer,
     darkTheme,
   }) => {
     const [findPage, setFindPage] = useState(false);
@@ -69,36 +67,15 @@ const Page = memo(
     );
 
     const [, drop] = useDrop(() => ({ accept: ItemTypes.Nemo }));
+    const themeClass = darkTheme ? styles.dark : styles.light;
+
     return (
-      <div
-        className={styles.page}
-        ref={drop}
-        style={{
-          backgroundColor: darkTheme ? COLORS.Dgrey4 : COLORS.Lgrey4,
-        }}
-      >
+      <div className={`${styles.page} ${themeClass}`} ref={drop}>
         <div className={styles.menuBar}>
-          <button
-            className={styles.plus}
-            onClick={onMake}
-            style={{
-              backgroundColor: darkTheme ? COLORS.Dgrey3 : COLORS.Lgrey3,
-              color: darkTheme ? COLORS.vWhite : COLORS.vBlack,
-            }}
-          >
+          <button className={`${styles.plus} ${themeClass}`} onClick={onMake}>
             <div className={`${styles.hv} ${darkTheme && styles.dk}`} /> + 네모 만들기!
           </button>
-          <div
-            className={`${styles.edit} ${editOn}`}
-            onClick={onEdit}
-            style={{
-              backgroundColor:
-                (edit && COLORS.mainColorL) ||
-                (darkTheme && COLORS.Dgrey3) ||
-                COLORS.Lgrey3,
-              color: darkTheme ? COLORS.vWhite : COLORS.vBlack,
-            }}
-          >
+          <div className={`${styles.edit} ${themeClass} ${editOn}`} onClick={onEdit}>
             <div className={`${styles.hv} ${darkTheme && styles.dk}`} />
             네모 수정하기
           </div>

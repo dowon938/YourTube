@@ -5,33 +5,16 @@ export const COLORS = {
   mainHoverL: 'rgb(32, 153, 92)',
   mainHoverD: 'rgb(32, 153, 92)',
   //grey
-  // Lgrey1: 'rgb(68,68,68)',
+  Lgrey1: 'rgb(58, 99, 81)',
   Lgrey2: 'rgb(216,216,216)',
   Lgrey3: 'rgb(232,232,232)',
   Lgrey4: 'rgb(252,252,252)',
-  //brown
-  // Lgrey1: 'rgb(244, 209, 96)',
-  // Lgrey2: 'rgb(231, 212, 181)',
-  // Lgrey3: 'rgb(246, 230, 203)',
-  // Lgrey4: 'rgb(227, 205, 193)',
-  //green
-  // Lgrey1: 'rgb(121, 135, 119)',
-  // Lgrey2: 'rgb(162, 178, 159)',
-  // Lgrey3: 'rgb(226, 233, 224)',
-  // Lgrey4: 'rgb(245, 245, 236)',
-  Lgrey1: 'rgb(58, 99, 81)',
-  // Lgrey2: 'rgb(212, 198, 182)',
-  // Lgrey3: 'rgb(225, 219, 212)',
-  // Lgrey4: 'rgb(244, 242, 237)',
-  //dark
-  // Dgrey1: 'rgb(8, 15, 34)',
-  // Dgrey2: 'rgb(47,56,76)',
-  // Dgrey3: 'rgb(60,68,88)',
-  // Dgrey4: 'rgb(99,105,123)',
+
   Dgrey1: 'rgb(10, 17, 30)',
   Dgrey2: 'rgb(28, 32, 39)',
-  Dgrey4: 'rgb(12, 18, 25)',
   Dgrey3: 'rgb(52,59,66)',
+  Dgrey4: 'rgb(12, 18, 25)',
+
   lineGrey: 'rgb(0,0,0)',
   fontGrey: 'rgb(144, 144, 144)',
   fontHover: 'rgb(250,250,250)',

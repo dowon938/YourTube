@@ -37,6 +37,7 @@ const Tab = memo(
       e.preventDefault();
       setInputToggle((inputToggle) => !inputToggle);
     };
+
     return (
       <>
         <div

@@ -170,6 +170,8 @@ const Nemo = memo(
       [nemoPre, rect, double, throttleGrid]
     );
 
+    const themeClass = darkTheme ? styles.dark : styles.light;
+
     return (
       <div
         id={nemo.nemoId}
@@ -183,13 +185,7 @@ const Nemo = memo(
         }}
       >
         {edit && (
-          <div
-            className={styles.edit}
-            style={{
-              backgroundColor: darkTheme ? COLORS.Dgrey4 : COLORS.Lgrey4,
-              color: darkTheme ? COLORS.vWhite : COLORS.fontGrey,
-            }}
-          >
+          <div className={`${styles.edit} ${themeClass}`}>
             <i
               className="fas fa-arrows-alt"
               ref={dragRef}
@@ -230,24 +226,13 @@ const Nemo = memo(
           </div>
         )}
         <div
-          className={styles.title}
+          className={`${styles.title} ${themeClass}`}
           ref={dragRef}
           title="다른 카드 옆으로 드래그해서 위치를 변경합니다."
-          onMouseEnter={(e) => {
-            spanRef.current.style.color = COLORS.vWhite;
-          }}
-          onMouseLeave={(e) => {
-            spanRef.current.style.color = darkTheme ? COLORS.vWhite : COLORS.fontGrey;
-          }}
         >
           {/* <div ref={dropRef} className={styles.dropRef}></div> */}
           {!inputToggle && (
-            <span
-              ref={spanRef}
-              style={{
-                color: darkTheme ? COLORS.vWhite : COLORS.fontGrey,
-              }}
-            >
+            <span className={`${styles.span} ${themeClass}`} ref={spanRef}>
               {nemo.newTitle || nemo.nemoTitle || '제목을 지어주세요!'}
             </span>
           )}
@@ -278,16 +263,7 @@ const Nemo = memo(
                 />
               )
           )}
-          <button
-            className={styles.drag}
-            ref={resizeRef}
-            style={{
-              borderBottomColor: darkTheme ? COLORS.Dgrey2 : COLORS.Lgrey2,
-              borderRightColor: darkTheme ? COLORS.Dgrey2 : COLORS.Lgrey2,
-            }}
-          >
-            <div className={styles.before}></div>
-          </button>
+          <button className={`${styles.drag} ${themeClass}`} ref={resizeRef}></button>
           <div
             ref={dropLeft}
             className={`${styles.drop} ${styles.left}`}

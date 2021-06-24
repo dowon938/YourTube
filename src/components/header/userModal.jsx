@@ -1,24 +1,15 @@
 import React from 'react';
-import { COLORS } from '../../common/colors';
 import styles from './userModal.module.css';
 
 const UserModal = ({ user, logOut, darkTheme }) => {
+  const themeClass = darkTheme ? styles.dark : styles.light;
+
   return (
-    <div
-      className={styles.userModal}
-      style={{ backgroundColor: darkTheme ? COLORS.Dgrey1 : COLORS.Lgrey1 }}
-    >
-      <div
-        className={styles.triangle}
-        style={{ borderBottomColor: darkTheme ? COLORS.Dgrey1 : COLORS.Lgrey1 }}
-      />
-      <div className={styles.userFlex} style={{ fontSize: 1 + 'rem' }}>
+    <div className={`${styles.userModal} ${themeClass}`}>
+      <div className={`${styles.triangle} ${themeClass}`} />
+      <div className={styles.userFlex}>
         <div className={styles.userFlex2}>
-          <button
-            className={styles.logOut}
-            onClick={logOut}
-            style={{ backgroundColor: COLORS.mainColorL, color: COLORS.vWhite }}
-          >
+          <button className={`${styles.logOut} ${themeClass}`} onClick={logOut}>
             LogOut!
           </button>
           <img src={user.photoURL} alt="user" className={styles.userImg} />

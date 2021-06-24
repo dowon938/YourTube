@@ -53,9 +53,11 @@ const PlayerPage = memo(({ nemo, player, youtube, darkTheme }) => {
     nemo.nemoId === player.nemoId && setCurrentVideo(player.video);
   }, [player, nemo.nemoId]);
 
+  const themeClass = darkTheme ? styles.dark : styles.light;
+
   return (
-    <div className={styles.page}>
-      <div className={styles.nemoTitle}>{nemo.nemoTitle}</div>
+    <div className={`${styles.page} ${themeClass}`}>
+      <div className={`${styles.nemoTitle} ${themeClass}`}>{nemo.nemoTitle}</div>
       <div className={styles.grid}>
         <div
           className={styles.ytPlayer}
@@ -78,7 +80,7 @@ const PlayerPage = memo(({ nemo, player, youtube, darkTheme }) => {
           />
         </div>
         <div
-          className={styles.videoList}
+          className={`${styles.videoList} ${themeClass}`}
           style={{
             gridColumn: `auto/span 1`,
             gridRow: `auto/span 7`,
@@ -94,19 +96,20 @@ const PlayerPage = memo(({ nemo, player, youtube, darkTheme }) => {
                   setCurrentVideo={setCurrentVideo}
                   getDescription={getDescription}
                   getComments={getComments}
+                  darkTheme={darkTheme}
                 />
               )
           )}
         </div>
         <div
-          className={styles.commentList}
+          className={`${styles.commentList} ${themeClass}`}
           style={{
             gridColumn: `auto/span 3`,
             gridRow: `auto/span 6`,
           }}
         >
           {description && (
-            <div className={styles.meta}>
+            <div className={`${styles.meta} ${themeClass}`}>
               <div className={styles.title}>{description.title}</div>
               <div className={styles.date}>{description.publishedAt.slice(0, 10)}</div>
               <div style={{ borderTop: '1px solid grey ', margin: '0.5em 0' }}></div>

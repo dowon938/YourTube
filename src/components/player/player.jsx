@@ -27,6 +27,7 @@ const Player = ({ player, setPlayer, findPage, order, youtube, darkTheme }) => {
   useEffect(() => {
     setPosition(order.indexOf(player.nemoId) * 100);
   }, [player, order]);
+
   return (
     <div>
       <div

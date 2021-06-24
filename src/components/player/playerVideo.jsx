@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import styles from './playerVideo.module.css';
 
 const PlayerVideo = memo(
-  ({ video, setCurrentVideo, currentVideo, getComments, getDescription }) => {
+  ({ video, setCurrentVideo, currentVideo, getComments, getDescription, darkTheme }) => {
     const onChange = () => {
       getDescription(video.id.videoId);
       getComments(video.id.videoId);
@@ -18,6 +18,8 @@ const PlayerVideo = memo(
       if (video.id.videoId === currentVideo.id.videoId) setIsCurrent(true);
       else setIsCurrent(false);
     }, [currentVideo, video.id.videoId]);
+
+    const themeClass = darkTheme ? styles.dark : styles.light;
 
     return (
       <div className={styles.flex} onClick={onChange}>
@@ -33,7 +35,7 @@ const PlayerVideo = memo(
             alt="thumnail"
           />
         </div>
-        <div className={styles.title}>{video.snippet.title}</div>
+        <div className={`${styles.title} ${themeClass}`}>{video.snippet.title}</div>
       </div>
     );
   }

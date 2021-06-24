@@ -15,10 +15,6 @@
   border-radius: 12px;
   margin-bottom: 10px;
   margin-right: 6px;
-  /* &:hover {
-    background: blue;
-  } */
-  /* border: rgb(242, 242, 242, 0.2) solid 1px; */
   opacity: 1;
 }
 .hv {
@@ -40,7 +36,6 @@
 }
 .edit {
   opacity: 1;
-  /* position: relative; */
   display: inline-block;
   width: 0;
   transform: scaleX(0) translateX(-100%);

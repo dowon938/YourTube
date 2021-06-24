@@ -2,10 +2,14 @@
 @value mainColor,mainHover,Lgrey1,Lgrey2,Lgrey3,Lgrey4,Dgrey1,Dgrey2,Dgrey3,Dgrey4,lineGrey,fontGrey,fontHover,hoverGrey,vWhite,vBlack,vTrans from '/src/common/colors.css';
 
 .app {
-  /* color: rgb(40, 192, 115); */
   background-color: Lgrey3;
 }
-
+.app.dark {
+  background-color: Dgrey2;
+}
+.app.light {
+  background-color: Lgrey2;
+}
 * {
   box-sizing: border-box;
 }

@@ -30,6 +30,20 @@
   border-radius: 14px;
   transition: ease-in 180ms;
 }
+.plusPage.dark,
+.editPage.dark {
+  background-color: Dgrey1;
+  color: vWhite;
+}
+.plusPage.light,
+.editPage.light {
+  background-color: Lgrey1;
+  color: vWhite;
+}
+.editPage.dark.editOn,
+.editPage.light.editOn {
+  background-color: mainColor;
+}
 .editPage i {
   position: relative;
   top: -1px;
@@ -48,11 +62,7 @@
   transition: ease-in 180ms;
 }
 
-.editOn {
-  background-color: mainColor;
-}
 .editPage:hover .hv,
 .plusPage:hover .hv {
-  /* background-color: tomato; */
   opacity: 0.4;
 }

@@ -1,4 +1,4 @@
-@value mainColor from '/src/common/colors.css';
+@value mainColor,Dgrey1,Lgrey1 from '/src/common/colors.css';
 
 .header {
   width: 100%;
@@ -12,6 +12,16 @@
   top: 0;
   z-index: 3;
   transition: ease-in-out 100ms;
+  font-size: 0.85em;
+}
+.header.dark {
+  background-color: Dgrey1;
+}
+.header.light {
+  background-color: Lgrey1;
+}
+.pageDown {
+  font-size: 0.6em;
 }
 .logo {
   margin-left: 0.5em;
@@ -36,6 +46,7 @@
 .login {
   display: flex;
   align-items: flex-end;
+  font-size: 1.2em;
   margin-right: 1em;
   margin-bottom: -0.8em;
 }
@@ -61,6 +72,8 @@
   z-index: 11;
   cursor: pointer;
   color: mainColor;
+  font-size: 2em;
+  margin-top: 0.5em;
   margin-right: 0.5rem;
   padding: 2px;
   transition: ease-in 180ms;

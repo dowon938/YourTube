@@ -12,6 +12,12 @@
   border-radius: 10px;
   transition: ease-in 180ms;
 }
+.page.dark {
+  background-color: Dgrey4;
+}
+.page.light {
+  background-color: Lgrey4;
+}
 .grid {
   display: grid;
   grid-auto-columns: auto;
@@ -37,15 +43,26 @@
   font-size: 0.8em;
   transition: ease-in 180ms;
   background-color: Lgrey4;
-  color: rgb(144, 144, 144);
+  color: fontGrey;
   margin-left: 0.4em;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
 }
+.plus.dark,
+.edit.dark {
+  background-color: Dgrey3;
+  color: vWhite;
+}
+.plus.light,
+.edit.light {
+  background-color: Lgrey3;
+  color: fontGrey;
+}
 
-.editOn {
+.edit.dark.editOn,
+.edit.light.editOn {
   background-color: mainColor;
-  color: rgb(242, 242, 242);
+  color: vWhite;
 }
 .editOn:hover {
   background-color: mainHover;

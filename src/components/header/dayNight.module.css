@@ -6,7 +6,7 @@
   border-radius: 1em;
   overflow: hidden;
   transform: scale(0.8);
-  opacity: 0.75;
+  opacity: 0.85;
   cursor: pointer;
   transition: ease-in-out 250ms;
 }
@@ -42,21 +42,28 @@
   left: 10%;
   top: 13%;
 }
-.sun,
-.sun2 {
+.sun {
   position: absolute;
   left: 12%;
   top: 16%;
   width: 0.9em;
   height: 0.9em;
   border-radius: 0.3em;
-  background-color: rgb(255, 119, 0);
+  background-color: rgb(255, 183, 0);
 }
 .sun {
   z-index: 2;
 }
 .sun2 {
-  filter: blur(1.5px);
+  background-color: rgb(255, 68, 0);
+  position: absolute;
+  left: 12%;
+  top: 16%;
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 0.3em;
+  transform: scale(1.3);
+  filter: blur(2px);
   z-index: 0;
 }
 .moon {

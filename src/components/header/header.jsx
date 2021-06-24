@@ -5,7 +5,6 @@ import _ from 'lodash';
 import { memo } from 'react/cjs/react.production.min';
 import UserModal from './userModal';
 import DayNight from './dayNight';
-import { COLORS } from '../../common/colors';
 
 const Header = memo(
   ({ authService, user, logOut, darkTheme, setDarkTheme, dbService }) => {
@@ -13,15 +12,13 @@ const Header = memo(
     const [toggle, setToggle] = useState(false);
 
     const themeToggle = () => {
-      setDarkTheme((darkTheme) => !darkTheme);
-      // console.log(darkTheme);
-      user.uid && dbService.setTheme(user.uid, !darkTheme);
+      const newTheme = !darkTheme;
+      setDarkTheme(newTheme);
+      user.uid && dbService.setTheme(user.uid, newTheme);
     };
-
     const userToggle = () => {
       setToggle((toggle) => !toggle);
     };
-
     useEffect(() => {
       const scrollEvent = _.throttle(() => {
         window.scrollY === 0 ? setPageDown(false) : setPageDown(true);
@@ -31,14 +28,13 @@ const Header = memo(
         window.removeEventListener('scroll', scrollEvent);
       };
     }, []);
+
+    const themeClass = darkTheme ? styles.dark : styles.light;
+
     return (
       <header
         id="header"
-        className={styles.header}
-        style={{
-          fontSize: pageDown ? '0.6em' : '0.85em',
-          backgroundColor: darkTheme ? COLORS.Dgrey1 : COLORS.Lgrey1,
-        }}
+        className={`${styles.header} ${themeClass} ${pageDown && styles.pageDown}`}
       >
         <div className={styles.logo}>
           <span className={styles.your}>Your</span>
@@ -47,16 +43,11 @@ const Header = memo(
         <div className={styles.right}>
           {user.uid ? (
             <div className={styles.logOn}>
-              {/* <i class="fas fa-user"></i> */}
-              <i
-                className={`fas fa-user ${styles.userIcon}`}
-                onClick={userToggle}
-                style={{ fontSize: 2 + 'em', marginTop: '0.5em' }}
-              />
+              <i className={`fas fa-user ${styles.userIcon}`} onClick={userToggle} />
               {toggle && <UserModal user={user} logOut={logOut} darkTheme={darkTheme} />}
             </div>
           ) : (
-            <div className={styles.login} style={{ fontSize: 1.2 + 'em' }}>
+            <div className={styles.login}>
               <span className={styles.loginwith}>login with</span>
               <Login authService={authService} />
             </div>

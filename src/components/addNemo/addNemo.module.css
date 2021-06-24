@@ -13,6 +13,9 @@
   grid-template-rows: repeat(5, auto-fill);
   gap: 0.4em;
 }
+.addModal.dark {
+  background-color: rgb(28, 32, 39);
+}
 .form {
   height: 2em;
   display: flex;
@@ -32,6 +35,30 @@
   height: 100%;
   border-radius: 0 1em 1em 0;
   background-color: rgb(209, 200, 190);
+  color: rgb(250, 250, 250);
+}
+.form.dark button {
+  background-color: rgb(10, 17, 30);
+}
+.form.light button {
+  background-color: rgb(58, 99, 81);
+}
+.submit {
+  position: relative;
+}
+.submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(250, 250, 250);
+  border-radius: 0 1em 1em 0;
+  opacity: 0;
+}
+.form button:hover.submit::before {
+  opacity: 0.4;
 }
 .img {
   pointer-events: none;
@@ -51,8 +78,14 @@ li {
   border-radius: 0.8em;
   transition: ease-in 180ms;
 }
+.chList.dark {
+  color: rgb(250, 250, 250);
+}
 .chList:hover {
   background-color: rgb(209, 200, 190, 0.5);
+}
+.chList.dark:hover {
+  background-color: rgb(10, 17, 30);
 }
 .span {
   pointer-events: none;
@@ -71,9 +104,10 @@ li {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgb(36, 36, 36, 0.85);
+  background-color: rgb(0, 0, 0, 0.8);
   transition: ease-in 50ms;
 }
+
 .close:hover {
-  background-color: rgb(88, 88, 88, 0.85);
+  background-color: rgb(48, 48, 48, 0.8);
 }

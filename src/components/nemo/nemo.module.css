@@ -48,11 +48,25 @@
   border-radius: 10px 10px 0px 0px;
   z-index: 2;
 }
+.title.dark {
+  color: vWhite;
+}
+.title.light {
+  color: vWhite;
+}
 .title:hover {
   background-color: mainColor;
   color: rgb(242, 242, 242);
 }
-
+.span.dark {
+  color: vWhite;
+}
+.span.light {
+  color: fontGrey;
+}
+.title:hover .span.light {
+  color: vWhite;
+}
 /* .title:hover::before {
   content: '"drag & drop"';
   position: absolute;
@@ -72,6 +86,14 @@
   right: 0;
   background-color: rgb(252, 252, 252);
   z-index: 3;
+}
+.edit.dark {
+  background-color: Dgrey4;
+  color: vWhite;
+}
+.edit.light {
+  background-color: Lgrey4;
+  color: fontGrey;
 }
 .edit i {
   margin-left: 0.6em;
@@ -108,37 +130,32 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  /* width: 2em;
-  height: 2em; */
   background-color: transparent;
   border-top: 14px solid transparent;
   border-left: 14px solid transparent;
   border-bottom: 14px solid rgb(200, 200, 200, 0.5);
   border-right: 14px solid rgb(200, 200, 200, 0.5);
-  /* border-radius: 1em; */
   border-bottom-right-radius: 10px;
   padding: 0;
   transition: ease-in 250ms;
 }
-.before {
-  position: absolute;
-  top: -14.5px;
-  left: -14.5px;
-  border-top: 14px solid transparent;
-  border-left: 14px solid transparent;
-  border-bottom: 14px solid mainColor;
-  border-right: 14px solid mainColor;
-  border-bottom-right-radius: 10px;
-  transition: ease-in 250ms;
-  opacity: 0;
+.drag.dark {
+  border-bottom-color: Dgrey2;
+  border-right-color: Dgrey2;
 }
-.drag:hover .before {
-  transform: scale(1.1) translate(-4%, -4%);
-  opacity: 1;
+.drag.light {
+  border-bottom-color: Lgrey2;
+  border-right-color: Lgrey2;
 }
-.drag:active .before {
-  transform: scale(1.1) translate(-4%, -4%);
-  opacity: 1;
+.drag.dark:hover,
+.drag.light:hover {
+  border-bottom-color: mainColor;
+  border-right-color: mainColor;
+}
+.drag.dark:active,
+.drag.light:active {
+  border-bottom-color: mainColor;
+  border-right-color: mainColor;
 }
 
 .refresh {

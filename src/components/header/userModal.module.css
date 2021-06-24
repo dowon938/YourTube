@@ -1,3 +1,5 @@
+@value mainColor,mainHover,Lgrey1,Lgrey2,Lgrey3,Lgrey4,Dgrey1,Dgrey2,Dgrey3,Dgrey4,lineGrey,fontGrey,fontHover,hoverGrey,vWhite,vBlack,vTrans from '/src/common/colors.css';
+
 .userModal::before {
   content: '';
   width: 10px;
@@ -11,12 +13,20 @@
   background-color: rgb(88, 88, 88);
   box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.2);
 }
+.userModal.dark {
+  background-color: Dgrey1;
+}
+.userModal.light {
+  background-color: Lgrey1;
+}
+
 .userFlex {
   display: flex;
   padding: 1em;
   flex-flow: column;
   align-items: flex-end;
   color: rgb(250, 250, 250);
+  font-size: 1rem;
 }
 .userFlex span {
   margin-top: 0.5em;
@@ -30,6 +40,12 @@
 .logOut {
   cursor: pointer;
 }
+.logOut.dark {
+  background-color: mainColor;
+}
+.logOut.light {
+  background-color: vWhite;
+}
 .logOut:hover {
   background-color: mainColor;
 }
@@ -42,6 +58,12 @@
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 20px solid rgb(88, 88, 88);
+}
+.triangle.dark {
+  border-bottom-color: Dgrey1;
+}
+.triangle.light {
+  border-bottom-color: Lgrey1;
 }
 
 .userImg {

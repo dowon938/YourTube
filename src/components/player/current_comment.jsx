@@ -2,8 +2,10 @@ import React from 'react';
 import styles from './current_comment.module.css';
 
 const CurrentComment = ({ comment, darkTheme }) => {
+  const themeClass = darkTheme ? styles.dark : styles.light;
+
   return (
-    <div className={styles.comment}>
+    <div className={`${styles.comment} ${themeClass}`}>
       <img
         className={styles.thumbnail}
         src={comment.authorProfileImageUrl}

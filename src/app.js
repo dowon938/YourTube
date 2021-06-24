@@ -8,7 +8,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useCallback } from 'react';
 import { useEffect } from 'react';
 import Player from './components/player/player';
-import { COLORS } from './common/colors';
 
 function App({ authService, dbService, youtube }) {
   const [user, setUser] = useState({});
@@ -48,16 +47,13 @@ function App({ authService, dbService, youtube }) {
       ? setDarkTheme(dbTheme)
       : setDarkTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
   }, [dbTheme, setDarkTheme]);
+
+  const themeClass = darkTheme ? styles.dark : styles.light;
+
   return (
-    <div
-      className={styles.app}
-      style={{
-        backgroundColor: darkTheme ? COLORS.Dgrey2 : COLORS.Lgrey2,
-      }}
-    >
+    <div className={`${styles.app} ${themeClass}`}>
       <DndProvider backend={HTML5Backend}>
         <Header
-          authService={authService}
           user={user}
           logOut={logOut}
           darkTheme={darkTheme}

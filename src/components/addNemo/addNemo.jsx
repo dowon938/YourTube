@@ -25,9 +25,13 @@ const AddNemo = ({ youtube, modalOn, setModalOn, addNemo, darkTheme }) => {
   }, [modalOn]);
   return (
     <>
-      <div onClick={onClose} className={styles.close} />
-      <div className={styles.addModal}>
-        <form ref={formRef} className={styles.form} onSubmit={onSearch}>
+      <div onClick={onClose} className={`${styles.close}`} />
+      <div className={`${styles.addModal} ${darkTheme ? styles.dark : styles.light}`}>
+        <form
+          ref={formRef}
+          className={`${styles.form} ${darkTheme ? styles.dark : styles.light}`}
+          onSubmit={onSearch}
+        >
           <input
             ref={inputRef}
             type="text"
@@ -42,7 +46,7 @@ const AddNemo = ({ youtube, modalOn, setModalOn, addNemo, darkTheme }) => {
           ? list.map((ch) => (
               <li
                 key={ch.snippet.channelId}
-                className={styles.chList}
+                className={`${styles.chList} ${darkTheme ? styles.dark : styles.light}`}
                 data-channelid={ch.snippet.channelId}
                 data-title={ch.snippet.title}
                 onClick={onAdd}

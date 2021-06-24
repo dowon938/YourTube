@@ -7,6 +7,12 @@
   /* border-radius: 0.6rem; */
   /* box-shadow: 1px 1px 3px 0px rgba(148, 148, 148, 1); */
 }
+.comment.dark {
+  color: vWhite;
+}
+.comment.light {
+  color: fontGrey;
+}
 
 .thumbnail {
   border-radius: 50%;
@@ -22,7 +28,6 @@
 }
 
 .author {
-  color: grey;
   font-size: 0.9em;
   padding-bottom: 0.3em;
 }

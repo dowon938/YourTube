@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-// import { COLORS } from '../../common/colors';
 import styles from './dayNight.module.css';
 
 const DayNight = memo(({ darkTheme, themeToggle }) => {
