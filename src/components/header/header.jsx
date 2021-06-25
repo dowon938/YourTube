@@ -20,9 +20,10 @@ const Header = memo(
       setToggle((toggle) => !toggle);
     };
     useEffect(() => {
-      const scrollEvent = _.throttle(() => {
+      const scrollEvent = _.debounce(() => {
         window.scrollY === 0 ? setPageDown(false) : setPageDown(true);
-      }, 10);
+        // console.log('scroll');
+      }, 100);
       window.addEventListener('scroll', scrollEvent);
       return () => {
         window.removeEventListener('scroll', scrollEvent);

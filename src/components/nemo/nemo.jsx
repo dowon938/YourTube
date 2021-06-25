@@ -8,6 +8,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from '../../utils/items';
 import _ from 'lodash';
 import { memo } from 'react';
+import AddNemo from '../addNemo/addNemo';
 
 const Nemo = memo(
   ({
@@ -23,13 +24,18 @@ const Nemo = memo(
     someDragging,
     setSomeDragging,
     darkTheme,
+    // setModalOn,
+    youtube,
+    // modalOn,
   }) => {
     const [nemo, setNemo] = useState(nemoPre);
     const [inputToggle, setInputToggle] = useState(false);
     const [rect, setRect] = useState(null);
-    const [videos, setVideos] = useState([...nemoPre.videos]);
-    const [double, setDouble] = useState(nemoPre.double);
+    const [videos, setVideos] = useState();
+    // nemoPre.videos !== undefined && [...nemoPre.videos]
+    const [double, setDouble] = useState(nemo.double);
     const [rotate, setRotate] = useState(false);
+    const [modalOn, setModalOn] = useState(false);
 
     const spanRef = useRef();
     const sonRef = useRef();
@@ -50,8 +56,8 @@ const Nemo = memo(
       setInputToggle((inputToggle) => !inputToggle);
     };
     const changeDouble = () => {
-      let nColumn = nemoPre.column;
-      let nRow = nemoPre.row;
+      let nColumn = nemo.column;
+      let nRow = nemo.row;
       if (!double) {
         nColumn < 3 && (nColumn = 3);
         nRow < 3 && (nRow = 3);
@@ -77,9 +83,9 @@ const Nemo = memo(
     };
 
     useEffect(() => {
-      setNemo(nemoPre);
-      setVideos([...nemoPre.videos]);
-    }, [nemoPre]);
+      setNemo(nemo);
+      setVideos(nemo.videos !== undefined && [...nemo.videos]);
+    }, [nemo]);
 
     // 드래그 앤 드랍
     const [{ isDragging }, dragRef, previewRef] = useDrag(
@@ -151,13 +157,13 @@ const Nemo = memo(
       const width = sonRef.current.clientWidth;
       const height = sonRef.current.clientHeight;
       setRect({ width, height });
-    }, [sonRef]);
+    }, [sonRef, nemo]);
     const [{ isResizing }, resizeRef] = useDrag(
       () => ({
         type: ItemTypes.Resize,
         item: {
-          column: nemoPre.column,
-          row: nemoPre.row,
+          column: nemo.column,
+          row: nemo.row,
           width: rect && rect.width,
           height: rect && rect.height,
           throttleGrid,
@@ -167,7 +173,7 @@ const Nemo = memo(
           isResizing: monitor.isDragging(),
         }),
       }),
-      [nemoPre, rect, double, throttleGrid]
+      [nemo, rect, double, throttleGrid]
     );
 
     const themeClass = darkTheme ? styles.dark : styles.light;
@@ -179,9 +185,8 @@ const Nemo = memo(
         ref={previewRef}
         style={{
           opacity: isDragging ? '0.3' : '1',
-          gridColumn:
-            nemoPre.column === 9 ? `auto/span 10` : `auto/span ${nemoPre.column}`,
-          gridRow: `auto/span ${nemoPre.row}`,
+          gridColumn: nemo.column === 9 ? `auto/span 10` : `auto/span ${nemo.column}`,
+          gridRow: `auto/span ${nemo.row}`,
         }}
       >
         {edit && (
@@ -242,39 +247,84 @@ const Nemo = memo(
           className={styles.imgs}
           style={{
             gridTemplateColumns: `repeat(${
-              nemoPre.column - (nemoPre.column % gridRatio)
+              nemo.column - (nemo.column % gridRatio)
             }, 1fr)`,
-            gridTemplateRows: `repeat(${nemoPre.row - (nemoPre.row % gridRatio)}, 1fr)`,
+            gridTemplateRows: `repeat(${nemo.row - (nemo.row % gridRatio)}, 1fr)`,
             border: isResizing ? `solid 2px ${COLORS.mainColorL}` : 'none',
             backgroundColor: darkTheme ? COLORS.Dgrey3 : COLORS.Lgrey3,
+            display: videos ? 'grid' : 'flex',
+            zIndex: modalOn && 100,
           }}
         >
-          {videos.map(
-            (video, index) =>
-              index <
-                parseInt(nemoPre.column / gridRatio) *
-                  parseInt(nemoPre.row / gridRatio) && (
-                <Video
-                  key={index}
-                  video={video}
-                  double={double}
-                  nemoPlayer={nemoPlayer}
-                  darkTheme={darkTheme}
-                />
-              )
+          {videos &&
+            videos.map(
+              (video, index) =>
+                index <
+                  parseInt(nemo.column / gridRatio) * parseInt(nemo.row / gridRatio) && (
+                  <Video
+                    key={index}
+                    video={video}
+                    double={double}
+                    nemoPlayer={nemoPlayer}
+                    darkTheme={darkTheme}
+                  />
+                )
+            )}
+          {!videos && (
+            <div
+              className={`${styles.btnContainer}`}
+              style={{
+                minHeight: nemo.row * 50,
+              }}
+            >
+              <div className={`${styles.btnDiv} ${themeClass}`}>
+                <button
+                  className={`${styles.chBtn} ${themeClass}`}
+                  onClick={() => setModalOn('Channel')}
+                >
+                  채널 추가하기
+                </button>
+              </div>
+              <div className={`${styles.btnDiv} ${themeClass}`}>
+                <button
+                  className={`${styles.listBtn} ${themeClass}`}
+                  onClick={() => setModalOn('List')}
+                >
+                  재생목록 추가하기
+                </button>
+              </div>
+              <div className={`${styles.btnDiv} ${themeClass}`}>
+                <button
+                  className={`${styles.videoBtn} ${themeClass}`}
+                  onClick={() => setModalOn('Video')}
+                >
+                  영상 추가하기
+                </button>
+              </div>
+            </div>
           )}
-          <button className={`${styles.drag} ${themeClass}`} ref={resizeRef}></button>
-          <div
-            ref={dropLeft}
-            className={`${styles.drop} ${styles.left}`}
-            style={{ zIndex: someDragging && 30 }}
-          ></div>
-          <div
-            ref={dropRight}
-            className={`${styles.drop} ${styles.right}`}
-            style={{ zIndex: someDragging && 30 }}
-          ></div>
+          {modalOn && (
+            <AddNemo
+              youtube={youtube}
+              modalOn={modalOn}
+              setModalOn={setModalOn}
+              addNemo={addNemo}
+              darkTheme={darkTheme}
+            />
+          )}
         </div>
+
+        <button className={`${styles.drag} ${themeClass}`} ref={resizeRef}></button>
+        <div
+          ref={dropLeft}
+          className={`${styles.drop} ${styles.left}`}
+          style={{ zIndex: someDragging ? 30 : 0 }}
+        ></div>
+        <div
+          ref={dropRight}
+          className={`${styles.drop} ${styles.right}`}
+          style={{ zIndex: someDragging ? 30 : 0 }}
+        ></div>
       </div>
     );
   }

@@ -10,6 +10,7 @@ const AddNemo = ({ youtube, modalOn, setModalOn, addNemo, darkTheme }) => {
     event.preventDefault();
     console.log(inputRef.current.value);
     inputRef.current.value &&
+      modalOn === 'Channel' &&
       youtube.search(inputRef.current.value).then((channels) => setList(channels));
     formRef.current.reset();
   };
@@ -24,7 +25,7 @@ const AddNemo = ({ youtube, modalOn, setModalOn, addNemo, darkTheme }) => {
     modalOn && inputRef.current.focus();
   }, [modalOn]);
   return (
-    <>
+    <div>
       <div onClick={onClose} className={`${styles.close}`} />
       <div className={`${styles.addModal} ${darkTheme ? styles.dark : styles.light}`}>
         <form
@@ -36,7 +37,7 @@ const AddNemo = ({ youtube, modalOn, setModalOn, addNemo, darkTheme }) => {
             ref={inputRef}
             type="text"
             className={styles.text}
-            placeholder="Search Channel Name!"
+            placeholder={`Search ${modalOn} Name!`}
           />
           <button className={styles.submit}>
             <i className="fas fa-search"></i>
@@ -61,7 +62,7 @@ const AddNemo = ({ youtube, modalOn, setModalOn, addNemo, darkTheme }) => {
             ))
           : ''}
       </div>
-    </>
+    </div>
   );
 };
 

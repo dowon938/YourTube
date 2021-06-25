@@ -32,42 +32,45 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
     dbService.addPages(userId, pageId, newPage);
     setPages(newPages);
   };
-  const addNemo = (channelId, paraNemo) => {
+  const saveNemo = (id, newNemo) => {
+    selected.isSample
+      ? setSample({
+          ...sample,
+          [selected.pageId]: {
+            ...sample[selected.pageId],
+            nemos: { ...sample[selected.pageId].nemos, [id]: newNemo },
+          },
+        })
+      : dbService.addNemo(userId, selected.pageId, id, newNemo);
+  };
+  const saveOrder = (id) => {
+    if (order.indexOf(id) === -1) {
+      const newOrder = [...order, id];
+      selected.isSample
+        ? setOrder(newOrder)
+        : dbService.setOrder(userId, selected.pageId, newOrder);
+    }
+  };
+  const addNemo = async () => {
+    const id = Date.now();
+    const newNemo = {
+      nemoId: id,
+      column: 5,
+      row: 5,
+      double: false,
+    };
+    await saveNemo(id, newNemo);
+    saveOrder(id);
+  };
+  const addChannel = (channelId, paraNemo) => {
     // const id = Date.now();
-    youtube
-      .bringVideo(channelId)
-      .then((video) => {
-        const newNemo = paraNemo
-          ? {
-              ...paraNemo,
-              videos: video,
-            }
-          : {
-              nemoId: channelId,
-              nemoTitle: video[0].snippet.channelTitle,
-              column: 4,
-              row: 4,
-              double: false,
-              videos: video,
-            };
-        selected.isSample
-          ? setSample({
-              ...sample,
-              [selected.pageId]: {
-                ...sample[selected.pageId],
-                nemos: { ...sample[selected.pageId].nemos, newNemo },
-              },
-            })
-          : dbService.addNemo(userId, selected.pageId, channelId, newNemo);
-      })
-      .then(() => {
-        if (order.indexOf(channelId) === -1) {
-          const newOrder = [...order, channelId];
-          selected.isSample
-            ? setOrder(newOrder)
-            : dbService.setOrder(userId, selected.pageId, newOrder);
-        }
-      });
+    youtube.bringVideo(channelId).then((video) => {
+      const newNemo = {
+        ...paraNemo,
+        videos: video,
+      };
+      saveNemo(paraNemo.nemoId, newNemo);
+    });
   };
   const deleteNemo = (channelId) => {
     const newOrder = [...order];
@@ -159,7 +162,7 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
         const gridRatio = double ? 3 : 2;
 
         // console.log(nRow, y, hPerRow, Math.round(y / hPerRow));
-        const SENS = 1.1;
+        const SENS = 0.8;
         nColumn += Math.round((x * SENS) / wPerColumn);
         nRow += Math.round((y * SENS) / hPerRow);
 

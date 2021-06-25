@@ -5,7 +5,7 @@ import { useState } from 'react/cjs/react.development';
 import styles from './video.module.css';
 import { COLORS } from '../../common/colors';
 
-const Video = memo(({ video, double, nemoPlayer, flexRatio, darkTheme }) => {
+const Video = memo(({ video, double, nemoPlayer, darkTheme }) => {
   const [play, setPlay] = useState(false);
   const [vol, setVol] = useState(50);
   const [YT, setYT] = useState();

@@ -9,7 +9,7 @@
   box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.2);
 
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 10vw);
   grid-template-rows: repeat(5, auto-fill);
   gap: 0.4em;
 }

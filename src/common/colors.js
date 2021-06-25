@@ -5,7 +5,7 @@ export const COLORS = {
   mainHoverL: 'rgb(32, 153, 92)',
   mainHoverD: 'rgb(32, 153, 92)',
   //grey
-  Lgrey1: 'rgb(58, 99, 81)',
+  Lgrey1: 'rgb(68, 114, 94)',
   Lgrey2: 'rgb(216,216,216)',
   Lgrey3: 'rgb(232,232,232)',
   Lgrey4: 'rgb(252,252,252)',

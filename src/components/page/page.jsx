@@ -31,8 +31,8 @@ const Page = memo(
     useEffect(() => {
       sample[pageId] ? setFindPage(sample[pageId]) : setFindPage(pages[pageId]);
     }, [pageId, sample, pages]);
-    const onMake = (event) => {
-      setModalOn((modalOn) => !modalOn);
+    const addModalOn = (type) => {
+      setModalOn(type);
     };
     const onEdit = (event) => {
       setEdit((edit) => !edit);
@@ -72,7 +72,7 @@ const Page = memo(
     return (
       <div className={`${styles.page} ${themeClass}`} ref={drop}>
         <div className={styles.menuBar}>
-          <button className={`${styles.plus} ${themeClass}`} onClick={onMake}>
+          <button className={`${styles.plus} ${themeClass}`} onClick={addNemo}>
             <div className={`${styles.hv} ${darkTheme && styles.dk}`} /> + 네모 만들기!
           </button>
           <div className={`${styles.edit} ${themeClass} ${editOn}`} onClick={onEdit}>
@@ -84,6 +84,7 @@ const Page = memo(
           {findPage &&
             order &&
             order.map((chId, index) => (
+              // console.log(findPage.nemos[chId].videos)
               <Nemo
                 key={chId}
                 index={index}
@@ -98,19 +99,21 @@ const Page = memo(
                 someDragging={someDragging}
                 setSomeDragging={setSomeDragging}
                 darkTheme={darkTheme}
+                // setModalOn={setModalOn}
+                youtube={youtube}
+                // modalOn={modalOn}
               />
             ))}
         </div>
-        {modalOn && (
+        {/* {modalOn && (
           <AddNemo
             youtube={youtube}
-            sdfsdf
             modalOn={modalOn}
             setModalOn={setModalOn}
             addNemo={addNemo}
             darkTheme={darkTheme}
           />
-        )}
+        )} */}
       </div>
     );
   }
