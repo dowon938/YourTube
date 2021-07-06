@@ -23,7 +23,7 @@ const Header = memo(
       const scrollEvent = _.debounce(() => {
         window.scrollY === 0 ? setPageDown(false) : setPageDown(true);
         // console.log('scroll');
-      }, 100);
+      }, 200);
       window.addEventListener('scroll', scrollEvent);
       return () => {
         window.removeEventListener('scroll', scrollEvent);

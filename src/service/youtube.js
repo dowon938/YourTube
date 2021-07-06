@@ -25,23 +25,14 @@ class Youtube {
     const response = await this.youtube.get('search', {
       params: {
         part: 'snippet',
-        maxResults: 36,
+        maxResults: 30,
         channelId: channelId,
         order: 'date',
       },
     });
     return response.data.items;
   }
-  async mostPopular() {
-    const response = await this.youtube.get('videos', {
-      params: {
-        part: 'snippet',
-        chart: 'mostPopular',
-        maxResults: 20,
-      },
-    });
-    return response.data;
-  }
+
   async description(id) {
     const response = await this.youtube.get('videos', {
       params: {
@@ -62,8 +53,37 @@ class Youtube {
     });
     return response.data.items;
   }
-
-  list() {}
+  async playListItems(id) {
+    const response = await this.youtube.get('playlistItems', {
+      params: {
+        part: 'snippet',
+        playlistId: id,
+        maxResults: 30,
+      },
+    });
+    return response.data.items;
+  }
+  async searchVideo(submit, pageToken) {
+    const response = await this.youtube.get('search', {
+      params: {
+        part: 'snippet',
+        maxResults: 9,
+        q: submit,
+        type: 'video',
+        pageToken: pageToken && pageToken,
+      },
+    });
+    return response.data;
+  }
+  async getVideoFromId(videoId) {
+    const response = await this.youtube.get('videos', {
+      params: {
+        part: 'snippet',
+        id: videoId,
+      },
+    });
+    return response.data;
+  }
 }
 
 export default Youtube;

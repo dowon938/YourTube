@@ -1,13 +1,5 @@
 @value mainColor,mainHover,Lgrey1,Lgrey2,Lgrey3,Lgrey4,Dgrey1,Dgrey2,Dgrey3,Dgrey4,lineGrey,fontGrey,fontHover,hoverGrey,vWhite,vBlack,vTrans from '/src/common/colors.css';
 
-.flex {
-  position: relative;
-  top: 0;
-  display: flex;
-  /* width: 33%; */
-  flex-flow: column;
-  /* background-color: rgb(242, 242, 242); */
-}
 .container {
   position: relative;
   width: 100%;

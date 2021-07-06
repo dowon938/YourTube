@@ -1,4 +1,4 @@
-@value mainColor,Dgrey1,Lgrey1 from '/src/common/colors.css';
+@value mainColor,Dgrey1,Lgrey1,vWhite from '/src/common/colors.css';
 
 .header {
   width: 100%;

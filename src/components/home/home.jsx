@@ -13,6 +13,7 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
   const [selected, setSelected] = useState({ pageId: 'daily-routine', isSample: true });
   const [order, setOrder] = useState([]);
   const [pageEdit, setPageEdit] = useState(false);
+
   const isSampleTab = useState(true);
   const addPage = () => {
     const id = Date.now();
@@ -28,21 +29,21 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
     setPages(newPages);
   };
   const changePage = (newPage, pageId) => {
-    const newPages = { ...pages, [pageId]: newPage };
     dbService.addPages(userId, pageId, newPage);
-    setPages(newPages);
   };
-  const saveNemo = (id, newNemo) => {
+
+  const saveNemo = (newNemo) => {
     selected.isSample
       ? setSample({
           ...sample,
           [selected.pageId]: {
             ...sample[selected.pageId],
-            nemos: { ...sample[selected.pageId].nemos, [id]: newNemo },
+            nemos: { ...sample[selected.pageId].nemos, [newNemo.nemoId]: newNemo },
           },
         })
-      : dbService.addNemo(userId, selected.pageId, id, newNemo);
+      : dbService.addNemo(userId, selected.pageId, newNemo.nemoId, newNemo);
   };
+
   const saveOrder = (id) => {
     if (order.indexOf(id) === -1) {
       const newOrder = [...order, id];
@@ -59,17 +60,70 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
       row: 5,
       double: false,
     };
-    await saveNemo(id, newNemo);
+    await saveNemo(newNemo);
     saveOrder(id);
   };
-  const addChannel = (channelId, paraNemo) => {
-    // const id = Date.now();
-    youtube.bringVideo(channelId).then((video) => {
+  const addChannel = (channelId, channelTitle, orgNemo) => {
+    youtube
+      .bringVideo(channelId)
+      .then((videos) =>
+        videos.map((video) => ({
+          snippet: { ...video.snippet },
+          videoId: video.id.videoId,
+        }))
+      )
+      .then((videos) => {
+        const newNemo = {
+          ...orgNemo,
+          channelId: channelId,
+          channelTitle: channelTitle,
+          videos: videos,
+        };
+        saveNemo(newNemo);
+      });
+  };
+  const addPlayList = async (playListId, orgNemo) => {
+    console.log(playListId);
+    youtube
+      .playListItems(playListId)
+      .catch((e) => {
+        console.log(e.response.status);
+        console.log(e.response.data);
+        const reason = e.response.data.error.errors[0].reason;
+        reason === 'quotaExceeded' &&
+          console.log('할당량을 초과했습니다. 관리자에게 문의하세요');
+        reason === 'playlistNotFound' && console.log('재생목록 ID를 찾을수 없습니다.');
+      })
+      .then((videos) => {
+        videos.map((video) => ({
+          snippet: { ...video.snippet },
+          videoId: video.snippet.resourceId.videoId,
+        }));
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .then((videos) => {
+        const newNemo = {
+          ...orgNemo,
+          playListId: playListId,
+          videos: videos,
+        };
+        saveNemo(newNemo);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  const addVideo = (videoId, orgNemo) => {
+    youtube.getVideoFromId(videoId).then((video) => {
+      console.log(orgNemo.videos);
       const newNemo = {
-        ...paraNemo,
-        videos: video,
+        ...orgNemo,
+        isCustomNemo: true,
+        videos: orgNemo.videos ? [...orgNemo.videos, video.items[0]] : [video.items[0]],
       };
-      saveNemo(paraNemo.nemoId, newNemo);
+      saveNemo(newNemo);
     });
   };
   const deleteNemo = (channelId) => {
@@ -87,17 +141,6 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
           },
         })
       : dbService.deleteNemo(userId, selected.pageId, channelId);
-  };
-  const changeNemo = (newNemo) => {
-    selected.isSample
-      ? setSample({
-          ...sample,
-          [selected.pageId]: {
-            ...sample[selected.pageId],
-            nemos: { ...sample[selected.pageId].nemos, [newNemo.nemoId]: newNemo },
-          },
-        })
-      : dbService.addNemo(userId, selected.pageId, newNemo.nemoId, newNemo);
   };
   const editPage = () => {
     console.log('hi');
@@ -257,10 +300,13 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
             youtube={youtube}
             addNemo={addNemo}
             deleteNemo={deleteNemo}
-            changeNemo={changeNemo}
+            saveNemo={saveNemo}
             onPlayer={onPlayer}
             setPlayer={setPlayer}
             darkTheme={darkTheme}
+            addChannel={addChannel}
+            addPlayList={addPlayList}
+            addVideo={addVideo}
           />
         </div>
       </div>

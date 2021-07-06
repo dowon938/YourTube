@@ -1,7 +1,6 @@
 import React, { memo, useCallback } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react/cjs/react.development';
-import AddNemo from '../addNemo/addNemo';
 import Nemo from '../nemo/nemo';
 import styles from './page.module.css';
 import { useDrop } from 'react-dnd';
@@ -19,34 +18,24 @@ const Page = memo(
     dbService,
     youtube,
     addNemo,
+    saveNemo,
     deleteNemo,
-    changeNemo,
     onPlayer,
     darkTheme,
+    addChannel,
+    addPlayList,
+    addVideo,
   }) => {
     const [findPage, setFindPage] = useState(false);
-    const [modalOn, setModalOn] = useState(false);
     const [edit, setEdit] = useState(false);
     const [someDragging, setSomeDragging] = useState(false);
     useEffect(() => {
       sample[pageId] ? setFindPage(sample[pageId]) : setFindPage(pages[pageId]);
     }, [pageId, sample, pages]);
-    const addModalOn = (type) => {
-      setModalOn(type);
-    };
+
     const onEdit = (event) => {
       setEdit((edit) => !edit);
     };
-
-    // useEffect(() => {
-    //   findPage &&
-    //     findPage.order &&
-    //     setPlayer({
-    //       findPage,
-    //       nemoId: findPage.order[0],
-    //       video: findPage.nemos[findPage.order[0]].videos[0],
-    //     });
-    // }, [findPage, setPlayer]);
 
     //플레이어
     const pagePlayer = (nemoId, videoId) => {
@@ -89,31 +78,23 @@ const Page = memo(
                 key={chId}
                 index={index}
                 id={chId}
-                nemoPre={findPage.nemos[chId]}
+                nemo={findPage.nemos[chId]}
                 edit={edit}
+                saveNemo={saveNemo}
                 deleteNemo={deleteNemo}
-                changeNemo={changeNemo}
                 moveNemo={moveNemo}
                 addNemo={addNemo}
                 pagePlayer={pagePlayer}
                 someDragging={someDragging}
                 setSomeDragging={setSomeDragging}
                 darkTheme={darkTheme}
-                // setModalOn={setModalOn}
+                addChannel={addChannel}
                 youtube={youtube}
-                // modalOn={modalOn}
+                addPlayList={addPlayList}
+                addVideo={addVideo}
               />
             ))}
         </div>
-        {/* {modalOn && (
-          <AddNemo
-            youtube={youtube}
-            modalOn={modalOn}
-            setModalOn={setModalOn}
-            addNemo={addNemo}
-            darkTheme={darkTheme}
-          />
-        )} */}
       </div>
     );
   }

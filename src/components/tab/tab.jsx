@@ -22,19 +22,20 @@ const Tab = memo(
     const selectedLight = selected.pageId === page.id ? COLORS.Lgrey1 : COLORS.Lgrey3;
     const selectedLightFont = selected.pageId === page.id ? COLORS.vWhite : COLORS.vBlack;
     const editOn = pageEdit ? styles.editOn : '';
+    const [pageTitle, setPageTitle] = useState(
+      page && (page.newTitle ? page.newTitle : '')
+    );
     // const sampleStyle = isSample ? styles.sampleStyle : '';
-    const editPage = (e) => {
-      setInputToggle((inputToggle) => !inputToggle);
-    };
     const onDelete = (e) => {
       deletePage(page.id);
     };
     const onChange = (e) => {
-      const newPage = { ...page, newTitle: e.target.value };
-      changePage(newPage, page.id);
+      setPageTitle(e.target.value);
     };
     const onSubmit = (e) => {
       e.preventDefault();
+      const newPage = { ...page, newTitle: pageTitle };
+      changePage(newPage, page.id);
       setInputToggle((inputToggle) => !inputToggle);
     };
 
@@ -63,7 +64,7 @@ const Tab = memo(
               <input
                 type="text"
                 placeholder="새로운 제목을 입력해주세요"
-                value={page.newTitle ? page.newTitle : ''}
+                value={pageTitle}
                 onChange={onChange}
               />
             </form>
@@ -73,7 +74,7 @@ const Tab = memo(
               className={`${styles.edit}`}
               // onClick={(e) => e.stopPropagation()}
             >
-              <i className="far fa-edit" onClick={editPage}></i>
+              <i className="far fa-edit" onClick={onSubmit}></i>
               <i className="fas fa-minus-circle" onClick={onDelete}></i>
             </span>
           )}

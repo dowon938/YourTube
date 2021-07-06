@@ -14,45 +14,46 @@ const Nemo = memo(
   ({
     id,
     index,
-    nemoPre,
+    nemo,
     edit,
     deleteNemo,
-    changeNemo,
+    saveNemo,
     moveNemo,
     addNemo,
     pagePlayer,
     someDragging,
     setSomeDragging,
     darkTheme,
-    // setModalOn,
     youtube,
-    // modalOn,
+    addChannel,
+    addPlayList,
+    addVideo,
   }) => {
-    const [nemo, setNemo] = useState(nemoPre);
+    // const [nemo, setNemo] = useState(nemoPre);
     const [inputToggle, setInputToggle] = useState(false);
     const [rect, setRect] = useState(null);
     const [videos, setVideos] = useState();
-    // nemoPre.videos !== undefined && [...nemoPre.videos]
-    const [double, setDouble] = useState(nemo.double);
+    const [double, setDouble] = useState();
     const [rotate, setRotate] = useState(false);
     const [modalOn, setModalOn] = useState(false);
+    const [nemoTitle, setNemoTitle] = useState(
+      Nemo && (nemo.nemoTitle ? nemo.nemoTitle : '')
+    );
 
     const spanRef = useRef();
     const sonRef = useRef();
-    const editTitle = () => {
-      setInputToggle((inputToggle) => !inputToggle);
-    };
+
     const onDelete = (e) => {
       deleteNemo(nemo.nemoId);
       console.log(nemo);
     };
     const onChange = (e) => {
-      const newNemo = { ...nemo, newTitle: e.target.value };
-      setNemo(newNemo);
-      changeNemo(newNemo);
+      setNemoTitle(e.target.value);
     };
     const onSubmit = (e) => {
       e.preventDefault();
+      const newNemo = { ...nemo, nemoTitle: nemoTitle };
+      saveNemo(newNemo);
       setInputToggle((inputToggle) => !inputToggle);
     };
     const changeDouble = () => {
@@ -65,17 +66,17 @@ const Nemo = memo(
       const newNemo = double
         ? { ...nemo, column: nColumn, row: nRow, double: false }
         : { ...nemo, column: nColumn, row: nRow, double: true };
-      setNemo(newNemo);
-      changeNemo(newNemo);
+      // setNemo(newNemo);
+      saveNemo(newNemo);
       setDouble((double) => !double);
     };
 
     const onRefresh = (e) => {
       setRotate(true);
-      addNemo(nemo.nemoId, nemo);
+      addChannel(nemo.channelId, nemo.channelTitle, nemo);
       setTimeout(() => {
         setRotate(false);
-      }, 2400);
+      }, 1600);
     };
     //플레이어
     const nemoPlayer = (videoId) => {
@@ -83,8 +84,9 @@ const Nemo = memo(
     };
 
     useEffect(() => {
-      setNemo(nemo);
-      setVideos(nemo.videos !== undefined && [...nemo.videos]);
+      // setNemo(nemoPre);
+      setDouble(nemo && nemo.double);
+      setVideos(nemo && nemo.videos !== undefined && [...nemo.videos]);
     }, [nemo]);
 
     // 드래그 앤 드랍
@@ -150,8 +152,8 @@ const Nemo = memo(
     const throttleGrid = _.throttle((newGrid) => {
       const { column, row } = newGrid;
       const newNemo = { ...nemo, column: column, row: row };
-      setNemo(newNemo);
-      changeNemo(newNemo);
+      // setNemo(newNemo);
+      saveNemo(newNemo);
     }, 50);
     useEffect(() => {
       const width = sonRef.current.clientWidth;
@@ -162,8 +164,8 @@ const Nemo = memo(
       () => ({
         type: ItemTypes.Resize,
         item: {
-          column: nemo.column,
-          row: nemo.row,
+          column: nemo && nemo.column,
+          row: nemo && nemo.row,
           width: rect && rect.width,
           height: rect && rect.height,
           throttleGrid,
@@ -180,13 +182,13 @@ const Nemo = memo(
 
     return (
       <div
-        id={nemo.nemoId}
+        id={nemo && nemo.nemoId}
         className={styles.nemo}
         ref={previewRef}
         style={{
           opacity: isDragging ? '0.3' : '1',
-          gridColumn: nemo.column === 9 ? `auto/span 10` : `auto/span ${nemo.column}`,
-          gridRow: `auto/span ${nemo.row}`,
+          gridColumn: nemo && `auto/span ${nemo.column}`,
+          gridRow: nemo && `auto/span ${nemo.row}`,
         }}
       >
         {edit && (
@@ -206,13 +208,15 @@ const Nemo = memo(
                 <input
                   type="text"
                   placeholder="새로운 제목을 입력해주세요"
-                  value={nemo.newTitle ? nemo.newTitle : ''}
+                  value={nemoTitle}
                   onChange={onChange}
                 />
               </form>
             )}
-            {!inputToggle && (nemo.newTitle || nemo.nemoTitle || '제목을 지어주세요!')}
-            <i className="far fa-edit" onClick={editTitle} title="제목을 수정합니다." />
+            {!inputToggle &&
+              nemo &&
+              (nemo.nemoTitle || nemo.channelTitle || '제목을 지어주세요!')}
+            <i className="far fa-edit" onClick={onSubmit} title="제목을 수정합니다." />
             <i
               className="fas fa-minus-circle"
               onClick={onDelete}
@@ -238,23 +242,25 @@ const Nemo = memo(
           {/* <div ref={dropRef} className={styles.dropRef}></div> */}
           {!inputToggle && (
             <span className={`${styles.span} ${themeClass}`} ref={spanRef}>
-              {nemo.newTitle || nemo.nemoTitle || '제목을 지어주세요!'}
+              {nemo && (nemo.nemoTitle || nemo.channelTitle || '제목을 지어주세요!')}
             </span>
           )}
         </div>
         <div
           ref={sonRef}
           className={styles.imgs}
-          style={{
-            gridTemplateColumns: `repeat(${
-              nemo.column - (nemo.column % gridRatio)
-            }, 1fr)`,
-            gridTemplateRows: `repeat(${nemo.row - (nemo.row % gridRatio)}, 1fr)`,
-            border: isResizing ? `solid 2px ${COLORS.mainColorL}` : 'none',
-            backgroundColor: darkTheme ? COLORS.Dgrey3 : COLORS.Lgrey3,
-            display: videos ? 'grid' : 'flex',
-            zIndex: modalOn && 100,
-          }}
+          style={
+            nemo && {
+              gridTemplateColumns: `repeat(${
+                nemo.column - (nemo.column % gridRatio)
+              }, 1fr)`,
+              gridTemplateRows: `repeat(${nemo.row - (nemo.row % gridRatio)}, 1fr)`,
+              border: isResizing ? `solid 2px ${COLORS.mainColorL}` : 'none',
+              backgroundColor: darkTheme ? COLORS.Dgrey3 : COLORS.Lgrey3,
+              display: videos ? 'grid' : 'flex',
+              zIndex: modalOn && 100,
+            }
+          }
         >
           {videos &&
             videos.map(
@@ -270,51 +276,78 @@ const Nemo = memo(
                   />
                 )
             )}
+          {videos &&
+            videos.length <
+              parseInt(nemo.column / gridRatio) * parseInt(nemo.row / gridRatio) && (
+              <div
+                className={`${styles.btnDiv} ${themeClass}`}
+                style={{
+                  gridColumn: double ? `auto/span 3` : 'auto/span 2',
+                  gridRow: double ? `auto/span 3` : 'auto/span 2',
+                  width: '100%',
+                }}
+              >
+                <button
+                  className={`${styles.videoBtn} ${themeClass}`}
+                  onClick={() => setModalOn('video')}
+                >
+                  영상 추가
+                </button>
+              </div>
+            )}
           {!videos && (
             <div
               className={`${styles.btnContainer}`}
-              style={{
-                minHeight: nemo.row * 50,
-              }}
+              style={
+                nemo && {
+                  minHeight: nemo.row * 50,
+                }
+              }
             >
               <div className={`${styles.btnDiv} ${themeClass}`}>
                 <button
                   className={`${styles.chBtn} ${themeClass}`}
-                  onClick={() => setModalOn('Channel')}
+                  onClick={() => setModalOn('channel')}
                 >
-                  채널 추가하기
+                  채널 추가
                 </button>
               </div>
               <div className={`${styles.btnDiv} ${themeClass}`}>
                 <button
                   className={`${styles.listBtn} ${themeClass}`}
-                  onClick={() => setModalOn('List')}
+                  onClick={() => setModalOn('playList')}
                 >
-                  재생목록 추가하기
+                  재생목록 추가
                 </button>
               </div>
               <div className={`${styles.btnDiv} ${themeClass}`}>
                 <button
                   className={`${styles.videoBtn} ${themeClass}`}
-                  onClick={() => setModalOn('Video')}
+                  onClick={() => setModalOn('video')}
                 >
-                  영상 추가하기
+                  영상 추가
                 </button>
               </div>
             </div>
           )}
           {modalOn && (
             <AddNemo
+              nemo={nemo}
               youtube={youtube}
               modalOn={modalOn}
               setModalOn={setModalOn}
               addNemo={addNemo}
               darkTheme={darkTheme}
+              addChannel={addChannel}
+              addPlayList={addPlayList}
+              addVideo={addVideo}
             />
           )}
         </div>
 
-        <button className={`${styles.drag} ${themeClass}`} ref={resizeRef}></button>
+        <button className={`${styles.drag} ${themeClass}`} ref={resizeRef}>
+          {isResizing && `${nemo.column}x${nemo.row}`}
+        </button>
         <div
           ref={dropLeft}
           className={`${styles.drop} ${styles.left}`}

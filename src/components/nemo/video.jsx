@@ -23,7 +23,7 @@ const Video = memo(({ video, double, nemoPlayer, darkTheme }) => {
     },
   };
   const onReady = (e) => {
-    e.target.pauseVideo();
+    e.target.playVideo();
     e.target.setVolume(50);
     setYT(e.target);
   };
@@ -37,7 +37,6 @@ const Video = memo(({ video, double, nemoPlayer, darkTheme }) => {
   };
   return (
     <div
-      className={styles.flex}
       style={{
         gridColumn: double ? `auto/span 3` : 'auto/span 2',
         gridRow: double ? `auto/span 3` : 'auto/span 2',
@@ -57,7 +56,7 @@ const Video = memo(({ video, double, nemoPlayer, darkTheme }) => {
           <div>
             <YouTube
               className={styles.videoPlayer}
-              videoId={video.id.videoId}
+              videoId={video.videoId}
               opts={opts}
               onReady={onReady}
               onStateChange={onChange}
