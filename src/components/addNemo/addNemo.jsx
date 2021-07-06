@@ -31,21 +31,24 @@ const AddNemo = ({
       youtube.search(value).then((channels) => setList(channels));
     if (modalOn === 'playList') {
       const playlistIdFromUrl =
-        value.split('list=').length > 1
-          ? value.split('list=')[1].split('&')[0]
-          : 'isNotRightUrl';
-      if (playlistIdFromUrl === 'isNotRightUrl') return;
+        value.split('list=').length > 1 ? value.split('list=')[1].split('&')[0] : false;
+      if (!playlistIdFromUrl) {
+        console.log('List Id가 발견되지 않았습니다.');
+        return;
+      }
       addPlayList(playlistIdFromUrl, nemo).then(setModalOn(false));
     }
     if (modalOn === 'video') {
-      const videoUrl =
-        value.split('v=').length > 1 ? value.split('v=')[1].split('&')[0] : 'isNotUrl';
-      console.log(videoUrl);
-      youtube.searchVideo(value).then((videos) => {
-        setSearchQ(value);
-        setNextPageTok(videos.nextPageToken);
-        setList(videos.items);
-      });
+      const videoIdFromUrl =
+        value.split('v=').length > 1 ? value.split('v=')[1].split('&')[0] : false;
+      console.log(videoIdFromUrl);
+      if (videoIdFromUrl) addVideo(videoIdFromUrl, nemo);
+      if (!videoIdFromUrl)
+        youtube.searchVideo(value).then((videos) => {
+          setSearchQ(value);
+          setNextPageTok(videos.nextPageToken);
+          setList(videos.items);
+        });
     }
     formRef.current.reset();
   };
@@ -105,16 +108,16 @@ const AddNemo = ({
             <i className="fas fa-search"></i>
           </button>
         </form>
-        {modalOn === 'video' && (
+        {modalOn === 'video' && !list && (
           <div className={styles.explain}>
             영상의 주소를 붙여넣거나, 키워드를 입력해 영상을 검색하세요.
             <img src="/imgs/videoLink.png" alt="videoLink Explain" />
             <img src="/imgs/videoSearch2.png" alt="videoSearch Explain" />
           </div>
         )}
-        {modalOn === 'playList' && (
+        {modalOn === 'playList' && !list && (
           <div className={styles.explain}>
-            예시
+            예시)
             <img src="/imgs/playList.png" alt="playlist Explain" />
           </div>
         )}

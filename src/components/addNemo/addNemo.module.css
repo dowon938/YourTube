@@ -92,6 +92,7 @@
   color: rgb(144, 144, 144);
 }
 .explain img {
+  margin-top: 0.8em;
   width: 100%;
 }
 .form button:hover.submit::before {

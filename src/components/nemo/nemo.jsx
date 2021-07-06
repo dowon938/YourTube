@@ -73,7 +73,7 @@ const Nemo = memo(
 
     const onRefresh = (e) => {
       setRotate(true);
-      addChannel(nemo.channelId, nemo.channelTitle, nemo);
+      addChannel(nemo.channelId, nemo.originTitle, nemo);
       setTimeout(() => {
         setRotate(false);
       }, 1600);
@@ -215,7 +215,7 @@ const Nemo = memo(
             )}
             {!inputToggle &&
               nemo &&
-              (nemo.nemoTitle || nemo.channelTitle || '제목을 지어주세요!')}
+              (nemo.nemoTitle || nemo.originTitle || '제목을 지어주세요!')}
             <i className="far fa-edit" onClick={onSubmit} title="제목을 수정합니다." />
             <i
               className="fas fa-minus-circle"
@@ -242,7 +242,7 @@ const Nemo = memo(
           {/* <div ref={dropRef} className={styles.dropRef}></div> */}
           {!inputToggle && (
             <span className={`${styles.span} ${themeClass}`} ref={spanRef}>
-              {nemo && (nemo.nemoTitle || nemo.channelTitle || '제목을 지어주세요!')}
+              {nemo && (nemo.nemoTitle || nemo.originTitle || '제목을 지어주세요!')}
             </span>
           )}
         </div>

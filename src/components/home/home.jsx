@@ -66,17 +66,19 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
   const addChannel = (channelId, channelTitle, orgNemo) => {
     youtube
       .bringVideo(channelId)
-      .then((videos) =>
-        videos.map((video) => ({
+      .then((videos) => {
+        videos = videos.filter((video) => video.id.videoId);
+        videos = videos.map((video) => ({
           snippet: { ...video.snippet },
           videoId: video.id.videoId,
-        }))
-      )
+        }));
+        return videos;
+      })
       .then((videos) => {
         const newNemo = {
           ...orgNemo,
           channelId: channelId,
-          channelTitle: channelTitle,
+          originTitle: channelTitle,
           videos: videos,
         };
         saveNemo(newNemo);
@@ -95,15 +97,17 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
         reason === 'playlistNotFound' && console.log('재생목록 ID를 찾을수 없습니다.');
       })
       .then((videos) => {
-        videos.map((video) => ({
+        videos = videos.map((video) => ({
           snippet: { ...video.snippet },
           videoId: video.snippet.resourceId.videoId,
         }));
+        return videos;
       })
       .catch((e) => {
         console.log(e);
       })
       .then((videos) => {
+        console.log(videos);
         const newNemo = {
           ...orgNemo,
           playListId: playListId,

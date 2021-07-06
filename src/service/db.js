@@ -17,7 +17,6 @@ class DbService {
     const nemosRef = firebaseDatabase.ref(`${userId}/pages`);
     nemosRef.on('value', (snapshot) => {
       snapshot.val() && setPages(snapshot.val());
-      // console.log('read');
     });
     return () => nemosRef.off();
   }
@@ -27,7 +26,6 @@ class DbService {
   readOrder(userId, selected, setOrder) {
     const nemosRef = firebaseDatabase.ref(`${userId}/pages/${selected}/order`);
     nemosRef.on('value', (snapshot) => {
-      // console.log(snapshot.val());
       snapshot.val() ? setOrder(snapshot.val()) : setOrder([]);
     });
     return () => nemosRef.off();
