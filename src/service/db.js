@@ -36,7 +36,6 @@ class DbService {
   readTheme(userId, setDarkTheme) {
     const themeRef = firebaseDatabase.ref(`${userId}/darkTheme`);
     themeRef.on('value', (snapshot) => {
-      console.log(snapshot.val());
       snapshot.val() !== undefined && setDarkTheme(snapshot.val());
     });
     return () => themeRef.off();

@@ -5,7 +5,7 @@ import { useState } from 'react/cjs/react.development';
 import styles from './video.module.css';
 import { COLORS } from '../../common/colors';
 
-const Video = memo(({ video, double, nemoPlayer, darkTheme }) => {
+const Video = memo(({ video, isLargerSize, gridRatio, nemoPlayer, darkTheme }) => {
   const [play, setPlay] = useState(false);
   const [vol, setVol] = useState(50);
   const [YT, setYT] = useState();
@@ -24,7 +24,7 @@ const Video = memo(({ video, double, nemoPlayer, darkTheme }) => {
   };
   const onReady = (e) => {
     e.target.playVideo();
-    e.target.setVolume(50);
+    // e.target.setVolume(50);
     setYT(e.target);
   };
   const changeVolume = (e) => {
@@ -38,8 +38,8 @@ const Video = memo(({ video, double, nemoPlayer, darkTheme }) => {
   return (
     <div
       style={{
-        gridColumn: double ? `auto/span 3` : 'auto/span 2',
-        gridRow: double ? `auto/span 3` : 'auto/span 2',
+        gridColumn: `auto/span ${gridRatio}`,
+        gridRow: `auto/span ${gridRatio}`,
         // width: flexRatio + '%',
       }}
     >
@@ -79,7 +79,7 @@ const Video = memo(({ video, double, nemoPlayer, darkTheme }) => {
           <div
             className={styles.overIcon}
             style={{
-              fontSize: double ? `1.5em` : '1.1em',
+              fontSize: isLargerSize ? `1.5em` : '1.1em',
             }}
           >
             <div className={styles.iconFlex}>

@@ -2,30 +2,35 @@
 
 .header {
   width: 100%;
+  max-width: 1200px;
+  margin: auto;
   padding: 0.4em;
-  background-color: rgb(68, 68, 68);
+  /* background-color: rgb(68, 68, 68); */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px dashed grey;
+  /* border-bottom: 2px dashed grey; */
   position: sticky;
   top: 0;
   z-index: 3;
-  transition: ease-in-out 100ms;
+  transition: ease-in 200ms;
   font-size: 0.85em;
 }
 .header.dark {
-  background-color: Dgrey1;
+  /* background-color: Dgrey1; */
 }
 .header.light {
-  background-color: Lgrey1;
+  /* background-color: Lgrey1; */
+  /* background-color: Dgrey1; */
 }
 .pageDown {
-  font-size: 0.6em;
+  font-size: 0.7em;
+  background-color: rgb(55, 55, 55, 0.7);
+  /* filter: blur(3px); */
 }
 .logo {
-  margin-left: 0.5em;
-  font-size: 1.6em;
+  /* margin-left: 0.5em; */
+  font-size: 1.8em;
   font-family: 'Pacifico', cursive;
   transition: ease-in 180ms;
 }
@@ -71,7 +76,7 @@
 .userIcon {
   z-index: 11;
   cursor: pointer;
-  color: mainColor;
+  color: vWhite;
   font-size: 2em;
   margin-top: 0.5em;
   margin-right: 0.5rem;

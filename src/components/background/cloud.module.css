@@ -1,0 +1,102 @@
+/*Lets start with the cloud formation rather*/
+
+/*The container will also serve as the SKY*/
+
+#clouds {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+
+/*Time to finalise the cloud shape*/
+.cloud {
+  width: 200px;
+  height: 60px;
+  background: rgb(255, 255, 255, 0.4);
+
+  border-radius: 200px;
+
+  position: relative;
+}
+
+.cloud:before,
+.cloud:after {
+  content: '';
+  position: absolute;
+  background: rgb(255, 255, 255, 0.6);
+  width: 100px;
+  height: 80px;
+  position: absolute;
+  top: -15px;
+  left: 10px;
+
+  border-radius: 100px;
+
+  transform: rotate(30deg);
+}
+
+.cloud:after {
+  width: 120px;
+  height: 120px;
+  top: -55px;
+  left: auto;
+  right: 15px;
+}
+
+/*Time to animate*/
+.x1 {
+  top: 10%;
+  animation: moveclouds 65s linear infinite;
+}
+
+/*variable speed, opacity, and position of clouds for realistic effect*/
+.x2 {
+  left: 200px;
+  top: 50%;
+
+  transform: scale(0.6);
+  opacity: 0.6; /*opacity proportional to the size*/
+
+  /*Speed will also be proportional to the size and opacity*/
+  /*More the speed. Less the time in 's' = seconds*/
+  animation: moveclouds 75s linear infinite;
+}
+
+.x3 {
+  left: -250px;
+  top: 70%;
+
+  transform: scale(0.8);
+  opacity: 0.8; /*opacity proportional to the size*/
+
+  animation: moveclouds 70s linear infinite;
+}
+
+.x4 {
+  left: 470px;
+  top: 20%;
+
+  transform: scale(0.75);
+  opacity: 0.75; /*opacity proportional to the size*/
+
+  animation: moveclouds 68s linear infinite;
+}
+
+.x5 {
+  left: -150px;
+  top: 35%;
+
+  transform: scale(0.8);
+  opacity: 0.8; /*opacity proportional to the size*/
+
+  animation: moveclouds 70s linear infinite;
+}
+
+@keyframes moveclouds {
+  0% {
+    margin-left: 20vw;
+  }
+  100% {
+    margin-left: -20vw;
+  }
+}

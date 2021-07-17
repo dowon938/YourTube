@@ -51,6 +51,8 @@ const Page = memo(
         newOrder.splice(index, 1);
         newOrder.splice(toIndex, 0, nemoId);
         isSample ? setOrder(newOrder) : dbService.setOrder(userId, pageId, newOrder);
+        //샘플페이지수정용코드
+        // dbService.setOrder('sample', pageId, newOrder);
       },
       [order, setOrder, dbService, isSample, pageId, userId]
     );

@@ -58,7 +58,7 @@ class Youtube {
       params: {
         part: 'snippet',
         playlistId: id,
-        maxResults: 30,
+        maxResults: 25,
       },
     });
     return response.data.items;

@@ -15,16 +15,20 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: hsla(60, 100%, 50%, 0.914);
   width: 80%;
   height: 80%;
 }
 .drop {
   position: absolute;
   top: 0;
-  /* background-color: rgb(0, 128, 128, 0.5); */
+  /* background-color: hsla(60, 100%, 50%, 0.914); */
   height: 100%;
   width: 25%;
 }
+/* .drop:nth-child(even) {
+  background-color: hsla(0, 100%, 50%, 0.5);
+} */
 .left {
   left: -0.5em;
 }
@@ -72,7 +76,6 @@
   top: 8px;
 } */
 .edit {
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;

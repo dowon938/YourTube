@@ -33,15 +33,14 @@ const Nemo = memo(
     const [inputToggle, setInputToggle] = useState(false);
     const [rect, setRect] = useState(null);
     const [videos, setVideos] = useState();
-    const [double, setDouble] = useState();
+    const [isLargerSize, setIsLargerSize] = useState();
     const [rotate, setRotate] = useState(false);
     const [modalOn, setModalOn] = useState(false);
     const [nemoTitle, setNemoTitle] = useState(
       Nemo && (nemo.nemoTitle ? nemo.nemoTitle : '')
     );
 
-    const spanRef = useRef();
-    const sonRef = useRef();
+    const rectRef = useRef();
 
     const onDelete = (e) => {
       deleteNemo(nemo.nemoId);
@@ -56,19 +55,19 @@ const Nemo = memo(
       saveNemo(newNemo);
       setInputToggle((inputToggle) => !inputToggle);
     };
-    const changeDouble = () => {
+    const changeIsLargerSize = () => {
       let nColumn = nemo.column;
       let nRow = nemo.row;
-      if (!double) {
+      if (!isLargerSize) {
         nColumn < 3 && (nColumn = 3);
         nRow < 3 && (nRow = 3);
       }
-      const newNemo = double
-        ? { ...nemo, column: nColumn, row: nRow, double: false }
-        : { ...nemo, column: nColumn, row: nRow, double: true };
+      const newNemo = isLargerSize
+        ? { ...nemo, column: nColumn, row: nRow, isLargerSize: false }
+        : { ...nemo, column: nColumn, row: nRow, isLargerSize: true };
       // setNemo(newNemo);
       saveNemo(newNemo);
-      setDouble((double) => !double);
+      setIsLargerSize((isLargerSize) => !isLargerSize);
     };
 
     const onRefresh = (e) => {
@@ -85,7 +84,7 @@ const Nemo = memo(
 
     useEffect(() => {
       // setNemo(nemoPre);
-      setDouble(nemo && nemo.double);
+      setIsLargerSize(nemo && nemo.isLargerSize);
       setVideos(nemo && nemo.videos !== undefined && [...nemo.videos]);
     }, [nemo]);
 
@@ -97,28 +96,10 @@ const Nemo = memo(
         collect: (monitor) => ({
           isDragging: monitor.isDragging(),
         }),
-        end: (item, monitor) => {
-          const { id: droppedId, index } = item;
-          const didDrop = monitor.didDrop();
-          if (!didDrop) {
-            moveNemo(droppedId, index);
-          }
-        },
       }),
       [id, index, moveNemo]
     );
-    // const [, dropRef] = useDrop(
-    //   () => ({
-    //     accept: ItemTypes.Nemo,
-    //     canDrop: () => false,
-    //     hover({ id: draggedId }) {
-    //       if (draggedId !== id) {
-    //         moveNemo(draggedId, index);
-    //       }
-    //     },
-    //   }),
-    //   [moveNemo]
-    // );
+
     const [, dropLeft] = useDrop(
       () => ({
         accept: ItemTypes.Nemo,
@@ -148,18 +129,18 @@ const Nemo = memo(
     }, [isDragging, setSomeDragging]);
 
     //드래그 리사이즈
-    const gridRatio = double ? 3 : 2;
+    const gridRatio = isLargerSize ? 3 : 2;
     const throttleGrid = _.throttle((newGrid) => {
       const { column, row } = newGrid;
       const newNemo = { ...nemo, column: column, row: row };
       // setNemo(newNemo);
       saveNemo(newNemo);
-    }, 50);
+    }, 100);
     useEffect(() => {
-      const width = sonRef.current.clientWidth;
-      const height = sonRef.current.clientHeight;
+      const width = rectRef.current.clientWidth;
+      const height = rectRef.current.clientHeight;
       setRect({ width, height });
-    }, [sonRef, nemo]);
+    }, [rectRef, nemo]);
     const [{ isResizing }, resizeRef] = useDrag(
       () => ({
         type: ItemTypes.Resize,
@@ -169,13 +150,13 @@ const Nemo = memo(
           width: rect && rect.width,
           height: rect && rect.height,
           throttleGrid,
-          double,
+          isLargerSize: isLargerSize,
         },
         collect: (monitor) => ({
           isResizing: monitor.isDragging(),
         }),
       }),
-      [nemo, rect, double, throttleGrid]
+      [nemo, rect, isLargerSize, throttleGrid]
     );
 
     const themeClass = darkTheme ? styles.dark : styles.light;
@@ -223,9 +204,11 @@ const Nemo = memo(
               title="카드를 삭제합니다."
             />
             <i
-              className={double ? 'fas fa-compress' : 'fas fa-expand'}
-              onClick={changeDouble}
-              title={double ? '이미지 크기를 축소합니다.' : '이미지 크기를 확대합니다.'}
+              className={isLargerSize ? 'fas fa-compress' : 'fas fa-expand'}
+              onClick={changeIsLargerSize}
+              title={
+                isLargerSize ? '이미지 크기를 축소합니다.' : '이미지 크기를 확대합니다.'
+              }
             />
             <i
               className={`fas fa-redo ${rotate && styles.rotate}`}
@@ -234,20 +217,27 @@ const Nemo = memo(
             />
           </div>
         )}
+        {!edit && (
+          <div
+            className={`${styles.title} ${themeClass}`}
+            ref={dragRef}
+            title="다른 카드 옆으로 드래그해서 위치를 변경합니다."
+          >
+            {/* <div ref={dropRef} className={styles.dropRef}></div> */}
+            {!inputToggle && (
+              <span
+                className={`${styles.span} ${themeClass}`}
+                style={{
+                  pointerEvents: 'none',
+                }}
+              >
+                {nemo && (nemo.nemoTitle || nemo.originTitle || '제목을 지어주세요!')}
+              </span>
+            )}
+          </div>
+        )}
         <div
-          className={`${styles.title} ${themeClass}`}
-          ref={dragRef}
-          title="다른 카드 옆으로 드래그해서 위치를 변경합니다."
-        >
-          {/* <div ref={dropRef} className={styles.dropRef}></div> */}
-          {!inputToggle && (
-            <span className={`${styles.span} ${themeClass}`} ref={spanRef}>
-              {nemo && (nemo.nemoTitle || nemo.originTitle || '제목을 지어주세요!')}
-            </span>
-          )}
-        </div>
-        <div
-          ref={sonRef}
+          ref={rectRef}
           className={styles.imgs}
           style={
             nemo && {
@@ -270,7 +260,8 @@ const Nemo = memo(
                   <Video
                     key={index}
                     video={video}
-                    double={double}
+                    isLargerSize={isLargerSize}
+                    gridRatio={gridRatio}
                     nemoPlayer={nemoPlayer}
                     darkTheme={darkTheme}
                   />
@@ -282,8 +273,8 @@ const Nemo = memo(
               <div
                 className={`${styles.btnDiv} ${themeClass}`}
                 style={{
-                  gridColumn: double ? `auto/span 3` : 'auto/span 2',
-                  gridRow: double ? `auto/span 3` : 'auto/span 2',
+                  gridColumn: isLargerSize ? `auto/span 3` : 'auto/span 2',
+                  gridRow: isLargerSize ? `auto/span 3` : 'auto/span 2',
                   width: '100%',
                 }}
               >
@@ -345,7 +336,13 @@ const Nemo = memo(
           )}
         </div>
 
-        <button className={`${styles.drag} ${themeClass}`} ref={resizeRef}>
+        <button
+          className={`${styles.drag} ${themeClass}`}
+          ref={resizeRef}
+          style={{
+            color: COLORS.mainColorL,
+          }}
+        >
           {isResizing && `${nemo.column}x${nemo.row}`}
         </button>
         <div

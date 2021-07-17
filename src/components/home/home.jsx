@@ -6,6 +6,8 @@ import Page from '../page/page';
 import Tab from '../tab/tab';
 import styles from './home.module.css';
 import { memo } from 'react';
+import Cloud from '../background/cloud';
+import Star from '../background/star';
 
 const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme }) => {
   const [sample, setSample] = useState({});
@@ -42,6 +44,8 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
           },
         })
       : dbService.addNemo(userId, selected.pageId, newNemo.nemoId, newNemo);
+    //샘플페이지수정용코드
+    // dbService.addNemo('sample', selected.pageId, newNemo.nemoId, newNemo);
   };
 
   const saveOrder = (id) => {
@@ -50,6 +54,8 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
       selected.isSample
         ? setOrder(newOrder)
         : dbService.setOrder(userId, selected.pageId, newOrder);
+      //샘플페이지수정용코드
+      // dbService.setOrder('sample', selected.pageId, newOrder);
     }
   };
   const addNemo = async () => {
@@ -58,7 +64,7 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
       nemoId: id,
       column: 5,
       row: 5,
-      double: false,
+      isLargerSize: false,
     };
     await saveNemo(newNemo);
     saveOrder(id);
@@ -145,6 +151,9 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
           },
         })
       : dbService.deleteNemo(userId, selected.pageId, channelId);
+    //샘플페이지수정용코드
+    // dbService.setOrder('sample', selected.pageId, newOrder);
+    // dbService.deleteNemo('sample', selected.pageId, channelId);
   };
   const editPage = () => {
     console.log('hi');
@@ -201,46 +210,25 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
           width: w,
           height: h,
           throttleGrid,
-          double,
+          isLargerSize,
         } = monitor.getItem();
         const { x, y } = monitor.getDifferenceFromInitialOffset();
-        let [nColumn, nRow] = [column, row];
+        let [newColumn, newRow] = [column, row];
         const [wPerColumn, hPerRow] = [w / column, h / row];
-        const gridRatio = double ? 3 : 2;
+        const gridRatio = isLargerSize ? 3 : 2;
 
-        // console.log(nRow, y, hPerRow, Math.round(y / hPerRow));
-        const SENS = 0.8;
-        nColumn += Math.round((x * SENS) / wPerColumn);
-        nRow += Math.round((y * SENS) / hPerRow);
+        const SENS = 1;
+        newColumn += Math.round((x * SENS) / wPerColumn);
+        newRow += Math.round((y * SENS) / hPerRow);
 
-        // const sensRatio = 0.1;
-        // if (x > wPerColumn * sensRatio) nColumn += Math.round(x / wPerColumn);
-        // if (y > hPerRow * sensRatio) nRow += Math.round(y / hPerRow);
-        // if (x < -wPerColumn * sensRatio) nColumn += Math.round(x / wPerColumn);
-        // if (y < -hPerRow * sensRatio) nRow += Math.round(y / hPerRow);
+        newColumn > 10 && (newColumn = 10);
+        newRow > 10 && (newRow = 10);
 
-        // if (double) {
-        //   if (nColumn % 3 !== 0) nColumn = nColumn + (3 - (nColumn % 3));
-        //   if (nRow % 3 !== 0) nRow = nRow + (3 - (nRow % 3));
-        // }
-        // if (!double) {
-        //   if (nColumn % 2 !== 0) nColumn = nColumn + (2 - (nColumn % 2));
-        //   if (nRow % 2 !== 0) nRow = nRow + (2 - (nRow % 2));
-        // }
-        // if (double) {
-        //   nColumn > 9 && (nColumn = 9);
-        //   nRow > 12 && (nRow = 12);
-        // }
-        // if (!double) {
-        //   nColumn > 10 && (nColumn = 10);
-        //   nRow > 12 && (nRow = 12);
-        // }
-        nColumn > 10 && (nColumn = 10);
-        nRow > 10 && (nRow = 10);
-        nColumn < gridRatio && (nColumn = gridRatio);
-        nRow < gridRatio && (nRow = gridRatio);
-
-        throttleGrid({ column: nColumn, row: nRow });
+        newColumn < gridRatio && (newColumn = gridRatio);
+        newRow < gridRatio && (newRow = gridRatio);
+        if (newColumn !== column || newRow !== row) {
+          throttleGrid({ column: newColumn, row: newRow });
+        }
       },
     }),
     []
@@ -250,6 +238,7 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
 
   return (
     <div ref={resizeDrop}>
+      <Star />
       <div className={styles.home}>
         <div className={styles.tab}>
           <div className={styles.sampleTab}>

@@ -19,7 +19,7 @@ const Tab = memo(
       setSelected({ pageId: page.id, isSample: isSampleTab ? true : false });
     };
     const selectedDark = selected.pageId === page.id ? COLORS.Dgrey1 : COLORS.Dgrey3;
-    const selectedLight = selected.pageId === page.id ? COLORS.Lgrey1 : COLORS.Lgrey3;
+    const selectedLight = selected.pageId === page.id ? COLORS.Dgrey1 : COLORS.Lgrey3;
     const selectedLightFont = selected.pageId === page.id ? COLORS.vWhite : COLORS.vBlack;
     const editOn = pageEdit ? styles.editOn : '';
     const [pageTitle, setPageTitle] = useState(

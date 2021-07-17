@@ -52,14 +52,15 @@ function App({ authService, dbService, youtube }) {
 
   return (
     <div className={`${styles.app} ${themeClass}`}>
+      <Header
+        user={user}
+        logOut={logOut}
+        darkTheme={darkTheme}
+        setDarkTheme={setDarkTheme}
+        authService={authService}
+        dbService={dbService}
+      />
       <DndProvider backend={HTML5Backend}>
-        <Header
-          user={user}
-          logOut={logOut}
-          darkTheme={darkTheme}
-          setDarkTheme={setDarkTheme}
-          dbService={dbService}
-        />
         <div
           style={{
             height: player && '90vh',

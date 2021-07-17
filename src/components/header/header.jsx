@@ -4,7 +4,7 @@ import styles from './header.module.css';
 import _ from 'lodash';
 import { memo } from 'react/cjs/react.production.min';
 import UserModal from './userModal';
-import DayNight from './dayNight';
+import DayNightSimple from './dayNightSimple';
 
 const Header = memo(
   ({ authService, user, logOut, darkTheme, setDarkTheme, dbService }) => {
@@ -53,7 +53,7 @@ const Header = memo(
               <Login authService={authService} />
             </div>
           )}
-          <DayNight darkTheme={darkTheme} themeToggle={themeToggle} />
+          <DayNightSimple darkTheme={darkTheme} themeToggle={themeToggle} />
         </div>
       </header>
     );

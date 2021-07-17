@@ -11,9 +11,9 @@ export const COLORS = {
   Lgrey4: 'rgb(252,252,252)',
 
   Dgrey1: 'rgb(10, 17, 30)',
-  Dgrey2: 'rgb(28, 32, 39)',
+  Dgrey2: 'rgb(34, 40, 49)',
   Dgrey3: 'rgb(52,59,66)',
-  Dgrey4: 'rgb(12, 18, 25)',
+  Dgrey4: 'rgb(22, 28, 35)',
 
   lineGrey: 'rgb(0,0,0)',
   fontGrey: 'rgb(144, 144, 144)',
