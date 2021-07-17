@@ -46,8 +46,8 @@ const PlayerPage = memo(({ nemo, player, youtube, darkTheme }) => {
   const [description, setDescription] = useState();
 
   useEffect(() => {
-    getComments(currentVideo.id.videoId);
-    getDescription(currentVideo.id.videoId);
+    getComments(currentVideo.videoId);
+    getDescription(currentVideo.videoId);
   }, [currentVideo, getComments, getDescription]);
   useEffect(() => {
     nemo.nemoId === player.nemoId && setCurrentVideo(player.video);
@@ -57,7 +57,9 @@ const PlayerPage = memo(({ nemo, player, youtube, darkTheme }) => {
 
   return (
     <div className={`${styles.page} ${themeClass}`}>
-      <div className={`${styles.nemoTitle} ${themeClass}`}>{nemo.nemoTitle}</div>
+      <div className={`${styles.nemoTitle} ${themeClass}`}>
+        {nemo.nemoTitle || nemo.originTitle}
+      </div>
       <div className={styles.grid}>
         <div
           className={styles.ytPlayer}
@@ -67,7 +69,7 @@ const PlayerPage = memo(({ nemo, player, youtube, darkTheme }) => {
         >
           <YouTube
             className={styles.videoPlayer}
-            videoId={currentVideo.id.videoId}
+            videoId={currentVideo.videoId}
             opts={{
               height: '100%',
               width: '100%',

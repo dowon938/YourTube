@@ -6,18 +6,18 @@ import styles from './playerVideo.module.css';
 const PlayerVideo = memo(
   ({ video, setCurrentVideo, currentVideo, getComments, getDescription, darkTheme }) => {
     const onChange = () => {
-      getDescription(video.id.videoId);
-      getComments(video.id.videoId);
+      getDescription(video.videoId);
+      getComments(video.videoId);
       setCurrentVideo(video);
     };
     const [isCurrent, setIsCurrent] = useState(
-      video.id.videoId === currentVideo.id.videoId ? true : false
+      video.videoId === currentVideo.videoId ? true : false
     );
 
     useEffect(() => {
-      if (video.id.videoId === currentVideo.id.videoId) setIsCurrent(true);
+      if (video.videoId === currentVideo.videoId) setIsCurrent(true);
       else setIsCurrent(false);
-    }, [currentVideo, video.id.videoId]);
+    }, [currentVideo, video.videoId]);
 
     const themeClass = darkTheme ? styles.dark : styles.light;
 

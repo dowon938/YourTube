@@ -37,23 +37,27 @@ const Header = memo(
         id="header"
         className={`${styles.header} ${themeClass} ${pageDown && styles.pageDown}`}
       >
-        <div className={styles.logo}>
-          <span className={styles.your}>Your</span>
-          <span className={styles.tube}>Tube</span>
-        </div>
-        <div className={styles.right}>
-          {user.uid ? (
-            <div className={styles.logOn}>
-              <i className={`fas fa-user ${styles.userIcon}`} onClick={userToggle} />
-              {toggle && <UserModal user={user} logOut={logOut} darkTheme={darkTheme} />}
-            </div>
-          ) : (
-            <div className={styles.login}>
-              <span className={styles.loginwith}>login with</span>
-              <Login authService={authService} />
-            </div>
-          )}
-          <DayNightSimple darkTheme={darkTheme} themeToggle={themeToggle} />
+        <div className={styles.container}>
+          <div className={styles.logo}>
+            <span className={styles.your}>Your</span>
+            <span className={styles.tube}>Tube</span>
+          </div>
+          <div className={styles.right}>
+            {user.uid ? (
+              <div className={styles.logOn}>
+                <i className={`fas fa-user ${styles.userIcon}`} onClick={userToggle} />
+                {toggle && (
+                  <UserModal user={user} logOut={logOut} darkTheme={darkTheme} />
+                )}
+              </div>
+            ) : (
+              <div className={styles.login}>
+                <span className={styles.loginwith}>login with</span>
+                <Login authService={authService} />
+              </div>
+            )}
+            <DayNightSimple darkTheme={darkTheme} themeToggle={themeToggle} />
+          </div>
         </div>
       </header>
     );

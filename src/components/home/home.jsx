@@ -6,7 +6,6 @@ import Page from '../page/page';
 import Tab from '../tab/tab';
 import styles from './home.module.css';
 import { memo } from 'react';
-import Cloud from '../background/cloud';
 import Star from '../background/star';
 
 const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme }) => {
@@ -217,7 +216,7 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
         const [wPerColumn, hPerRow] = [w / column, h / row];
         const gridRatio = isLargerSize ? 3 : 2;
 
-        const SENS = 1;
+        const SENS = 0.8;
         newColumn += Math.round((x * SENS) / wPerColumn);
         newRow += Math.round((y * SENS) / hPerRow);
 

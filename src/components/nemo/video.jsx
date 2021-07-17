@@ -5,7 +5,7 @@ import { useState } from 'react/cjs/react.development';
 import styles from './video.module.css';
 import { COLORS } from '../../common/colors';
 
-const Video = memo(({ video, isLargerSize, gridRatio, nemoPlayer, darkTheme }) => {
+const Video = memo(({ video, isLargerSize, flexRatio, nemoPlayer, darkTheme }) => {
   const [play, setPlay] = useState(false);
   const [vol, setVol] = useState(50);
   const [YT, setYT] = useState();
@@ -24,7 +24,7 @@ const Video = memo(({ video, isLargerSize, gridRatio, nemoPlayer, darkTheme }) =
   };
   const onReady = (e) => {
     e.target.playVideo();
-    // e.target.setVolume(50);
+    e.target.setVolume(40);
     setYT(e.target);
   };
   const changeVolume = (e) => {
@@ -38,9 +38,8 @@ const Video = memo(({ video, isLargerSize, gridRatio, nemoPlayer, darkTheme }) =
   return (
     <div
       style={{
-        gridColumn: `auto/span ${gridRatio}`,
-        gridRow: `auto/span ${gridRatio}`,
-        // width: flexRatio + '%',
+        width: flexRatio + '%',
+        padding: '0 0.1em',
       }}
     >
       <div

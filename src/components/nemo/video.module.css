@@ -5,23 +5,22 @@
   width: 100%;
   height: 0;
   padding-top: 56%;
-  overflow: hidden;
+  /* overflow: hidden; */
   transition: ease-in 180ms;
   border-radius: 4px;
 }
 .img {
-  width: 100%;
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
+  width: 100%;
+  /* top: 0; */
+  bottom: 0;
   transition: ease-in 180ms;
 }
 .title {
   padding-top: 0.3em;
   font-size: 0.8em;
   color: rgb(144, 144, 144);
-
+  height: 2.5em;
   transition: ease-in 180ms;
   font-weight: bold;
   overflow: hidden;
@@ -32,7 +31,7 @@
   -webkit-box-orient: vertical;
 }
 .container:hover .img {
-  transform: scale(1.03) translate(-49%, 0);
+  transform: scale(1.03);
 }
 
 .over {

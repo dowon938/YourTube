@@ -9,16 +9,10 @@
   z-index: 10;
   position: absolute;
   top: 5em;
-  right: 5em;
-  background-color: rgb(88, 88, 88);
+  right: 0;
+  background-color: Dgrey1;
   border-radius: 10px;
   box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.2);
-}
-.userModal.dark {
-  background-color: Dgrey1;
-}
-.userModal.light {
-  background-color: Dgrey1;
 }
 
 .userFlex {
@@ -55,7 +49,7 @@
 .triangle {
   position: absolute;
   top: -20px;
-  right: 10px;
+  right: 12px;
   background-color: transparent;
   border-top: 10px solid transparent;
   border-left: 10px solid transparent;

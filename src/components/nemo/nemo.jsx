@@ -241,13 +241,8 @@ const Nemo = memo(
           className={styles.imgs}
           style={
             nemo && {
-              gridTemplateColumns: `repeat(${
-                nemo.column - (nemo.column % gridRatio)
-              }, 1fr)`,
-              gridTemplateRows: `repeat(${nemo.row - (nemo.row % gridRatio)}, 1fr)`,
               border: isResizing ? `solid 2px ${COLORS.mainColorL}` : 'none',
               backgroundColor: darkTheme ? COLORS.Dgrey3 : COLORS.Lgrey3,
-              display: videos ? 'grid' : 'flex',
               zIndex: modalOn && 100,
             }
           }
@@ -261,9 +256,9 @@ const Nemo = memo(
                     key={index}
                     video={video}
                     isLargerSize={isLargerSize}
-                    gridRatio={gridRatio}
                     nemoPlayer={nemoPlayer}
                     darkTheme={darkTheme}
+                    flexRatio={100 / parseInt(nemo.column / gridRatio)}
                   />
                 )
             )}
