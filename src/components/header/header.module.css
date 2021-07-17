@@ -1,7 +1,7 @@
 @value mainColor,Dgrey1,Lgrey1,vWhite from '/src/common/colors.css';
 
 .header {
-  width: 100%;
+  width: 88vw;
   max-width: 1200px;
   margin: auto;
   padding: 0.4em;

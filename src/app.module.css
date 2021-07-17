@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;1,400&family=Pacifico&display=swap');
 @value mainColor,mainHover,Lgrey1,Lgrey2,Lgrey3,Lgrey4,Dgrey1,Dgrey2,Dgrey3,Dgrey4,lineGrey,fontGrey,fontHover,hoverGrey,vWhite,vBlack,vTrans from '/src/common/colors.css';
 
+html {
+  scroll-behavior: smooth;
+}
 .app {
   background-color: Lgrey3;
   transition: ease-in 300ms;
