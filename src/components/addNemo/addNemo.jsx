@@ -117,7 +117,7 @@ const AddNemo = ({
         )}
         {modalOn === 'playList' && !list && (
           <div className={styles.explain}>
-            예시)
+            **재생목록 설정이 '나만보기(private)'일 경우 등록이 불가합니다.
             <img src="/imgs/playList.png" alt="playlist Explain" />
           </div>
         )}

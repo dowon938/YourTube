@@ -16,7 +16,7 @@
 }
 .grid {
   display: grid;
-  min-width: 25vw;
+  min-width: 600px;
   max-height: 60vh;
   overflow-y: scroll;
   grid-template-columns: repeat(3, 1fr);
@@ -88,7 +88,7 @@
   opacity: 0;
 }
 .explain {
-  font-size: 0.8em;
+  font-size: 1em;
   color: rgb(144, 144, 144);
 }
 .explain img {

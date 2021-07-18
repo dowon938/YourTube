@@ -327,11 +327,14 @@
   0% {
     transform: scale(0);
   }
-  70% {
+  60% {
     transform: scale(0);
   }
-  100% {
+  80% {
     transform: scale(1);
+  }
+  100% {
+    transform: scale(1) rotate(60deg);
   }
 }
 @keyframes rayDown {

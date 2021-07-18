@@ -8,7 +8,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from '../../utils/items';
 import { memo } from 'react';
 import AddNemo from '../addNemo/addNemo';
-import { useCallback } from 'react';
+import _ from 'lodash';
 
 const Nemo = memo(
   ({
@@ -128,14 +128,11 @@ const Nemo = memo(
     //드래그 리사이즈
     const gridRatio = isLargerSize ? 3 : 2;
 
-    const saveGrid = useCallback(
-      (newGrid) => {
-        const { column, row } = newGrid;
-        const newNemo = { ...nemo, column: column, row: row };
-        saveNemo(newNemo, { column, row });
-      },
-      [nemo, saveNemo]
-    );
+    const saveGrid = _.throttle((newGrid) => {
+      const { column, row } = newGrid;
+      const newNemo = { ...nemo, column: column, row: row };
+      saveNemo(newNemo, { column, row });
+    }, 50);
 
     useEffect(() => {
       const width = ref.current.clientWidth;

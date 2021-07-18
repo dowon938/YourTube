@@ -3,8 +3,6 @@ import { useState } from 'react';
 import { useEffect } from 'react/cjs/react.development';
 import Nemo from '../nemo/nemo';
 import styles from './page.module.css';
-import { useDrop } from 'react-dnd';
-import { ItemTypes } from '../../utils/items';
 
 const Page = memo(
   ({

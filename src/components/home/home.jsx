@@ -214,6 +214,7 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
 
       newColumn += Math.round(x / wPerColumn);
       newRow += Math.round(y / hPerRow);
+
       if (newColumn === column && newRow === row) return;
       if (newColumn > 10) return;
       if (newRow > 10) return;
