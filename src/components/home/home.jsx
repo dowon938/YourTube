@@ -33,23 +33,12 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
     dbService.addPages(userId, pageId, newPage);
   };
 
-  const saveNemo = (newNemo, column, row) => {
-    // console.log(sample[selected.pageId].nemos[newNemo.nemoId]);
-    if (
-      selected.isSample &&
-      column === sample[selected.pageId].nemos[newNemo.nemoId].column
-    ) {
-      console.log('same', column);
-    }
-    selected.isSample
-      ? setSample({
-          ...sample,
-          [selected.pageId]: {
-            ...sample[selected.pageId],
-            nemos: { ...sample[selected.pageId].nemos, [newNemo.nemoId]: newNemo },
-          },
-        })
-      : dbService.addNemo(userId, selected.pageId, newNemo.nemoId, newNemo);
+  const saveNemo = (newNemo) => {
+    if (selected.isSample) {
+      const newSample = { ...sample };
+      newSample[selected.pageId].nemos[newNemo.nemoId] = newNemo;
+      setSample(newSample);
+    } else dbService.addNemo(userId, selected.pageId, newNemo.nemoId, newNemo);
     //샘플페이지수정용코드
     // dbService.addNemo('sample', selected.pageId, newNemo.nemoId, newNemo);
   };
@@ -142,21 +131,20 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
       saveNemo(newNemo);
     });
   };
-  const deleteNemo = (channelId) => {
+  const deleteNemo = (id) => {
     const newOrder = [...order];
-    newOrder.splice(newOrder.indexOf(channelId), 1);
+    console.log(newOrder.indexOf(id), newOrder);
+    newOrder.splice(newOrder.indexOf(id), 1);
+    console.log(newOrder, order);
     selected.isSample
-      ? setOrder(newOrder)
+      ? setOrder([...newOrder])
       : dbService.setOrder(userId, selected.pageId, newOrder);
-    selected.isSample
-      ? setSample({
-          ...sample,
-          [selected.pageId]: {
-            ...sample[selected.pageId],
-            nemos: { ...sample[selected.pageId].nemos, [channelId]: undefined },
-          },
-        })
-      : dbService.deleteNemo(userId, selected.pageId, channelId);
+    if (selected.isSample) {
+      const newSample = { ...sample };
+      delete newSample[selected.pageId].nemos[id];
+      newSample[selected.pageId].order = [...newOrder];
+      setSample(newSample);
+    } else dbService.deleteNemo(userId, selected.pageId, id);
     //샘플페이지수정용코드
     // dbService.setOrder('sample', selected.pageId, newOrder);
     // dbService.deleteNemo('sample', selected.pageId, channelId);
@@ -166,24 +154,6 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
     setPageEdit((pageEdit) => !pageEdit);
   };
 
-  //샘플만들기
-  // useEffect(() => {
-  //   const makeSample = () => {
-  //     const sample1 = dbService.addPages('sample', 'self-develop', {
-  //       id: 'self-develop',
-  //       pageTitle: 'self-develop',
-  //     });
-  //     const sample2 = dbService.addPages('sample', 'work-out', {
-  //       id: 'work-out',
-  //       pageTitle: 'work-out',
-  //     });
-  //     const sample3 = dbService.addPages('sample', 'daily-routine', {
-  //       id: 'daily-routine',
-  //       pageTitle: 'daily-routine',
-  //     });
-  //   };
-  //   // makeSample();
-  // }, [userId]);
   useEffect(() => {
     !userId && setPages({});
     const stopRead = dbService.readPages(userId, setPages);

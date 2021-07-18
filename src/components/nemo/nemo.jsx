@@ -139,7 +139,7 @@ const Nemo = memo(
       findGrid(nemo.nemoId);
       const newNemo = { ...nemo, column: column, row: row };
       // setNemo(newNemo);
-      saveNemo(newNemo);
+      saveNemo(newNemo, column);
     }, 50);
     useEffect(() => {
       const width = rectRef.current.clientWidth;
@@ -165,12 +165,13 @@ const Nemo = memo(
     );
 
     const themeClass = darkTheme ? styles.dark : styles.light;
-
+    const ref = useRef();
+    previewRef(ref);
     return (
       <div
         id={nemo && nemo.nemoId}
         className={styles.nemo}
-        ref={previewRef}
+        ref={ref}
         style={{
           opacity: isDragging ? '0.3' : '1',
           gridColumn: nemo && `auto/span ${nemo.column}`,
@@ -275,7 +276,7 @@ const Nemo = memo(
                 style={{
                   gridColumn: isLargerSize ? `auto/span 3` : 'auto/span 2',
                   gridRow: isLargerSize ? `auto/span 3` : 'auto/span 2',
-                  width: '100%',
+                  width: 100 / parseInt(nemo.column / gridRatio) + '%',
                 }}
               >
                 <button
