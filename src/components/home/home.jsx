@@ -33,7 +33,14 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
     dbService.addPages(userId, pageId, newPage);
   };
 
-  const saveNemo = (newNemo) => {
+  const saveNemo = (newNemo, column, row) => {
+    // console.log(sample[selected.pageId].nemos[newNemo.nemoId]);
+    if (
+      selected.isSample &&
+      column === sample[selected.pageId].nemos[newNemo.nemoId].column
+    ) {
+      console.log('same', column);
+    }
     selected.isSample
       ? setSample({
           ...sample,
@@ -177,7 +184,6 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
   //   };
   //   // makeSample();
   // }, [userId]);
-
   useEffect(() => {
     !userId && setPages({});
     const stopRead = dbService.readPages(userId, setPages);
@@ -198,40 +204,40 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
   }, [userId, selected, dbService]);
 
   //리사이즈 드랍
-  const [, resizeDrop] = useDrop(
-    () => ({
-      accept: ItemTypes.Resize,
-      canDrop: () => false,
-      hover(item, monitor) {
-        const {
-          column,
-          row,
-          width: w,
-          height: h,
-          throttleGrid,
-          isLargerSize,
-        } = monitor.getItem();
-        const { x, y } = monitor.getDifferenceFromInitialOffset();
-        let [newColumn, newRow] = [column, row];
-        const [wPerColumn, hPerRow] = [w / column, h / row];
-        const gridRatio = isLargerSize ? 3 : 2;
 
-        const SENS = 0.8;
-        newColumn += Math.round((x * SENS) / wPerColumn);
-        newRow += Math.round((y * SENS) / hPerRow);
+  const [, resizeDrop] = useDrop(() => ({
+    accept: ItemTypes.Resize,
+    canDrop: () => false,
+    hover(item, monitor) {
+      const {
+        column,
+        row,
+        width: w,
+        height: h,
+        throttleGrid,
+        isLargerSize,
+      } = monitor.getItem();
+      const { x, y } = monitor.getDifferenceFromInitialOffset();
+      let [newColumn, newRow] = [column, row];
+      const [wPerColumn, hPerRow] = [w / column, h / row];
+      const gridRatio = isLargerSize ? 3 : 2;
 
-        newColumn > 10 && (newColumn = 10);
-        newRow > 10 && (newRow = 10);
+      const SENS = 0.9;
 
-        newColumn < gridRatio && (newColumn = gridRatio);
-        newRow < gridRatio && (newRow = gridRatio);
-        if (newColumn !== column || newRow !== row) {
-          throttleGrid({ column: newColumn, row: newRow });
-        }
-      },
-    }),
-    []
-  );
+      newColumn += Math.round((x * SENS) / wPerColumn);
+      newRow += Math.round((y * SENS) / hPerRow);
+      if (newColumn > 10) return;
+      if (newRow > 10) return;
+      if (newColumn < gridRatio) return;
+      if (newRow < gridRatio) return;
+
+      // console.log(x, column, newColumn);
+
+      if (newColumn !== column || newRow !== row) {
+        throttleGrid({ column: newColumn, row: newRow });
+      }
+    },
+  }));
 
   const themeClass = darkTheme ? styles.dark : styles.light;
 

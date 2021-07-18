@@ -47,6 +47,7 @@ const Page = memo(
     const moveNemo = useCallback(
       (nemoId, toIndex) => {
         const index = order.indexOf(nemoId);
+        if (index === toIndex) return;
         let newOrder = [...order];
         newOrder.splice(index, 1);
         newOrder.splice(toIndex, 0, nemoId);
@@ -56,6 +57,12 @@ const Page = memo(
       },
       [order, setOrder, dbService, isSample, pageId, userId]
     );
+
+    const findGrid = (id) => {
+      const { column, row } = findPage.nemos[id];
+      // console.log(' ', column);
+      // console.log(findPage.nemos[id]);
+    };
 
     const [, drop] = useDrop(() => ({ accept: ItemTypes.Nemo }));
     const themeClass = darkTheme ? styles.dark : styles.light;
@@ -74,13 +81,13 @@ const Page = memo(
         <div className={styles.grid}>
           {findPage &&
             order &&
-            order.map((chId, index) => (
+            order.map((id, index) => (
               // console.log(findPage.nemos[chId].videos)
               <Nemo
-                key={chId}
+                key={id}
                 index={index}
-                id={chId}
-                nemo={findPage.nemos[chId]}
+                id={id}
+                nemo={findPage.nemos[id]}
                 edit={edit}
                 saveNemo={saveNemo}
                 deleteNemo={deleteNemo}
@@ -94,6 +101,7 @@ const Page = memo(
                 youtube={youtube}
                 addPlayList={addPlayList}
                 addVideo={addVideo}
+                findGrid={findGrid}
               />
             ))}
         </div>

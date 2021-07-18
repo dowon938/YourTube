@@ -28,8 +28,10 @@ const Nemo = memo(
     addChannel,
     addPlayList,
     addVideo,
+    findGrid,
   }) => {
     // const [nemo, setNemo] = useState(nemoPre);
+    // const [grid, setGrid] = useState({ column: nemo.column, row: nemo.row });
     const [inputToggle, setInputToggle] = useState(false);
     const [rect, setRect] = useState(null);
     const [videos, setVideos] = useState();
@@ -37,7 +39,7 @@ const Nemo = memo(
     const [rotate, setRotate] = useState(false);
     const [modalOn, setModalOn] = useState(false);
     const [nemoTitle, setNemoTitle] = useState(
-      Nemo && (nemo.nemoTitle ? nemo.nemoTitle : '')
+      nemo && (nemo.nemoTitle ? nemo.nemoTitle : '')
     );
 
     const rectRef = useRef();
@@ -105,9 +107,9 @@ const Nemo = memo(
         accept: ItemTypes.Nemo,
         canDrop: () => false,
         hover({ id: draggedId, index: orgIndex }) {
-          if (draggedId !== id) {
-            moveNemo(draggedId, index);
-          }
+          if (draggedId === id) return;
+          if (orgIndex === index - 1) return;
+          moveNemo(draggedId, index);
         },
       }),
       [moveNemo]
@@ -117,9 +119,9 @@ const Nemo = memo(
         accept: ItemTypes.Nemo,
         canDrop: () => false,
         hover({ id: draggedId, index: orgIndex }) {
-          if (draggedId !== id) {
-            orgIndex !== index + 1 && moveNemo(draggedId, index + 1);
-          }
+          if (draggedId === id) return;
+          if (orgIndex === index + 1) return;
+          moveNemo(draggedId, index + 1);
         },
       }),
       [moveNemo]
@@ -130,17 +132,20 @@ const Nemo = memo(
 
     //드래그 리사이즈
     const gridRatio = isLargerSize ? 3 : 2;
+
     const throttleGrid = _.throttle((newGrid) => {
       const { column, row } = newGrid;
+      console.log(column, nemo.column);
+      findGrid(nemo.nemoId);
       const newNemo = { ...nemo, column: column, row: row };
       // setNemo(newNemo);
       saveNemo(newNemo);
-    }, 100);
+    }, 50);
     useEffect(() => {
       const width = rectRef.current.clientWidth;
       const height = rectRef.current.clientHeight;
       setRect({ width, height });
-    }, [rectRef, nemo]);
+    }, [setRect, nemo]);
     const [{ isResizing }, resizeRef] = useDrag(
       () => ({
         type: ItemTypes.Resize,
