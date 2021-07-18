@@ -39,7 +39,6 @@ const Page = memo(
       findPage && nemoId && videoId && onPlayer(findPage, nemoId, videoId);
     };
 
-    const editOn = edit ? styles.editOn : '';
     //드래그 앤 드랍
     const moveNemo = useCallback(
       (nemoId, toIndex) => {
@@ -53,11 +52,11 @@ const Page = memo(
       [findPage, saveOrder]
     );
 
-    const [, drop] = useDrop(() => ({ accept: ItemTypes.Nemo }));
     const themeClass = darkTheme ? styles.dark : styles.light;
+    const editOn = edit ? styles.editOn : '';
 
     return (
-      <div className={`${styles.page} ${themeClass}`} ref={drop}>
+      <div className={`${styles.page} ${themeClass}`}>
         <div className={styles.menuBar}>
           <button className={`${styles.plus} ${themeClass}`} onClick={addNemo}>
             <div className={`${styles.hv} ${darkTheme && styles.dk}`} /> + 네모 만들기!

@@ -7,6 +7,7 @@ import Tab from '../tab/tab';
 import styles from './home.module.css';
 import { memo } from 'react';
 import Star from '../background/star';
+import { useRef } from 'react/cjs/react.development';
 
 const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme }) => {
   const [sample, setSample] = useState({});
@@ -223,10 +224,15 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
     },
   }));
 
+  const [, drop] = useDrop(() => ({ accept: ItemTypes.Nemo }));
+  const ref = useRef();
+  resizeDrop(ref);
+  drop(ref);
+
   const themeClass = darkTheme ? styles.dark : styles.light;
 
   return (
-    <div ref={resizeDrop}>
+    <div ref={ref}>
       <Star />
       <div className={styles.home}>
         <div className={styles.tab}>
