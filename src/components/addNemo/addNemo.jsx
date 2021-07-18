@@ -31,7 +31,7 @@ const AddNemo = ({
       youtube.search(value).then((channels) => setList(channels));
     if (modalOn === 'playList') {
       const playlistIdFromUrl =
-        value.split('list=').length > 1 ? value.split('list=')[1].split('&')[0] : false;
+        value.split('list=').length > 0 ? value.split('list=')[1].split('&')[0] : false;
       if (!playlistIdFromUrl) {
         console.log('List Id가 발견되지 않았습니다.');
         return;

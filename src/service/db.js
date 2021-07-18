@@ -10,6 +10,9 @@ class DbService {
   addPages(userId, pageId, pageFormat) {
     firebaseDatabase.ref(`${userId}/pages/${pageId}`).set(pageFormat);
   }
+  setPages(userId, newPages) {
+    firebaseDatabase.ref(`${userId}/pages/`).set(newPages);
+  }
   deletePages(userId, pageId) {
     firebaseDatabase.ref(`${userId}/pages/${pageId}`).remove();
   }

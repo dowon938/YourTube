@@ -28,7 +28,6 @@ const Nemo = memo(
     addChannel,
     addPlayList,
     addVideo,
-    findGrid,
   }) => {
     // const [nemo, setNemo] = useState(nemoPre);
     // const [grid, setGrid] = useState({ column: nemo.column, row: nemo.row });
@@ -46,7 +45,6 @@ const Nemo = memo(
 
     const onDelete = (e) => {
       deleteNemo(nemo.nemoId);
-      console.log(nemo);
     };
     const onChange = (e) => {
       setNemoTitle(e.target.value);
@@ -121,7 +119,7 @@ const Nemo = memo(
         hover({ id: draggedId, index: orgIndex }) {
           if (draggedId === id) return;
           if (orgIndex === index + 1) return;
-          moveNemo(draggedId, index + 1);
+          moveNemo(draggedId, index + 1, nemo);
         },
       }),
       [moveNemo]
@@ -135,12 +133,10 @@ const Nemo = memo(
 
     const throttleGrid = _.throttle((newGrid) => {
       const { column, row } = newGrid;
-      console.log(column, nemo.column);
-      findGrid(nemo.nemoId);
       const newNemo = { ...nemo, column: column, row: row };
-      // setNemo(newNemo);
-      saveNemo(newNemo, column);
+      saveNemo(newNemo, { column, row });
     }, 50);
+
     useEffect(() => {
       const width = rectRef.current.clientWidth;
       const height = rectRef.current.clientHeight;
@@ -155,7 +151,7 @@ const Nemo = memo(
           width: rect && rect.width,
           height: rect && rect.height,
           throttleGrid,
-          isLargerSize: isLargerSize,
+          gridRatio,
         },
         collect: (monitor) => ({
           isResizing: monitor.isDragging(),
@@ -274,9 +270,8 @@ const Nemo = memo(
               <div
                 className={`${styles.btnDiv} ${themeClass}`}
                 style={{
-                  gridColumn: isLargerSize ? `auto/span 3` : 'auto/span 2',
-                  gridRow: isLargerSize ? `auto/span 3` : 'auto/span 2',
                   width: 100 / parseInt(nemo.column / gridRatio) + '%',
+                  height: 'auto',
                 }}
               >
                 <button
@@ -312,14 +307,14 @@ const Nemo = memo(
                   재생목록 추가
                 </button>
               </div>
-              <div className={`${styles.btnDiv} ${themeClass}`}>
+              {/* <div className={`${styles.btnDiv} ${themeClass}`}>
                 <button
                   className={`${styles.videoBtn} ${themeClass}`}
                   onClick={() => setModalOn('video')}
                 >
                   영상 추가
                 </button>
-              </div>
+              </div> */}
             </div>
           )}
           {modalOn && (

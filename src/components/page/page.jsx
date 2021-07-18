@@ -8,17 +8,14 @@ import { ItemTypes } from '../../utils/items';
 
 const Page = memo(
   ({
-    userId,
     pageId,
     isSample,
     sample,
     pages,
-    order,
-    setOrder,
-    dbService,
     youtube,
     addNemo,
     saveNemo,
+    saveOrder,
     deleteNemo,
     onPlayer,
     darkTheme,
@@ -26,12 +23,12 @@ const Page = memo(
     addPlayList,
     addVideo,
   }) => {
-    const [findPage, setFindPage] = useState(false);
+    const [findPage, setFindPage] = useState(isSample ? sample[pageId] : pages[pageId]);
     const [edit, setEdit] = useState(false);
     const [someDragging, setSomeDragging] = useState(false);
     useEffect(() => {
-      sample[pageId] ? setFindPage(sample[pageId]) : setFindPage(pages[pageId]);
-    }, [pageId, sample, pages]);
+      isSample ? setFindPage(sample[pageId]) : setFindPage(pages[pageId]);
+    }, [pageId, sample, pages, isSample]);
 
     const onEdit = (event) => {
       setEdit((edit) => !edit);
@@ -46,23 +43,17 @@ const Page = memo(
     //드래그 앤 드랍
     const moveNemo = useCallback(
       (nemoId, toIndex) => {
-        const index = order.indexOf(nemoId);
+        const index = findPage.order.indexOf(nemoId);
         if (index === toIndex) return;
-        let newOrder = [...order];
+        let newOrder = [...findPage.order];
         newOrder.splice(index, 1);
         newOrder.splice(toIndex, 0, nemoId);
-        isSample ? setOrder(newOrder) : dbService.setOrder(userId, pageId, newOrder);
+        saveOrder(newOrder);
         //샘플페이지수정용코드
         // dbService.setOrder('sample', pageId, newOrder);
       },
-      [order, setOrder, dbService, isSample, pageId, userId]
+      [findPage, saveOrder]
     );
-
-    const findGrid = (id) => {
-      const { column, row } = findPage.nemos[id];
-      // console.log(' ', column);
-      // console.log(findPage.nemos[id]);
-    };
 
     const [, drop] = useDrop(() => ({ accept: ItemTypes.Nemo }));
     const themeClass = darkTheme ? styles.dark : styles.light;
@@ -80,8 +71,8 @@ const Page = memo(
         </div>
         <div className={styles.grid}>
           {findPage &&
-            order &&
-            order.map((id, index) => (
+            findPage.order !== undefined &&
+            findPage.order.map((id, index) => (
               // console.log(findPage.nemos[chId].videos)
               <Nemo
                 key={id}
@@ -101,7 +92,6 @@ const Page = memo(
                 youtube={youtube}
                 addPlayList={addPlayList}
                 addVideo={addVideo}
-                findGrid={findGrid}
               />
             ))}
         </div>
