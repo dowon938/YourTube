@@ -135,7 +135,7 @@ const Nemo = memo(
 
     const throttleGrid = _.throttle((newGrid) => {
       const { column, row } = newGrid;
-      // console.log(column, nemo.column);
+      console.log(column, nemo.column);
       findGrid(nemo.nemoId);
       const newNemo = { ...nemo, column: column, row: row };
       // setNemo(newNemo);
