@@ -171,14 +171,14 @@
     right: 0;
     opacity: 0;
   }
-  40% {
+  30% {
     width: 0.55em;
     height: 0.55em;
     top: 0;
     right: 0;
     opacity: 0;
   }
-  60% {
+  50% {
     width: 1.55em;
     height: 1.55em;
     top: 0.76em;
@@ -210,7 +210,7 @@
     opacity: 1;
     background-color: hsl(206, 30%, 75%);
   }
-  40% {
+  30% {
     width: 1.55em;
     height: 1.55em;
     top: 0.76em;
@@ -218,7 +218,7 @@
     opacity: 1;
     background-color: hsl(206, 30%, 75%);
   }
-  60% {
+  45% {
     width: 0.55em;
     height: 0.55em;
     background-color: hsl(206, 30%, 75%);
@@ -240,19 +240,19 @@
     height: 1em;
     opacity: 1;
   }
-  40% {
+  30% {
     width: 2em;
     height: 2em;
     opacity: 1;
     background-color: white;
   }
-  60% {
+  45% {
     width: 2em;
     height: 2em;
     opacity: 1;
     background-color: white;
   }
-  65% {
+  50% {
     width: 2em;
     height: 2em;
     opacity: 0;
@@ -271,11 +271,11 @@
     transform: translate(-53%, -53%) rotate(-25deg);
     opacity: 0;
   }
-  60% {
+  40% {
     transform: translate(-53%, -53%) rotate(-25deg);
     opacity: 0;
   }
-  65% {
+  49% {
     transform: translate(-53%, -53%) rotate(-25deg);
     opacity: 1;
   }

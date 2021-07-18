@@ -187,8 +187,8 @@
   border-right-color: Dgrey2;
 }
 .drag.light {
-  border-bottom-color: Lgrey2;
-  border-right-color: Lgrey2;
+  border-bottom-color: hsl(150, 50%, 65%);
+  border-right-color: hsl(150, 50%, 65%);
 }
 .drag.dark:hover,
 .drag.light:hover {

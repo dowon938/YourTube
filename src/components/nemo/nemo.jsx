@@ -6,9 +6,9 @@ import { COLORS } from '../../common/colors';
 
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from '../../utils/items';
-import _ from 'lodash';
 import { memo } from 'react';
 import AddNemo from '../addNemo/addNemo';
+import { useCallback } from 'react';
 
 const Nemo = memo(
   ({
@@ -16,23 +16,22 @@ const Nemo = memo(
     index,
     nemo,
     edit,
-    deleteNemo,
     saveNemo,
+    deleteNemo,
     moveNemo,
     addNemo,
     pagePlayer,
     someDragging,
     setSomeDragging,
     darkTheme,
-    youtube,
     addChannel,
+    youtube,
     addPlayList,
     addVideo,
   }) => {
-    // const [nemo, setNemo] = useState(nemoPre);
-    // const [grid, setGrid] = useState({ column: nemo.column, row: nemo.row });
     const [inputToggle, setInputToggle] = useState(false);
     const [rect, setRect] = useState(null);
+    const ref = useRef();
     const [videos, setVideos] = useState();
     const [isLargerSize, setIsLargerSize] = useState();
     const [rotate, setRotate] = useState(false);
@@ -40,8 +39,6 @@ const Nemo = memo(
     const [nemoTitle, setNemoTitle] = useState(
       nemo && (nemo.nemoTitle ? nemo.nemoTitle : '')
     );
-
-    const rectRef = useRef();
 
     const onDelete = (e) => {
       deleteNemo(nemo.nemoId);
@@ -131,17 +128,21 @@ const Nemo = memo(
     //드래그 리사이즈
     const gridRatio = isLargerSize ? 3 : 2;
 
-    const throttleGrid = _.throttle((newGrid) => {
-      const { column, row } = newGrid;
-      const newNemo = { ...nemo, column: column, row: row };
-      saveNemo(newNemo, { column, row });
-    }, 50);
+    const saveGrid = useCallback(
+      (newGrid) => {
+        const { column, row } = newGrid;
+        const newNemo = { ...nemo, column: column, row: row };
+        saveNemo(newNemo, { column, row });
+      },
+      [nemo, saveNemo]
+    );
 
     useEffect(() => {
-      const width = rectRef.current.clientWidth;
-      const height = rectRef.current.clientHeight;
+      const width = ref.current.clientWidth;
+      const height = ref.current.clientHeight;
       setRect({ width, height });
     }, [setRect, nemo]);
+
     const [{ isResizing }, resizeRef] = useDrag(
       () => ({
         type: ItemTypes.Resize,
@@ -150,18 +151,17 @@ const Nemo = memo(
           row: nemo && nemo.row,
           width: rect && rect.width,
           height: rect && rect.height,
-          throttleGrid,
+          saveGrid,
           gridRatio,
         },
         collect: (monitor) => ({
           isResizing: monitor.isDragging(),
         }),
       }),
-      [nemo, rect, isLargerSize, throttleGrid]
+      [nemo, rect, isLargerSize, saveGrid]
     );
 
     const themeClass = darkTheme ? styles.dark : styles.light;
-    const ref = useRef();
     previewRef(ref);
     return (
       <div
@@ -225,7 +225,6 @@ const Nemo = memo(
             ref={dragRef}
             title="다른 카드 옆으로 드래그해서 위치를 변경합니다."
           >
-            {/* <div ref={dropRef} className={styles.dropRef}></div> */}
             {!inputToggle && (
               <span
                 className={`${styles.span} ${themeClass}`}
@@ -233,13 +232,21 @@ const Nemo = memo(
                   pointerEvents: 'none',
                 }}
               >
+                <i
+                  // className="fas fa-circle"
+                  className="fas fa-star-of-life"
+                  style={{
+                    color: `${darkTheme ? COLORS.Dgrey3 : COLORS.Lgrey2}`,
+                    marginRight: '1em',
+                    fontSize: '0.5em',
+                  }}
+                />
                 {nemo && (nemo.nemoTitle || nemo.originTitle || '제목을 지어주세요!')}
               </span>
             )}
           </div>
         )}
         <div
-          ref={rectRef}
           className={styles.imgs}
           style={
             nemo && {
@@ -307,14 +314,6 @@ const Nemo = memo(
                   재생목록 추가
                 </button>
               </div>
-              {/* <div className={`${styles.btnDiv} ${themeClass}`}>
-                <button
-                  className={`${styles.videoBtn} ${themeClass}`}
-                  onClick={() => setModalOn('video')}
-                >
-                  영상 추가
-                </button>
-              </div> */}
             </div>
           )}
           {modalOn && (

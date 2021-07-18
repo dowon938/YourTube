@@ -13,12 +13,22 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
   const [pages, setPages] = useState({});
   const [selected, setSelected] = useState({ pageId: 'daily-routine', isSample: true });
   const [pageEdit, setPageEdit] = useState(false);
+  useEffect(() => {
+    !userId && setPages({});
+    const stopRead = dbService.readPages(userId, setPages);
+    console.log('readPage');
+    return () => stopRead();
+  }, [userId, dbService]);
+  useEffect(() => {
+    const stopRead = dbService.readPages('sample', setSample);
+    console.log('readSample');
+    return () => stopRead();
+  }, [dbService]);
 
-  const isSampleTab = useState(true);
   const addPage = () => {
     const id = Date.now();
     dbService.addPages(userId, id, {
-      pageTitle: '"No Name"',
+      pageTitle: '이름이 필요해요⇒',
       id: `${id}`,
     });
   };
@@ -188,43 +198,15 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
   };
 
   const editPage = () => {
-    console.log('hi');
     setPageEdit((pageEdit) => !pageEdit);
   };
 
-  useEffect(() => {
-    !userId && setPages({});
-    const stopRead = dbService.readPages(userId, setPages);
-    console.log('readPage');
-    return () => stopRead();
-  }, [userId, dbService]);
-  useEffect(() => {
-    const stopRead = dbService.readPages('sample', setSample);
-    console.log('readSample');
-    return () => stopRead();
-  }, [dbService]);
-  // useEffect(() => {
-  //   const stopRead = selected.isSample
-  //     ? dbService.readOrder('sample', selected.pageId, setOrder)
-  //     : dbService.readOrder(userId, selected.pageId, setOrder);
-  //   console.log('order');
-  //   return () => stopRead();
-  // }, [userId, selected, dbService]);
-
   //리사이즈 드랍
-
   const [, resizeDrop] = useDrop(() => ({
     accept: ItemTypes.Resize,
     canDrop: () => false,
     hover(item, monitor) {
-      const {
-        column,
-        row,
-        width: w,
-        height: h,
-        throttleGrid,
-        gridRatio,
-      } = monitor.getItem();
+      const { column, row, width: w, height: h, saveGrid, gridRatio } = monitor.getItem();
       const { x, y } = monitor.getDifferenceFromInitialOffset();
       let [newColumn, newRow] = [column, row];
       const [wPerColumn, hPerRow] = [w / column, h / row];
@@ -237,7 +219,7 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
       if (newColumn < gridRatio) return;
       if (newRow < gridRatio) return;
 
-      throttleGrid({ column: newColumn, row: newRow });
+      saveGrid({ column: newColumn, row: newRow });
     },
   }));
 
@@ -255,8 +237,8 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
                 page={sample[pageId]}
                 setSelected={setSelected}
                 selected={selected}
-                isSampleTab={isSampleTab}
                 darkTheme={darkTheme}
+                isSampleTab
               />
             ))}
           </div>
@@ -294,14 +276,12 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
             isSample={selected.isSample}
             sample={sample}
             pages={pages}
-            dbService={dbService}
             youtube={youtube}
             addNemo={addNemo}
-            deleteNemo={deleteNemo}
             saveNemo={saveNemo}
             saveOrder={saveOrder}
+            deleteNemo={deleteNemo}
             onPlayer={onPlayer}
-            setPlayer={setPlayer}
             darkTheme={darkTheme}
             addChannel={addChannel}
             addPlayList={addPlayList}

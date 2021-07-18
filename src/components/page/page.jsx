@@ -49,8 +49,6 @@ const Page = memo(
         newOrder.splice(index, 1);
         newOrder.splice(toIndex, 0, nemoId);
         saveOrder(newOrder);
-        //샘플페이지수정용코드
-        // dbService.setOrder('sample', pageId, newOrder);
       },
       [findPage, saveOrder]
     );
