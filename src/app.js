@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import styles from './app.module.css';
-import Header from './components/header/header';
-import Home from './components/home/home';
 
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useCallback } from 'react';
 import { useEffect } from 'react';
+import styles from './app.module.css';
+import Header from './components/header/header';
+import Home from './components/home/home';
 import Player from './components/player/player';
 
 function App({ authService, dbService, youtube }) {

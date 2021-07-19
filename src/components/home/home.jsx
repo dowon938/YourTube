@@ -13,16 +13,16 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
   const [sample, setSample] = useState({});
   const [pages, setPages] = useState({});
   const [selected, setSelected] = useState({ pageId: 'daily-routine', isSample: true });
+  const { pageId, isSample } = selected;
   const [pageEdit, setPageEdit] = useState(false);
+
   useEffect(() => {
     !userId && setPages({});
     const stopRead = dbService.readPages(userId, setPages);
-    console.log('readPage');
     return () => stopRead();
   }, [userId, dbService]);
   useEffect(() => {
     const stopRead = dbService.readPages('sample', setSample);
-    console.log('readSample');
     return () => stopRead();
   }, [dbService]);
 
@@ -33,92 +33,58 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
       id: `${id}`,
     });
   };
-  const deletePage = (pageId) => {
-    dbService.deletePages(userId, pageId);
+
+  const deletePage = (targetPageId) => {
+    dbService.deletePages(userId, targetPageId);
     const newPages = { ...pages };
-    delete newPages[pageId];
+    delete newPages[targetPageId];
     setPages(newPages);
   };
-  const changePage = (newPage, pageId) => {
-    dbService.addPages(userId, pageId, newPage);
+  const changePage = (newPage, targetPageId) => {
+    dbService.addPages(userId, targetPageId, newPage);
+  };
+  const saveSampleToDB = () => {
+    dbService.setPages('sample', sample);
   };
 
   const saveNemo = (newNemo, grid) => {
+    const nemoId = newNemo.nemoId;
     if (grid) {
       const { column, row } = grid;
-      if (
-        selected.isSample &&
-        column === sample[selected.pageId].nemos[newNemo.nemoId].column &&
-        row === sample[selected.pageId].nemos[newNemo.nemoId].row
-      )
-        return;
-      if (
-        !selected.isSample &&
-        column === pages[selected.pageId].nemos[newNemo.nemoId].column &&
-        row === pages[selected.pageId].nemos[newNemo.nemoId].row
-      )
-        return;
+      const { column: originColumn, row: originRow } = isSample
+        ? sample[pageId].nemos[nemoId]
+        : pages[pageId].nemos[nemoId];
+      if (column === originColumn && row === originRow) return;
     }
-    if (selected.isSample) {
-      const newSample = { ...sample };
-      newSample[selected.pageId].nemos[newNemo.nemoId] = newNemo;
-      setSample(newSample);
-    }
-    if (!selected.isSample) {
-      dbService.addNemo(userId, selected.pageId, newNemo.nemoId, newNemo);
-      const newPages = { ...pages };
-      newPages[selected.pageId].nemos
-        ? (newPages[selected.pageId].nemos[newNemo.nemoId] = newNemo)
-        : (newPages[selected.pageId].nemos = { [newNemo.nemoId]: newNemo });
-      setPages(newPages);
-    }
+    const newPage = isSample ? { ...sample } : { ...pages };
+    newPage[pageId].nemos
+      ? (newPage[pageId].nemos[nemoId] = newNemo)
+      : (newPage[pageId].nemos = { [nemoId]: newNemo });
+    !isSample && dbService.addNemo(userId, pageId, nemoId, newNemo);
+    isSample ? setSample(newPage) : setPages(newPage);
   };
 
-  const saveOrder = (newOrder, id) => {
-    if (selected.isSample) {
-      const newSample = { ...sample };
-      if (!newOrder) {
-        newSample[selected.pageId].order = newSample[selected.pageId].order
-          ? [...newSample[selected.pageId].order, id]
-          : [id];
-        setSample(newSample);
-      } else {
-        newSample[selected.pageId].order = newOrder;
-        setSample(newSample);
-      }
-    }
-    if (!selected.isSample) {
-      const newPages = { ...pages };
-      if (!newOrder) {
-        newPages[selected.pageId].order = newPages[selected.pageId].order
-          ? [...newPages[selected.pageId].order, id]
-          : [id];
-        dbService.setPages(userId, newPages);
-      } else {
-        newPages[selected.pageId].order = newOrder;
-        dbService.setPages(userId, newPages);
-      }
-    }
+  const saveOrder = (newOrder) => {
+    const newPage = isSample ? { ...sample } : { pages };
+    newPage[pageId].order = newOrder;
+    isSample ? setSample(newPage) : dbService.setPages(userId, newPage);
+  };
+
+  const addOrder = (id) => {
+    const newPage = isSample ? { ...sample } : { pages };
+    newPage[pageId].order = newPage[pageId].order ? [...newPage[pageId].order, id] : [id];
+    isSample ? setSample(newPage) : dbService.setPages(userId, newPage);
   };
 
   const deleteNemo = (id) => {
-    if (selected.isSample) {
-      const newSample = { ...sample };
-      const newOrder = [...newSample[selected.pageId].order];
-      newOrder.splice(newSample[selected.pageId].order.indexOf(id), 1);
-      delete newSample[selected.pageId].nemos[id];
-      newSample[selected.pageId].order = newOrder;
-      setSample(newSample);
-    }
-    if (!selected.isSample) {
-      const newPages = { ...pages };
-      const newOrder = [...newPages[selected.pageId].order];
-      newOrder.splice(newPages[selected.pageId].order.indexOf(id), 1);
-      delete newPages[selected.pageId].nemos[id];
-      newPages[selected.pageId].order = newOrder;
-      dbService.setPages(userId, newPages);
-      setPages(newPages);
-    }
+    const newPage = isSample ? { ...sample } : { ...pages };
+    const newOrder = [...newPage[pageId].order];
+    newOrder.splice(newPage[pageId].order.indexOf(id), 1);
+    delete newPage[pageId].nemos[id];
+    newPage[pageId].order = newOrder;
+
+    isSample ? setSample(newPage) : setPages(newPage);
+    !isSample && dbService.setPages(userId, newPage);
   };
 
   const addNemo = async () => {
@@ -130,8 +96,9 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
       isLargerSize: false,
     };
     await saveNemo(newNemo);
-    saveOrder(false, id);
+    addOrder(id);
   };
+
   const addChannel = (channelId, channelTitle, orgNemo) => {
     youtube
       .bringVideo(channelId)
@@ -153,6 +120,7 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
         saveNemo(newNemo);
       });
   };
+
   const addPlayList = async (playListId, orgNemo) => {
     console.log(playListId);
     youtube
@@ -186,6 +154,7 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
         console.log(e);
       });
   };
+
   const addVideo = (videoId, orgNemo) => {
     youtube.getVideoFromId(videoId).then((video) => {
       console.log(orgNemo.videos);
@@ -274,13 +243,14 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
               <div className={styles.hv} />
               <i className="far fa-edit"></i>
             </button>
+            <button onClick={saveSampleToDB}>샘플DB에저장하기</button>
           </div>
         </div>
         <div className={styles.pageGrid}>
           <Page
             userId={userId}
-            pageId={selected.pageId}
-            isSample={selected.isSample}
+            pageId={pageId}
+            isSample={isSample}
             sample={sample}
             pages={pages}
             youtube={youtube}
