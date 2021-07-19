@@ -21,6 +21,7 @@
 }
 .plusPage,
 .editPage {
+  cursor: pointer;
   position: relative;
   z-index: 2;
   width: 28px;

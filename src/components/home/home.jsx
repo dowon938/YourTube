@@ -65,23 +65,23 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
   };
 
   const saveOrder = (newOrder) => {
-    const newPage = isSample ? { ...sample } : { pages };
+    const newPage = isSample ? { ...sample } : { ...pages };
     newPage[pageId].order = newOrder;
     isSample ? setSample(newPage) : dbService.setPages(userId, newPage);
   };
 
   const addOrder = (id) => {
-    const newPage = isSample ? { ...sample } : { pages };
-    newPage[pageId].order = newPage[pageId].order ? [...newPage[pageId].order, id] : [id];
+    const newPage = isSample ? { ...sample } : { ...pages };
+    newPage[pageId].order
+      ? (newPage[pageId].order = [...newPage[pageId].order, id])
+      : (newPage[pageId].order = [id]);
     isSample ? setSample(newPage) : dbService.setPages(userId, newPage);
   };
 
   const deleteNemo = (id) => {
     const newPage = isSample ? { ...sample } : { ...pages };
-    const newOrder = [...newPage[pageId].order];
-    newOrder.splice(newPage[pageId].order.indexOf(id), 1);
     delete newPage[pageId].nemos[id];
-    newPage[pageId].order = newOrder;
+    newPage[pageId].order.splice(newPage[pageId].order.indexOf(id), 1);
 
     isSample ? setSample(newPage) : setPages(newPage);
     !isSample && dbService.setPages(userId, newPage);
@@ -122,7 +122,6 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
   };
 
   const addPlayList = async (playListId, orgNemo) => {
-    console.log(playListId);
     youtube
       .playListItems(playListId)
       .catch((e) => {
@@ -142,7 +141,6 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
         console.log(e);
       })
       .then((videos) => {
-        console.log(videos);
         const newNemo = {
           ...orgNemo,
           playListId: playListId,
@@ -176,20 +174,16 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
     accept: ItemTypes.Resize,
     canDrop: () => false,
     hover(item, monitor) {
-      const { column, row, width: w, height: h, saveGrid, gridRatio } = monitor.getItem();
+      const { column, row, wPerColumn, hPerRow, saveGrid, gridRatio } = monitor.getItem();
       const { x, y } = monitor.getDifferenceFromInitialOffset();
       let [newColumn, newRow] = [column, row];
-      const [wPerColumn, hPerRow] = [w / column, h / row];
 
       newColumn += Math.round(x / wPerColumn);
       newRow += Math.round(y / hPerRow);
 
       if (newColumn === column && newRow === row) return;
-      if (newColumn > 10) return;
-      if (newRow > 10) return;
-      if (newColumn < gridRatio) return;
-      if (newRow < gridRatio) return;
-
+      if (newColumn > 10 || newRow > 10) return;
+      if (newColumn < gridRatio || newRow < gridRatio) return;
       saveGrid({ column: newColumn, row: newRow });
     },
   }));
@@ -243,7 +237,16 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
               <div className={styles.hv} />
               <i className="far fa-edit"></i>
             </button>
-            <button onClick={saveSampleToDB}>샘플DB에저장하기</button>
+            {userId === 'lyKviGnfTBdi6rEDHIt4Gd2zq0F2' && (
+              <button
+                onClick={saveSampleToDB}
+                className={`${styles.editPage} ${themeClass}`}
+                style={{ width: '12em' }}
+              >
+                <div className={styles.hv} />
+                샘플DB에저장하기
+              </button>
+            )}
           </div>
         </div>
         <div className={styles.pageGrid}>

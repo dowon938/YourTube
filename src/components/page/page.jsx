@@ -24,6 +24,8 @@ const Page = memo(
     const [findPage, setFindPage] = useState(isSample ? sample[pageId] : pages[pageId]);
     const [edit, setEdit] = useState(false);
     const [someDragging, setSomeDragging] = useState(false);
+    const [rotate, setRotate] = useState(false);
+
     useEffect(() => {
       isSample ? setFindPage(sample[pageId]) : setFindPage(pages[pageId]);
     }, [pageId, sample, pages, isSample]);
@@ -49,6 +51,26 @@ const Page = memo(
       },
       [findPage, saveOrder]
     );
+    //새로고침
+    const onRefresh = () => {
+      setRotate(true);
+      findPage.order.forEach((nemoId) => {
+        const nemo = findPage.nemos[nemoId];
+        nemo.channelId && addChannel(nemo.channelId, nemo.originTitle, nemo);
+        nemo.playListId && addPlayList(nemo.playListId, nemo);
+        console.log(
+          `i have ${
+            (nemo.channelId && 'channelId') ||
+            (nemo.playListId && 'playListId') ||
+            'no Id'
+          }`
+        );
+      });
+
+      setTimeout(() => {
+        setRotate(false);
+      }, 1600);
+    };
 
     const themeClass = darkTheme ? styles.dark : styles.light;
     const editOn = edit ? styles.editOn : '';
@@ -56,13 +78,20 @@ const Page = memo(
     return (
       <div className={`${styles.page} ${themeClass}`}>
         <div className={styles.menuBar}>
+          <button className={`${styles.refresh} ${themeClass}`} onClick={onRefresh}>
+            <div className={`${styles.hv} ${darkTheme && styles.dk}`} />
+            <i
+              className={`fas fa-redo ${rotate && styles.rotate}`}
+              title="재생목록을 다시 불러옵니다."
+            />
+          </button>
           <button className={`${styles.plus} ${themeClass}`} onClick={addNemo}>
             <div className={`${styles.hv} ${darkTheme && styles.dk}`} /> + 네모 만들기!
           </button>
-          <div className={`${styles.edit} ${themeClass} ${editOn}`} onClick={onEdit}>
+          <button className={`${styles.edit} ${themeClass} ${editOn}`} onClick={onEdit}>
             <div className={`${styles.hv} ${darkTheme && styles.dk}`} />
             네모 수정하기
-          </div>
+          </button>
         </div>
         <div className={styles.grid}>
           {findPage &&

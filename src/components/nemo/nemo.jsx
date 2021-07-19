@@ -69,7 +69,13 @@ const Nemo = memo(
 
     const onRefresh = (e) => {
       setRotate(true);
-      addChannel(nemo.channelId, nemo.originTitle, nemo);
+      console.log(
+        `i have ${
+          (nemo.channelId && 'channelId') || (nemo.playListId && 'playListId') || 'no Id'
+        }`
+      );
+      nemo.channelId && addChannel(nemo.channelId, nemo.originTitle, nemo);
+      nemo.playListId && addPlayList(nemo.playListId, nemo);
       setTimeout(() => {
         setRotate(false);
       }, 1600);
@@ -135,9 +141,9 @@ const Nemo = memo(
     }, 50);
 
     useEffect(() => {
-      const width = ref.current.clientWidth;
-      const height = ref.current.clientHeight;
-      setRect({ width, height });
+      const wPerColumn = ref.current.clientWidth / nemo.column;
+      const hPerRow = ref.current.clientHeight / nemo.row;
+      setRect({ wPerColumn, hPerRow });
     }, [setRect, nemo]);
 
     const [{ isResizing }, resizeRef] = useDrag(
@@ -146,8 +152,8 @@ const Nemo = memo(
         item: {
           column: nemo && nemo.column,
           row: nemo && nemo.row,
-          width: rect && rect.width,
-          height: rect && rect.height,
+          wPerColumn: rect && rect.wPerColumn,
+          hPerRow: rect && rect.hPerRow,
           saveGrid,
           gridRatio,
         },
@@ -230,7 +236,6 @@ const Nemo = memo(
                 }}
               >
                 <i
-                  // className="fas fa-circle"
                   className="fas fa-star-of-life"
                   style={{
                     color: `${darkTheme ? COLORS.Dgrey3 : COLORS.Lgrey2}`,

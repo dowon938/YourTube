@@ -47,13 +47,26 @@
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
 }
+.refresh {
+  position: relative;
+  cursor: pointer;
+  width: 2em;
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1em;
+}
+
 .plus.dark,
-.edit.dark {
+.edit.dark,
+.refresh.dark {
   background-color: Dgrey3;
   color: vWhite;
 }
 .plus.light,
-.edit.light {
+.edit.light,
+.refresh.light {
   background-color: Lgrey3;
   color: fontGrey;
 }
@@ -85,4 +98,19 @@
 .edit:hover .hv,
 .plus:hover .hv {
   opacity: 0.4;
+}
+
+.rotate {
+  color: mainColor;
+  animation: rotate-keyframes 800ms ease-in-out infinite;
+}
+
+@keyframes rotate-keyframes {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }

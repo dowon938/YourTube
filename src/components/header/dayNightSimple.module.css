@@ -57,10 +57,10 @@
   background-color: rgb(255, 183, 0);
 }
 .rays.up {
-  animation: rayUp 1.5s ease-in-out forwards;
+  animation: rayUp 1s ease-in-out forwards;
 }
 .rays.down {
-  animation: rayDown 1.5s ease-in-out forwards;
+  animation: rayDown 1s ease-in-out forwards;
 }
 /* rotate */
 .deg0 {
@@ -138,22 +138,22 @@
   background-color: rgb(34, 40, 49);
 }
 .up.cover::after {
-  animation: moonUp 1.5s ease-in-out forwards;
+  animation: moonUp 1s ease-in-out forwards;
 }
 .down.cover::after {
-  animation: moonDown 1.5s ease-in forwards;
+  animation: moonDown 1s ease-in forwards;
 }
 .up.sun {
-  animation: sunToMoon 1.5s ease-in-out forwards;
+  animation: sunToMoon 1s ease-in-out forwards;
 }
 .down.sun {
-  animation: moonToSun 1.5s ease-in-out forwards;
+  animation: moonToSun 1s ease-in-out forwards;
 }
 .up.moonIcon {
-  animation: cssToIcon 1.5s ease-in-out forwards;
+  animation: cssToIcon 1s ease-in-out forwards;
 }
 .down.moonIcon {
-  animation: iconToCss 1.5s ease-in-out forwards;
+  animation: iconToCss 1s ease-in-out forwards;
 }
 @keyframes sunUp {
   0% {
@@ -201,14 +201,6 @@
     left: 0.74em;
     opacity: 1;
     background-color: rgb(34, 40, 49);
-  }
-  20% {
-    width: 1.55em;
-    height: 1.55em;
-    top: 0.76em;
-    left: 0.74em;
-    opacity: 1;
-    background-color: hsl(206, 30%, 75%);
   }
   30% {
     width: 1.55em;
