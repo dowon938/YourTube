@@ -4,13 +4,13 @@ import styles from './star.module.css';
 
 const Star = (props) => {
   const randomValue = (number) => {
-    let value = `${random(700)}vh ${random(100)}vh #FFF`;
+    let value = `${random(100)}vw ${random(100)}vh #FFF`;
     for (let i = 0; i < number; i++) {
-      value = `${value} , ${random(700)}vh ${random(100)}vh #FFF`;
+      value = `${value} , ${random(100)}vw ${random(200)}vh #FFF`;
     }
     return value;
   };
-  const randomValue1 = randomValue(700);
+  const randomValue1 = randomValue(500);
   const randomValue2 = randomValue(200);
   const randomValue3 = randomValue(100);
   return (

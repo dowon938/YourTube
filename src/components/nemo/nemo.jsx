@@ -269,7 +269,8 @@ const Nemo = memo(
                     isLargerSize={isLargerSize}
                     nemoPlayer={nemoPlayer}
                     darkTheme={darkTheme}
-                    flexRatio={100 / parseInt(nemo.column / gridRatio)}
+                    flexWidthRatio={100 / parseInt(nemo.column / gridRatio)}
+                    flexHeightRatio={100 / parseInt(nemo.row / gridRatio)}
                   />
                 )
             )}

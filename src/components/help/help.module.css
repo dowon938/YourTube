@@ -1,0 +1,22 @@
+@value mainColor,mainHover,Lgrey1,Lgrey2,Lgrey3,Lgrey4,Dgrey1,Dgrey2,Dgrey3,Dgrey4,lineGrey,fontGrey,fontHover,hoverGrey,vWhite,vBlack,vTrans from '/src/common/colors.css';
+
+.helpContainer {
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(36, 36, 36, 0.85);
+}
+.close {
+  background-color: transparent;
+  position: absolute;
+  font-size: 2em;
+  top: 1em;
+  right: 1em;
+  color: white;
+}
+.close:hover {
+  color: mainColor;
+}

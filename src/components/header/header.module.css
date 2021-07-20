@@ -26,13 +26,14 @@
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.25);
 }
 .logo {
+  cursor: pointer;
   margin-top: 0.5rem;
   font-size: 1.8em;
   font-family: 'Pacifico', cursive;
   transition: ease-in 180ms;
 }
 .logo:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .your {
@@ -71,7 +72,8 @@
   display: flex;
   align-items: center;
 }
-.userIcon {
+.userIcon,
+.help {
   z-index: 11;
   cursor: pointer;
   color: vWhite;
@@ -82,7 +84,8 @@
   transition: ease-in 180ms;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
 }
-.userIcon:hover {
+.userIcon:hover,
+.help:hover {
   color: mainColor;
   transform: scale(1.1);
 }

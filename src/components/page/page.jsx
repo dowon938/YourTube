@@ -54,22 +54,23 @@ const Page = memo(
     //새로고침
     const onRefresh = () => {
       setRotate(true);
-      findPage.order.forEach((nemoId) => {
-        const nemo = findPage.nemos[nemoId];
-        nemo.channelId && addChannel(nemo.channelId, nemo.originTitle, nemo);
-        nemo.playListId && addPlayList(nemo.playListId, nemo);
-        console.log(
-          `i have ${
-            (nemo.channelId && 'channelId') ||
-            (nemo.playListId && 'playListId') ||
-            'no Id'
-          }`
-        );
-      });
+      findPage.order &&
+        findPage.order.forEach((nemoId) => {
+          const nemo = findPage.nemos[nemoId];
+          nemo.channelId && addChannel(nemo.channelId, nemo.originTitle, nemo);
+          nemo.playListId && addPlayList(nemo.playListId, nemo);
+          console.log(
+            `i have ${
+              (nemo.channelId && 'channelId') ||
+              (nemo.playListId && 'playListId') ||
+              'no Id'
+            }`
+          );
+        });
 
       setTimeout(() => {
         setRotate(false);
-      }, 1600);
+      }, 900);
     };
 
     const themeClass = darkTheme ? styles.dark : styles.light;

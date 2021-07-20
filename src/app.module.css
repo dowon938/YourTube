@@ -29,3 +29,8 @@ body {
   /*To hide the horizontal scroller appearing during the animation*/
   overflow-x: hidden;
 }
+button {
+  cursor: pointer;
+  outline-style: none;
+  border-style: none;
+}

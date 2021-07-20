@@ -7,7 +7,7 @@ import UserModal from './userModal';
 import DayNightSimple from './dayNightSimple';
 
 const Header = memo(
-  ({ authService, user, logOut, darkTheme, setDarkTheme, dbService }) => {
+  ({ authService, user, logOut, darkTheme, setDarkTheme, dbService, helpToggle }) => {
     const [pageDown, setPageDown] = useState(false);
     const [toggle, setToggle] = useState(false);
 
@@ -19,11 +19,11 @@ const Header = memo(
     const userToggle = () => {
       setToggle((toggle) => !toggle);
     };
+
     useEffect(() => {
       const scrollEvent = _.debounce(() => {
-        window.scrollY === 0 ? setPageDown(false) : setPageDown(true);
-        // console.log('scroll');
-      }, 200);
+        window.scrollY < 50 ? setPageDown(false) : setPageDown(true);
+      }, 100);
       window.addEventListener('scroll', scrollEvent);
       return () => {
         window.removeEventListener('scroll', scrollEvent);
@@ -38,11 +38,19 @@ const Header = memo(
         className={`${styles.header} ${themeClass} ${pageDown && styles.pageDown}`}
       >
         <div className={styles.container}>
-          <div className={styles.logo}>
+          <div
+            className={styles.logo}
+            onClick={() => {
+              document.location.reload(true);
+            }}
+          >
             <span className={styles.your}>Your</span>
             <span className={styles.tube}>Tube</span>
           </div>
           <div className={styles.right}>
+            <div className={styles.help} onClick={helpToggle}>
+              <i className="fas fa-question"></i>
+            </div>
             {user.uid ? (
               <div className={styles.logOn}>
                 <i className={`fas fa-user ${styles.userIcon}`} onClick={userToggle} />

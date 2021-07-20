@@ -8,10 +8,12 @@ import styles from './app.module.css';
 import Header from './components/header/header';
 import Home from './components/home/home';
 import Player from './components/player/player';
+import Help from './components/help/help';
 
 function App({ authService, dbService, youtube }) {
   const [user, setUser] = useState({});
   const [player, setPlayer] = useState(false);
+  const [help, setHelp] = useState(false);
   const [dbTheme, setDbTheme] = useState();
   const [darkTheme, setDarkTheme] = useState(
     window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -25,6 +27,9 @@ function App({ authService, dbService, youtube }) {
     authService.logout();
     setUser({});
   }, [authService]);
+  const helpToggle = () => {
+    setHelp((help) => !help);
+  };
 
   useEffect(() => {
     authService.onAuthChange((data) => {
@@ -59,12 +64,13 @@ function App({ authService, dbService, youtube }) {
         setDarkTheme={setDarkTheme}
         authService={authService}
         dbService={dbService}
+        helpToggle={helpToggle}
       />
       <DndProvider backend={HTML5Backend}>
         <div
           style={{
-            height: player && '90vh',
-            overflow: player && 'hidden',
+            height: (player || help) && '90vh',
+            overflow: (player || help) && 'hidden',
           }}
         >
           <Home
@@ -88,6 +94,7 @@ function App({ authService, dbService, youtube }) {
           darkTheme={darkTheme}
         />
       )}
+      {help && <Help helpToggle={helpToggle} />}
     </div>
   );
 }
