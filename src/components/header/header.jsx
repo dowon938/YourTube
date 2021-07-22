@@ -48,12 +48,12 @@ const Header = memo(
             <span className={styles.tube}>Tube</span>
           </div>
           <div className={styles.right}>
-            <div className={styles.help} onClick={helpToggle}>
-              <i className="fas fa-question"></i>
-            </div>
             {user.uid ? (
               <div className={styles.logOn}>
-                <i className={`fas fa-user ${styles.userIcon}`} onClick={userToggle} />
+                <i
+                  className={`fas fa-user-circle ${styles.userIcon}`}
+                  onClick={userToggle}
+                />
                 {toggle && (
                   <UserModal user={user} logOut={logOut} darkTheme={darkTheme} />
                 )}
@@ -64,6 +64,9 @@ const Header = memo(
                 <Login authService={authService} />
               </div>
             )}
+            <div className={styles.help} onClick={helpToggle}>
+              <i className="fas fa-question-circle"></i>
+            </div>
             <DayNightSimple darkTheme={darkTheme} themeToggle={themeToggle} />
           </div>
         </div>

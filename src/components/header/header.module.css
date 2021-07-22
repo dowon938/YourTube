@@ -50,7 +50,6 @@
   display: flex;
   align-items: flex-end;
   font-size: 1.2em;
-  margin-right: 1em;
   margin-bottom: -0.8em;
 }
 .loginwith {
@@ -79,10 +78,13 @@
   color: vWhite;
   font-size: 2em;
   margin-top: 0.5em;
-  margin-right: 0.5rem;
+  margin-left: 0.5rem;
   padding: 2px;
   transition: ease-in 180ms;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+}
+.help {
+  /* font-size: 1.5em; */
 }
 .userIcon:hover,
 .help:hover {

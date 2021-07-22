@@ -34,7 +34,6 @@ const Nemo = memo(
     const ref = useRef();
     const [videos, setVideos] = useState();
     const [isLargerSize, setIsLargerSize] = useState();
-    const [rotate, setRotate] = useState(false);
     const [modalOn, setModalOn] = useState(false);
     const [nemoTitle, setNemoTitle] = useState(
       nemo && (nemo.nemoTitle ? nemo.nemoTitle : '')
@@ -67,19 +66,6 @@ const Nemo = memo(
       setIsLargerSize((isLargerSize) => !isLargerSize);
     };
 
-    const onRefresh = (e) => {
-      setRotate(true);
-      console.log(
-        `i have ${
-          (nemo.channelId && 'channelId') || (nemo.playListId && 'playListId') || 'no Id'
-        }`
-      );
-      nemo.channelId && addChannel(nemo.channelId, nemo.originTitle, nemo);
-      nemo.playListId && addPlayList(nemo.playListId, nemo);
-      setTimeout(() => {
-        setRotate(false);
-      }, 1600);
-    };
     //플레이어
     const nemoPlayer = (videoId) => {
       videoId && pagePlayer(nemo.nemoId, videoId);
@@ -214,11 +200,6 @@ const Nemo = memo(
               title={
                 isLargerSize ? '이미지 크기를 축소합니다.' : '이미지 크기를 확대합니다.'
               }
-            />
-            <i
-              className={`fas fa-redo ${rotate && styles.rotate}`}
-              onClick={onRefresh}
-              title="재생목록을 다시 불러옵니다."
             />
           </div>
         )}

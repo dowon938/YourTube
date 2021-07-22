@@ -20,3 +20,56 @@
 .close:hover {
   color: mainColor;
 }
+.helpContents {
+  margin: auto;
+  max-width: 1200px;
+  width: 89vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.slider {
+  margin: auto;
+  max-width: 1200px;
+  width: 89vw;
+  height: 100vh;
+  display: flex;
+  /* transition: all 1s cubic-bezier(0.21, 0.01, 0.15, 1); */
+
+  /* overflow: hidden; */
+  /* background-color: rgb(255, 99, 71, 0.2); */
+}
+.helpContents img {
+  width: 100%;
+  object-fit: contain;
+  object-position: top;
+  /* opacity: 0.5; */
+}
+.left,
+.right {
+  cursor: pointer;
+  z-index: 100;
+  position: fixed;
+  top: 50%;
+  font-size: 1.5em;
+  background-color: transparent;
+  color: rgb(250, 250, 250);
+  transition: ease-in 180ms;
+}
+.left:hover,
+.right:hover {
+  transform: scale(1.2);
+  color: tomato;
+}
+.left {
+  left: 3%;
+}
+.right {
+  right: 3%;
+}
+.count {
+  position: relative;
+  bottom: 15%;
+  left: 50%;
+  font-size: 2em;
+  color: white;
+}
