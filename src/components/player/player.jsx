@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PlayerPage from './playerPage';
 import styles from './player.module.css';
-import { useState } from 'react/cjs/react.development';
-import { useEffect } from 'react/cjs/react.development';
 
 const Player = ({ player, setPlayer, findPage, order, youtube, darkTheme }) => {
   const [position, setPosition] = useState(order.indexOf(player.nemoId) * 100);

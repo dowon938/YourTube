@@ -1,5 +1,4 @@
-import React, { memo } from 'react';
-import { useState } from 'react/cjs/react.development';
+import React, { useState, memo } from 'react';
 import styles from './tab.module.css';
 import { COLORS } from '../../common/colors';
 

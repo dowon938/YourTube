@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import Login from '../login/login';
 import styles from './header.module.css';
 import _ from 'lodash';
-import { memo } from 'react/cjs/react.production.min';
 import UserModal from './userModal';
 import DayNightSimple from './dayNightSimple';
 

@@ -1,12 +1,10 @@
-import React from 'react';
-import { useEffect, useRef, useState } from 'react/cjs/react.development';
+import React, { useEffect, useRef, useState, memo } from 'react';
 import styles from './nemo.module.css';
 import Video from './video';
 import { COLORS } from '../../common/colors';
 
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from '../../utils/items';
-import { memo } from 'react';
 import AddNemo from '../addNemo/addNemo';
 import _ from 'lodash';
 

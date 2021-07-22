@@ -1,6 +1,5 @@
 import _ from 'lodash';
-import React, { useRef } from 'react';
-import { useEffect, useState } from 'react/cjs/react.development';
+import React, { useEffect, useState, useRef } from 'react';
 import { COLORS } from '../../common/colors';
 import styles from './addNemo.module.css';
 

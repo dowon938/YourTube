@@ -1,6 +1,4 @@
-import React, { memo, useCallback } from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react/cjs/react.development';
+import React, { useState, useEffect, memo, useCallback } from 'react';
 import Nemo from '../nemo/nemo';
 import styles from './page.module.css';
 

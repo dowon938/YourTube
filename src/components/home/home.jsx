@@ -1,12 +1,10 @@
-import React, { useEffect, memo } from 'react';
+import React, { useState, useRef, useEffect, memo } from 'react';
 import { useDrop } from 'react-dnd';
-import { useState } from 'react/cjs/react.development';
 import { ItemTypes } from '../../utils/items';
 import Page from '../page/page';
 import Tab from '../tab/tab';
 import styles from './home.module.css';
 import Star from '../background/star';
-import { useRef } from 'react/cjs/react.development';
 
 const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme }) => {
   const [sample, setSample] = useState({});

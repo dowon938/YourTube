@@ -1,6 +1,4 @@
-import React from 'react';
-import { memo } from 'react';
-import { useEffect, useState } from 'react/cjs/react.development';
+import React, { useEffect, useState, memo } from 'react';
 import styles from './playerVideo.module.css';
 
 const PlayerVideo = memo(

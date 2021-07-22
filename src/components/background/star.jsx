@@ -1,5 +1,5 @@
-import { random } from 'lodash';
 import React from 'react';
+import { random } from 'lodash';
 import styles from './star.module.css';
 
 const Star = (props) => {

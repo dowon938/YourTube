@@ -1,7 +1,5 @@
-import React from 'react';
-import { memo } from 'react';
+import React, { useState, memo } from 'react';
 import YouTube from 'react-youtube';
-import { useState } from 'react/cjs/react.development';
 import styles from './video.module.css';
 import { COLORS } from '../../common/colors';
 

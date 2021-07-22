@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react/cjs/react.development';
+import React, { useState } from 'react';
 import styles from './help.module.css';
 
 const Help = ({ helpToggle }) => {
