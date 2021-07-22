@@ -4,7 +4,6 @@ import './index.module.css';
 import App from './app';
 import AuthService from './service/auth_service';
 import DbService from './service/db';
-import 'font-awesome/css/font-awesome.min.css';
 import Youtube from './service/youtube';
 
 const youtube = new Youtube(process.env.REACT_APP_YOUTUBE_API_KEY);

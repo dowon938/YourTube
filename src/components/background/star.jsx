@@ -10,70 +10,64 @@ const Star = (props) => {
     }
     return value;
   };
-  const randomValue1 = randomValue(500);
-  const randomValue2 = randomValue(200);
+  const randomValue1 = randomValue(700);
+  const randomValue2 = randomValue(150);
   const randomValue3 = randomValue(100);
+  const smallStarStyle = {
+    width: '1px',
+    height: '1px',
+    background: 'transparent',
+    boxShadow: randomValue1,
+  };
+  const smallAfterStyle = {
+    content: '',
+    position: 'absolute',
+    top: '100vh',
+    width: '1px',
+    height: '1px',
+    background: 'transparent',
+    boxShadow: randomValue1,
+  };
+  const midiumStarStyle = {
+    width: '2px',
+    height: '2px',
+    background: 'transparent',
+    boxShadow: randomValue2,
+  };
+  const midiumAfterStyle = {
+    content: '',
+    position: 'absolute',
+    top: '100vh',
+    width: '2px',
+    height: '2px',
+    background: 'transparent',
+    boxShadow: randomValue2,
+  };
+  const largeStarStyle = {
+    width: '3px',
+    height: '3px',
+    background: 'transparent',
+    boxShadow: randomValue3,
+  };
+  const largeAfterStyle = {
+    content: '',
+    position: 'absolute',
+    top: '100vh',
+    width: '3px',
+    height: '3px',
+    background: 'transparent',
+    boxShadow: randomValue3,
+  };
   return (
     <div id="stars">
-      <div
-        className={styles.stars1}
-        style={{
-          boxShadow: randomValue1,
-        }}
-      >
-        <div
-          style={{
-            content: '',
-            position: 'absolute',
-            top: '100vh',
-            width: '1px',
-            height: '1px',
-            backgroundColor: 'transparent',
-            boxShadow: randomValue1,
-          }}
-        >
-          {' '}
-        </div>
+      <div className={styles.stars1} style={smallStarStyle}>
+        <div style={smallAfterStyle}> </div>
       </div>
-      <div
-        className={styles.stars2}
-        style={{
-          boxShadow: randomValue2,
-        }}
-      >
-        <div
-          style={{
-            content: '',
-            position: 'absolute',
-            top: '100vh',
-            width: '2px',
-            height: '2px',
-            backgroundColor: 'transparent',
-            boxShadow: randomValue2,
-          }}
-        >
-          {' '}
-        </div>
+      <div className={styles.stars2} style={midiumStarStyle}>
+        <div style={midiumAfterStyle}> </div>
       </div>
-      <div
-        className={styles.stars3}
-        style={{
-          boxShadow: randomValue3,
-        }}
-      >
-        <div
-          style={{
-            content: '',
-            position: 'absolute',
-            top: '100vh',
-            width: '3px',
-            height: '3px',
-            backgroundColor: 'transparent',
-            boxShadow: randomValue3,
-          }}
-        >
-          {' '}
-        </div>
+      <div className={styles.stars3} style={largeStarStyle}>
+        <div style={largeAfterStyle}> </div>
       </div>
     </div>
   );

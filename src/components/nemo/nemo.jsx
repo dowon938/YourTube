@@ -281,7 +281,7 @@ const Nemo = memo(
                 className={`${styles.btnDiv} ${themeClass}`}
                 style={{
                   width: 100 / parseInt(nemo.column / gridRatio) + '%',
-                  height: 'auto',
+                  height: 100 / parseInt(nemo.row / gridRatio) + '%',
                 }}
               >
                 <button
