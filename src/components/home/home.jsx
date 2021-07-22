@@ -10,8 +10,8 @@ import Star from '../background/star';
 import { useRef } from 'react/cjs/react.development';
 
 const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme }) => {
-  const [sample, setSample] = useState({});
-  const [pages, setPages] = useState({});
+  const [sample, setSample] = useState();
+  const [pages, setPages] = useState();
   const [selected, setSelected] = useState({ pageId: 'daily-routine', isSample: true });
   const { pageId, isSample } = selected;
   const [pageEdit, setPageEdit] = useState(false);
@@ -201,16 +201,17 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
       <div className={styles.home}>
         <div className={styles.tab}>
           <div className={styles.sampleTab}>
-            {Object.keys(sample).map((pageId) => (
-              <Tab
-                key={pageId}
-                page={sample[pageId]}
-                setSelected={setSelected}
-                selected={selected}
-                darkTheme={darkTheme}
-                isSampleTab
-              />
-            ))}
+            {sample &&
+              Object.keys(sample).map((pageId) => (
+                <Tab
+                  key={pageId}
+                  page={sample[pageId]}
+                  setSelected={setSelected}
+                  selected={selected}
+                  darkTheme={darkTheme}
+                  isSampleTab
+                />
+              ))}
           </div>
           <div className={styles.myTab}>
             {pages &&
@@ -254,8 +255,8 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
             userId={userId}
             pageId={pageId}
             isSample={isSample}
-            sample={sample}
-            pages={pages}
+            sample={sample && sample}
+            pages={pages && pages}
             youtube={youtube}
             addNemo={addNemo}
             saveNemo={saveNemo}
