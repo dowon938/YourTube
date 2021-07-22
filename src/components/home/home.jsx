@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import { useDrop } from 'react-dnd';
 import { useState } from 'react/cjs/react.development';
 import { ItemTypes } from '../../utils/items';
 import Page from '../page/page';
 import Tab from '../tab/tab';
 import styles from './home.module.css';
-import { memo } from 'react';
 import Star from '../background/star';
 import { useRef } from 'react/cjs/react.development';
 
 const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme }) => {
-  const [sample, setSample] = useState();
-  const [pages, setPages] = useState();
+  const [sample, setSample] = useState({});
+  const [pages, setPages] = useState({});
   const [selected, setSelected] = useState({ pageId: 'daily-routine', isSample: true });
   const { pageId, isSample } = selected;
   const [pageEdit, setPageEdit] = useState(false);
@@ -201,32 +200,30 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
       <div className={styles.home}>
         <div className={styles.tab}>
           <div className={styles.sampleTab}>
-            {sample &&
-              Object.keys(sample).map((pageId) => (
-                <Tab
-                  key={pageId}
-                  page={sample[pageId]}
-                  setSelected={setSelected}
-                  selected={selected}
-                  darkTheme={darkTheme}
-                  isSampleTab
-                />
-              ))}
+            {Object.keys(sample).map((pageId) => (
+              <Tab
+                key={pageId}
+                page={sample[pageId]}
+                setSelected={setSelected}
+                selected={selected}
+                darkTheme={darkTheme}
+                isSampleTab
+              />
+            ))}
           </div>
           <div className={styles.myTab}>
-            {pages &&
-              Object.keys(pages).map((pageId) => (
-                <Tab
-                  key={pageId}
-                  page={pages[pageId]}
-                  deletePage={deletePage}
-                  changePage={changePage}
-                  setSelected={setSelected}
-                  selected={selected}
-                  pageEdit={pageEdit}
-                  darkTheme={darkTheme}
-                />
-              ))}
+            {Object.keys(pages).map((pageId) => (
+              <Tab
+                key={pageId}
+                page={pages[pageId]}
+                deletePage={deletePage}
+                changePage={changePage}
+                setSelected={setSelected}
+                selected={selected}
+                pageEdit={pageEdit}
+                darkTheme={darkTheme}
+              />
+            ))}
             <button onClick={addPage} className={`${styles.plusPage} ${themeClass}`}>
               <div className={styles.hv} />
               <span>+</span>
@@ -255,8 +252,8 @@ const Home = memo(({ dbService, userId, youtube, onPlayer, setPlayer, darkTheme 
             userId={userId}
             pageId={pageId}
             isSample={isSample}
-            sample={sample && sample}
-            pages={pages && pages}
+            sample={sample}
+            pages={pages}
             youtube={youtube}
             addNemo={addNemo}
             saveNemo={saveNemo}
