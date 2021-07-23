@@ -10,17 +10,9 @@ html {
 }
 .app.dark {
   background-color: Dgrey2;
-  /* background: radial-gradient(
-    ellipse at center,
-    hsl(212, 33%, 16%) 0%,
-    hsl(230, 25%, 7%) 100%
-  ); */
 }
 .app.light {
-  /* background-color: Lgrey2; */
-  /* background: rgb(201, 219, 233); */
-  /* background: linear-gradient(to bottom, hsl(206, 30%, 75%) 0%, hsl(206, 30%, 85%) 100%); */
-  background-color: hsl(206, 30%, 75%);
+  background-color: hsl(205, 30%, 75%);
 }
 * {
   box-sizing: border-box;

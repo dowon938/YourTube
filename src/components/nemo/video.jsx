@@ -39,7 +39,7 @@ const Video = memo(
         style={{
           width: flexWidthRatio + '%',
           height: flexHeightRatio + '%',
-          padding: '0 0.1em',
+          padding: '0.2em 0.35em',
           display: 'flex',
           flexFlow: 'column',
         }}
