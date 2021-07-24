@@ -77,12 +77,13 @@ const Page = memo(
     return (
       <div className={`${styles.page} ${themeClass}`}>
         <div className={styles.menuBar}>
-          <button className={`${styles.refresh} ${themeClass}`} onClick={onRefresh}>
+          <button
+            className={`${styles.refresh} ${themeClass}`}
+            title="재생목록을 다시 불러옵니다."
+            onClick={onRefresh}
+          >
             <div className={`${styles.hv} ${darkTheme && styles.dk}`} />
-            <i
-              className={`fas fa-redo ${rotate && styles.rotate}`}
-              title="재생목록을 다시 불러옵니다."
-            />
+            <i className={`fas fa-redo ${rotate && styles.rotate}`} />
           </button>
           <button className={`${styles.plus} ${themeClass}`} onClick={addNemo}>
             <div className={`${styles.hv} ${darkTheme && styles.dk}`} /> + 네모 만들기!
