@@ -26,22 +26,21 @@
   width: 89vw;
   height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
 }
 .slider {
-  margin: auto;
-  max-width: 1200px;
-  width: 89vw;
-  height: 100vh;
+  width: 100%;
   display: flex;
-  /* transition: all 1s cubic-bezier(0.21, 0.01, 0.15, 1); */
-
-  /* overflow: hidden; */
-  /* background-color: rgb(255, 99, 71, 0.2); */
 }
 .helpContents img {
   width: 100%;
+  height: fit-content;
+
+  /* height: auto;
   object-fit: contain;
-  object-position: top;
+  object-position: center; */
   /* opacity: 0.5; */
 }
 .left,
@@ -50,7 +49,7 @@
   z-index: 100;
   position: fixed;
   top: 50%;
-  font-size: 1.5em;
+  font-size: 2em;
   background-color: transparent;
   color: rgb(250, 250, 250);
   transition: ease-in 180ms;
@@ -61,15 +60,30 @@
   color: tomato;
 }
 .left {
-  left: 3%;
+  left: 2%;
 }
 .right {
-  right: 3%;
+  right: 2%;
 }
 .count {
   position: relative;
-  bottom: 15%;
-  left: 50%;
+  bottom: 10%;
+  left: 48%;
   font-size: 2em;
+  color: white;
+}
+.navigator {
+  display: flex;
+  margin: 0 -1px;
+}
+.navigator button {
+  background-color: Lgrey2;
+  width: 25%;
+  height: 0.6em;
+  margin: 0 1px;
+}
+.cookieCheck {
+  display: flex;
+  margin: 1em auto;
   color: white;
 }

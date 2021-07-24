@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from './app.module.css';
 import Header from './components/header/header';
 import Home from './components/home/home';
@@ -9,6 +8,7 @@ import Player from './components/player/player';
 import Help from './components/help/help';
 
 function App({ authService, dbService, youtube }) {
+  const [cookies, setCookie, removeCookie] = useCookies(['popUp']);
   const [user, setUser] = useState({});
   const [player, setPlayer] = useState(false);
   const [help, setHelp] = useState(false);
@@ -50,11 +50,23 @@ function App({ authService, dbService, youtube }) {
       ? setDarkTheme(dbTheme)
       : setDarkTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
   }, [dbTheme, setDarkTheme]);
-
+  useEffect(() => {
+    if (cookies.popUp === undefined) {
+      setHelp(true);
+    } else {
+      setHelp(false);
+    }
+  }, [setHelp, cookies]);
   const themeClass = darkTheme ? styles.dark : styles.light;
 
   return (
-    <div className={`${styles.app} ${themeClass}`}>
+    <div
+      className={`${styles.app} ${themeClass}`}
+      style={{
+        height: (player || help) && '100vh',
+        overflow: (player || help) && 'hidden',
+      }}
+    >
       <Header
         user={user}
         logOut={logOut}
@@ -64,24 +76,15 @@ function App({ authService, dbService, youtube }) {
         dbService={dbService}
         helpToggle={helpToggle}
       />
-      <DndProvider backend={HTML5Backend}>
-        <div
-          style={{
-            height: (player || help) && '90vh',
-            overflow: (player || help) && 'hidden',
-          }}
-        >
-          <Home
-            authService={authService}
-            dbService={dbService}
-            youtube={youtube}
-            userId={user.uid}
-            onPlayer={onPlayer}
-            setPlayer={setPlayer}
-            darkTheme={darkTheme}
-          />
-        </div>
-      </DndProvider>
+      <Home
+        authService={authService}
+        dbService={dbService}
+        youtube={youtube}
+        userId={user.uid}
+        onPlayer={onPlayer}
+        setPlayer={setPlayer}
+        darkTheme={darkTheme}
+      />
       {player && (
         <Player
           player={player}
@@ -92,7 +95,9 @@ function App({ authService, dbService, youtube }) {
           darkTheme={darkTheme}
         />
       )}
-      {help && <Help helpToggle={helpToggle} />}
+      {help && (
+        <Help helpToggle={helpToggle} setCookie={setCookie} removeCookie={removeCookie} />
+      )}
     </div>
   );
 }

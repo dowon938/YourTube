@@ -20,7 +20,6 @@ const PlayerPage = memo(({ nemo, player, youtube, darkTheme }) => {
             : items
         )
         .then((comment) => setComments(comment));
-      console.log('cm');
     },
     [youtube]
   );
@@ -35,7 +34,6 @@ const PlayerPage = memo(({ nemo, player, youtube, darkTheme }) => {
       youtube.description(id).then((data) => {
         data.items.length !== 0 && setDescription(data.items[0].snippet);
       });
-      console.log('ds');
     },
     [youtube]
   );

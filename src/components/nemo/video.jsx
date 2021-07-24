@@ -10,6 +10,7 @@ const Video = memo(
     const [YT, setYT] = useState();
     const [playing, setPlaying] = useState(false);
     const onPlay = () => {
+      setPlaying(false);
       setPlay((play) => !play);
     };
     const opts = {
@@ -32,6 +33,7 @@ const Video = memo(
     };
     const onChange = (e) => {
       setVol(YT.getVolume());
+      console.log(YT.getPlayerState());
       YT.getPlayerState() === 1 ? setPlaying(true) : setPlaying(false);
     };
     return (
@@ -89,7 +91,7 @@ const Video = memo(
               </div>
               <div className={styles.iconFlex}>
                 <i className="far fa-clone" onClick={() => nemoPlayer(video)} />
-                <span>새 창에서 재생</span>
+                <span>플레이어로 재생</span>
               </div>
             </div>
           </div>

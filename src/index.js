@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { DndProvider } from 'react-dnd';
+import { CookiesProvider } from 'react-cookie';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import './index.module.css';
 import App from './app';
 import AuthService from './service/auth_service';
@@ -12,7 +15,11 @@ const dbService = new DbService();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App authService={authService} dbService={dbService} youtube={youtube} />
+    <DndProvider backend={HTML5Backend}>
+      <CookiesProvider>
+        <App authService={authService} dbService={dbService} youtube={youtube} />
+      </CookiesProvider>
+    </DndProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
