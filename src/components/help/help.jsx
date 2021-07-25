@@ -23,21 +23,19 @@ const Help = ({ helpToggle, setCookie, removeCookie }) => {
   };
   return (
     <div className={styles.helpContainer}>
-      <button className={styles.close} onClick={helpToggle}>
-        <i className="fas fa-times"></i>
-      </button>
       <div className={styles.helpContents}>
-        <div
-          className={styles.slider}
-          style={{
-            // left: -position + '%',
-            transform: `translateX(${-position}%)`,
-          }}
-        >
-          <img src="/imgs/help/1.jpg" alt="help1" />
-          <img src="/imgs/help/2.jpg" alt="help2" />
-          <img src="/imgs/help/3.jpg" alt="help3" />
-          <img src="/imgs/help/4.jpg" alt="help3" />
+        <div className={styles.sliderWrapper}>
+          <div
+            className={styles.slider}
+            style={{
+              transform: `translateX(${-position}%)`,
+            }}
+          >
+            <img src="/imgs/help/1.jpg" alt="help1" />
+            <img src="/imgs/help/2.jpg" alt="help2" />
+            <img src="/imgs/help/3.jpg" alt="help3" />
+            <img src="/imgs/help/4.jpg" alt="help3" />
+          </div>
         </div>
         <div className={styles.navigator}>
           <button
@@ -58,7 +56,7 @@ const Help = ({ helpToggle, setCookie, removeCookie }) => {
           ></button>
         </div>
         <div className={styles.cookieCheck}>
-          <label htmlFor="cookie">다시는 자동으로 열지 않음</label>
+          <label htmlFor="cookie">자동으로 열지 않음</label>
           <input
             type="checkbox"
             name="cookieCheckbox"
@@ -66,13 +64,18 @@ const Help = ({ helpToggle, setCookie, removeCookie }) => {
             onChange={popUpCheck}
           />
         </div>
+        <div className={styles.btnContainer}>
+          <button className={styles.close} onClick={helpToggle}>
+            <i className="fas fa-times"></i>
+          </button>
+          <button className={styles.left} onClick={moveLeft}>
+            <i className="fas fa-chevron-left" />
+          </button>
+          <button className={styles.right} onClick={moveRight}>
+            <i className="fas fa-chevron-right" />
+          </button>
+        </div>
       </div>
-      <button className={styles.left} onClick={moveLeft}>
-        <i className="fas fa-chevron-left" />
-      </button>
-      <button className={styles.right} onClick={moveRight}>
-        <i className="fas fa-chevron-right" />
-      </button>
     </div>
   );
 };
