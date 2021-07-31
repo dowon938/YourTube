@@ -3,12 +3,15 @@
 ---
 
 이 프로젝트는 유튜브의 수많은 유혹을 뿌리치고자 만든 개인 프로젝트입니다.
+
 내가 원하는 채널과, 재생목록을 저장해두고 유튜브에 들어가지 않고, 필요한 영상만 시청하기 위해 만들었습니다.
+
 좋아하는 작업용 음악들을 모아두고 재생할 때 유용해요👍🏻
 
 ### 랜딩페이지
 
-![image](https://user-images.githubusercontent.com/68101878/127576907-80759f4e-6ede-4fb5-a949-b102792a97bc.png)
+<img src="https://user-images.githubusercontent.com/68101878/127576907-80759f4e-6ede-4fb5-a949-b102792a97bc.png" width='80%'>
+
 [YourTube 바로가기](https://yourtube-app.netlify.app/)
 
 **처음 방문하는 사용자에게 간략하게 사용법을 안내해주고 쿠키를 통해 재방문시 표시되지 않도록 함**
@@ -17,7 +20,8 @@
 
 ### 로그인
 
-![image](https://user-images.githubusercontent.com/68101878/127577507-85cec30b-0241-4161-b491-de3b3383a38f.png)
+<img src="https://user-images.githubusercontent.com/68101878/127577507-85cec30b-0241-4161-b491-de3b3383a38f.png" width='80%'>
+
 **헤더에서 구글과 깃허브 아이콘을 클릭해 구글계정과 깃허브 계정을 통해 로그인 가능**
 
 - Firebase Authentication을 사용
@@ -27,13 +31,14 @@
 
 ### 페이지(재생목록) 구조
 
-![image](https://user-images.githubusercontent.com/68101878/127579450-b809eb07-d3e8-4d25-87d7-2152a28efba3.png)
+<img src="https://user-images.githubusercontent.com/68101878/127579450-b809eb07-d3e8-4d25-87d7-2152a28efba3.png" width='80%'>
+
 **페이지들은 여러 네모(재생목록더미)로 구성되어 있고, 네모는 비디오를 담고 있음**</br>
 App - page - nemo - video
 
-<img src="https://user-images.githubusercontent.com/68101878/127754217-0fda5223-bd1f-46c9-a27f-577c21f8495e.png" width='40%'><img src="https://user-images.githubusercontent.com/68101878/127754209-2c5d4c11-7d8b-4297-b5be-0bd91b1b8ea2.png" width='55%'>
+<img src="https://user-images.githubusercontent.com/68101878/127754217-0fda5223-bd1f-46c9-a27f-577c21f8495e.png" width='35%'><img src="https://user-images.githubusercontent.com/68101878/127754209-2c5d4c11-7d8b-4297-b5be-0bd91b1b8ea2.png" width='49%'>
 
-<center><img src="https://user-images.githubusercontent.com/68101878/127754444-89dac5e1-1d66-4c42-b9fb-fad0efafbdc1.gif" width='75%'></center>
+<img src="https://user-images.githubusercontent.com/68101878/127754444-89dac5e1-1d66-4c42-b9fb-fad0efafbdc1.gif" width='80%'>
 
 **네모에는 채널과 재생목록 중 하나를 추가 할 수 있고, 영상이 모자랄 경우 영상을 추가 할 수 있음**
 
