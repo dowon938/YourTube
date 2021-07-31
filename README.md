@@ -32,7 +32,7 @@
 App - page - nemo - video
 
 <img src="https://user-images.githubusercontent.com/68101878/127754217-0fda5223-bd1f-46c9-a27f-577c21f8495e.png" width='40%'>
-<img src="https://user-images.githubusercontent.com/68101878/127754209-2c5d4c11-7d8b-4297-b5be-0bd91b1b8ea2.png" width='56%'>
+<img src="https://user-images.githubusercontent.com/68101878/127754209-2c5d4c11-7d8b-4297-b5be-0bd91b1b8ea2.png" width='55%'>
 <center><img src="https://user-images.githubusercontent.com/68101878/127754444-89dac5e1-1d66-4c42-b9fb-fad0efafbdc1.gif" width='50%'></center>
 
 **네모에는 채널과 재생목록 중 하나를 추가 할 수 있고, 영상이 모자랄 경우 영상을 추가 할 수 있음**
