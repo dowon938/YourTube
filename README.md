@@ -8,6 +8,8 @@
 
 좋아하는 작업용 음악들을 모아두고 재생할 때 유용해요👍🏻
 
+<br>
+
 ### 랜딩페이지
 
 <img src="https://user-images.githubusercontent.com/68101878/127576907-80759f4e-6ede-4fb5-a949-b102792a97bc.png" width='80%'>
@@ -17,6 +19,8 @@
 **처음 방문하는 사용자에게 간략하게 사용법을 안내해주고 쿠키를 통해 재방문시 표시되지 않도록 함**
 
 - react-cookie 라이브러리사용
+
+<br>
 
 ### 로그인
 
@@ -29,6 +33,8 @@
 - 로그인하지 않아도 기능은 모두 체험할 수 있고 다만 DB에 저장되지 않음
 - 샘플페이지는 isSample변수를 만들어 구분하고, 샘플일시에 state만 변경하고 DB에는 저장하지 않도록 설정
 
+<br>
+
 ### 페이지 구조
 
 <img src="https://user-images.githubusercontent.com/68101878/127579450-b809eb07-d3e8-4d25-87d7-2152a28efba3.png" width='80%'>
@@ -39,7 +45,7 @@
 
 <br>
 
-### 네모(재생목록) 구성
+### ◼ 네모(재생목록) 구성
 
 <img src="https://user-images.githubusercontent.com/68101878/127754217-0fda5223-bd1f-46c9-a27f-577c21f8495e.png" width='35%'><img src="https://user-images.githubusercontent.com/68101878/127754209-2c5d4c11-7d8b-4297-b5be-0bd91b1b8ea2.png" width='49%'>
 
@@ -55,7 +61,7 @@
 
 <br>
 
-### 네모(재생목록) 기능
+### ◼ 네모 (재생목록) 기능
 
 <img src="https://user-images.githubusercontent.com/68101878/127852981-b7e32fd8-83b1-4a4c-a0cc-d71f7f057a6a.gif" width='45%'><img src="https://user-images.githubusercontent.com/68101878/127852938-712d8643-3037-4c63-a7ae-c9ec58d84bb0.gif" width='52%'>
 
@@ -69,12 +75,32 @@
 - `드랍영역`은 각각 `네모`의 `좌,우`에 배치하여 순서가 더 `자연스럽게 변경`
 - `드랍영역`은 `드래깅될 때`만 `z-index값`을 높여서 다른 인터렉션에 방해 되지 않도록 처리
 
-### 재생
+<br>
+
+### ▶ 재생
+
+<img src="https://user-images.githubusercontent.com/68101878/127857665-18f4e211-5d84-4552-ad03-e91acf807e33.png" width='90%'>
+<img src="https://user-images.githubusercontent.com/68101878/127860071-9060b4d9-a0b9-4424-a12e-9d131e814fba.gif" width='45%'><img src="https://user-images.githubusercontent.com/68101878/127860048-3e7a226f-c79a-477f-9b3d-6fc47bd430fd.gif" width='45%'>
 
 **두 가지 재생방식**
 
 - 소리 위주로 재생하거나 작게 보고싶을 때는 네모안에서 재생
 - 네모에서 재생되고 있는 영상은 초록 테두리와 재생중 아이콘으로 확인 할 수 있음
-- 네모에서 재생될 때 추가로 볼륨버튼을 제공함 (크기가 작아 유튜브에서 제공하는 볼륨 버튼은 가려짐)
+- 네모에서 재생될 때 볼륨 조절 버튼 생성(iframe크기가 작아 유튜브에서 제공하는 볼륨 버튼은 가려짐)
 - 크게 보고 싶을 때는 플레이어로 재생
 - 플레이어에서는 동영상 설명과 댓글을 볼 수 있음
+
+<br>
+
+### 📚 기술 스택 및 라이브러리
+
+```
+React
+JavaScript es6
+firebase (Auth,realtimeDB)
+axios
+react-dnd
+react-cookie
+react-youtube
+lodash
+```
