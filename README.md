@@ -36,7 +36,6 @@
 **페이지들은 여러 네모(재생목록더미)로 구성되어 있고, 네모는 비디오를 담고 있음**</br>
 
 - App - page - nemo - video
-- 페이지는 가로 span 10인 그리드
 
 <br>
 
@@ -58,11 +57,16 @@
 
 ### 네모(재생목록) 기능
 
+<img src="https://user-images.githubusercontent.com/68101878/127851657-11df376c-ac12-43ab-98b0-5b279ab80720.gif" width='45%'><img src="https://user-images.githubusercontent.com/68101878/127851961-11bb8b32-77f0-4f9e-9a35-abdce1da2cfb.gif" width='45%'>
+
 **네모는 드래그로 이동과 리사이징 가능해 마음대로 페이지를 꾸밀수 있음**
 
-- 네모는 `우측하단 버튼`을 `드래그`해 `리사이징` 할 수 있고, `grid-column`,`grid-row`의 `span 값`을 변경해서 사이즈가 변경됨 (최대 span 10 \* span 10)
+- 페이지는 column(가로) 10개로 이루어진 그리드
+- [네모는 `우측하단 버튼`을 `드래그`해 `리사이징` 할 수 있고, `grid-column`,`grid-row`의 `span 값`을 변경해서 사이즈가 변경됨](https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-resizing-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0grid-template%EC%9D%B4%EC%9A%A9)
 - 네모 안에 표시될 `영상 갯수`는 `가로 세로 span값`에 의해 결정됨
 - `grid` 방식으로 정렬 되어 있어 가로로 긴 네모, 세로로 긴 네모들이 `어우러지게 배치`됨
+- [제목을 드래그하여 재생목록의 배치 순서를 변경 가능](https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-drop-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)
+-
 
 ### 재생
 
