@@ -80,6 +80,7 @@
 ### ▶ 재생
 
 <img src="https://user-images.githubusercontent.com/68101878/127857665-18f4e211-5d84-4552-ad03-e91acf807e33.png" width='90%'>
+
 <img src="https://user-images.githubusercontent.com/68101878/127860071-9060b4d9-a0b9-4424-a12e-9d131e814fba.gif" width='45%'><img src="https://user-images.githubusercontent.com/68101878/127860048-3e7a226f-c79a-477f-9b3d-6fc47bd430fd.gif" width='45%'>
 
 **두 가지 재생방식**
