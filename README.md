@@ -29,12 +29,18 @@
 - 로그인하지 않아도 기능은 모두 체험할 수 있고 다만 DB에 저장되지 않음
 - 샘플페이지는 isSample변수를 만들어 구분하고, 샘플일시에 state만 변경하고 DB에는 저장하지 않도록 설정
 
-### 페이지(재생목록) 구조
+### 페이지 구조
 
 <img src="https://user-images.githubusercontent.com/68101878/127579450-b809eb07-d3e8-4d25-87d7-2152a28efba3.png" width='80%'>
 
 **페이지들은 여러 네모(재생목록더미)로 구성되어 있고, 네모는 비디오를 담고 있음**</br>
-App - page - nemo - video
+
+- App - page - nemo - video
+- 페이지는 가로 span 10인 그리드
+
+<br>
+
+### 네모(재생목록) 구성
 
 <img src="https://user-images.githubusercontent.com/68101878/127754217-0fda5223-bd1f-46c9-a27f-577c21f8495e.png" width='35%'><img src="https://user-images.githubusercontent.com/68101878/127754209-2c5d4c11-7d8b-4297-b5be-0bd91b1b8ea2.png" width='49%'>
 
@@ -47,3 +53,17 @@ App - page - nemo - video
 - 네모에 비디오 갯수가 모자랄 경우에 영상 추가 버튼이 보임
 - 영상 추가 - 영상을 키워드로 검색하거나 원하는 영상의 url로 직접 영상을 추가 할 수 있음
 - 영상을 키워드로 검색하면 스크롤시에 nextPageToken을 이용해서 계속해서 목록을 받아와 무한스크롤
+
+<br>
+
+### 네모(재생목록) 기능
+
+**네모는 드래그로 이동과 리사이징 가능해 마음대로 페이지를 꾸밀수 있음**
+
+- 네모는 `우측하단 버튼`을 `드래그`해 `리사이징` 할 수 있고, `grid-column`,`grid-row`의 `span 값`을 변경해서 사이즈가 변경됨 (최대 span 10 \* span 10)
+- 네모 안에 표시될 `영상 갯수`는 `가로 세로 span값`에 의해 결정됨
+- `grid` 방식으로 정렬 되어 있어 가로로 긴 네모, 세로로 긴 네모들이 `어우러지게 배치`됨
+
+### 재생
+
+**두 가지 재생방식**
