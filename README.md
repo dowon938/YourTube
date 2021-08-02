@@ -10,11 +10,11 @@
 
 <br>
 
-### 랜딩페이지
+### 🖥 랜딩페이지
 
 <img src="https://user-images.githubusercontent.com/68101878/127576907-80759f4e-6ede-4fb5-a949-b102792a97bc.png" width='80%'>
 
-[YourTube 바로가기](https://yourtube-app.netlify.app/)
+[‣YourTube 바로가기](https://yourtube-app.netlify.app/)
 
 **처음 방문하는 사용자에게 간략하게 사용법을 안내해주고 쿠키를 통해 재방문시 표시되지 않도록 함**
 
@@ -22,7 +22,7 @@
 
 <br>
 
-### 로그인
+### 🔒 로그인
 
 <img src="https://user-images.githubusercontent.com/68101878/127577507-85cec30b-0241-4161-b491-de3b3383a38f.png" width='80%'>
 
@@ -35,7 +35,7 @@
 
 <br>
 
-### 페이지 구조
+### 📜 페이지 구조
 
 <img src="https://user-images.githubusercontent.com/68101878/127579450-b809eb07-d3e8-4d25-87d7-2152a28efba3.png" width='80%'>
 
@@ -45,7 +45,7 @@
 
 <br>
 
-### ◼ 네모(재생목록) 구성
+### 📦 네모(재생목록) 구성
 
 <img src="https://user-images.githubusercontent.com/68101878/127754217-0fda5223-bd1f-46c9-a27f-577c21f8495e.png" width='35%'><img src="https://user-images.githubusercontent.com/68101878/127754209-2c5d4c11-7d8b-4297-b5be-0bd91b1b8ea2.png" width='49%'>
 
@@ -61,17 +61,17 @@
 
 <br>
 
-### ◼ 네모 (재생목록) 기능
+### 📦 네모 (재생목록) 기능
 
 <img src="https://user-images.githubusercontent.com/68101878/127852981-b7e32fd8-83b1-4a4c-a0cc-d71f7f057a6a.gif" width='45%'><img src="https://user-images.githubusercontent.com/68101878/127852938-712d8643-3037-4c63-a7ae-c9ec58d84bb0.gif" width='52%'>
 
 **네모는 드래그로 이동과 리사이징 가능해 마음대로 페이지를 꾸밀수 있음**
 
 - 페이지는 column(가로) 10개로 이루어진 그리드
-- 네모는 우측하단 버튼을 드래그하여 리사이징, grid-column,grid-row의 span 값이 변경됨 [[리사이징 상세](https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-resizing-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0grid-template%EC%9D%B4%EC%9A%A9)]
+- 네모는 우측하단 버튼을 드래그하여 리사이징, grid-column,grid-row의 span 값이 변경됨 [[‣리사이징 상세](https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-resizing-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0grid-template%EC%9D%B4%EC%9A%A9)]
 - 네모 안에 표시될 영상 갯수는 가로 세로 span값에 의해 결정됨
 - grid 방식으로 정렬 되어 있어 가로로 긴 네모, 세로로 긴 네모들이 어우러지게 배치
-- 제목을 드래그하여 재생목록의 배치 순서를 변경 가능 [[드래그앤드랍 상세](https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-drop-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)]
+- 제목을 드래그하여 재생목록의 배치 순서를 변경 가능 [[‣드래그앤드랍 상세](https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-drop-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)]
 - 드랍영역은 각각 네모의 좌,우에 배치하여 순서가 더 자연스럽게 변경
 - 드랍영역은 드래깅될 때만 z-index값을 높여서 다른 인터렉션에 방해 되지 않도록 처리
 
