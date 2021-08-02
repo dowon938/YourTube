@@ -57,17 +57,24 @@
 
 ### 네모(재생목록) 기능
 
-<img src="https://user-images.githubusercontent.com/68101878/127851657-11df376c-ac12-43ab-98b0-5b279ab80720.gif" width='45%'><img src="https://user-images.githubusercontent.com/68101878/127851961-11bb8b32-77f0-4f9e-9a35-abdce1da2cfb.gif" width='45%'>
+<img src="https://user-images.githubusercontent.com/68101878/127852981-b7e32fd8-83b1-4a4c-a0cc-d71f7f057a6a.gif" width='45%'><img src="https://user-images.githubusercontent.com/68101878/127852938-712d8643-3037-4c63-a7ae-c9ec58d84bb0.gif" width='52%'>
 
 **네모는 드래그로 이동과 리사이징 가능해 마음대로 페이지를 꾸밀수 있음**
 
 - 페이지는 column(가로) 10개로 이루어진 그리드
-- [네모는 `우측하단 버튼`을 `드래그`해 `리사이징` 할 수 있고, `grid-column`,`grid-row`의 `span 값`을 변경해서 사이즈가 변경됨](https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-resizing-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0grid-template%EC%9D%B4%EC%9A%A9)
+- 네모는 `우측하단 버튼`을 `드래그`하여 `리사이징`, `grid-column`,`grid-row`의 `span 값`이 변경됨 [[리사이징 상세](https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-resizing-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0grid-template%EC%9D%B4%EC%9A%A9)]
 - 네모 안에 표시될 `영상 갯수`는 `가로 세로 span값`에 의해 결정됨
-- `grid` 방식으로 정렬 되어 있어 가로로 긴 네모, 세로로 긴 네모들이 `어우러지게 배치`됨
-- [제목을 드래그하여 재생목록의 배치 순서를 변경 가능](https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-drop-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)
--
+- `grid` 방식으로 정렬 되어 있어 가로로 긴 네모, 세로로 긴 네모들이 `어우러지게 배치`
+- 제목을 드래그하여 재생목록의 배치 순서를 변경 가능 [[드래그앤드랍 상세](https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-drop-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)]
+- `드랍영역`은 각각 `네모`의 `좌,우`에 배치하여 순서가 더 `자연스럽게 변경`
+- `드랍영역`은 `드래깅될 때`만 `z-index값`을 높여서 다른 인터렉션에 방해 되지 않도록 처리
 
 ### 재생
 
 **두 가지 재생방식**
+
+- 소리 위주로 재생하거나 작게 보고싶을 때는 네모안에서 재생
+- 네모에서 재생되고 있는 영상은 초록 테두리와 재생중 아이콘으로 확인 할 수 있음
+- 네모에서 재생될 때 추가로 볼륨버튼을 제공함 (크기가 작아 유튜브에서 제공하는 볼륨 버튼은 가려짐)
+- 크게 보고 싶을 때는 플레이어로 재생
+- 플레이어에서는 동영상 설명과 댓글을 볼 수 있음
