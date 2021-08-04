@@ -14,7 +14,7 @@
 
 <img src="https://user-images.githubusercontent.com/68101878/127576907-80759f4e-6ede-4fb5-a949-b102792a97bc.png" width='80%'>
 
-[‣YourTube 바로가기](https://yourtube-app.netlify.app/)
+[‣YourTube 바로가기](https://yourtube-app.netlify.app/){:target="_blank"}
 
 **처음 방문하는 사용자에게 간략하게 사용법을 안내해주고 쿠키를 통해 재방문시 표시되지 않도록 함**
 
