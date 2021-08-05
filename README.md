@@ -14,7 +14,7 @@
 
 <img src="https://user-images.githubusercontent.com/68101878/127576907-80759f4e-6ede-4fb5-a949-b102792a97bc.png" width='80%'>
 
-<a href="https://yourtube-app.netlify.app/" target="_blank">‣YourTube 바로가기</a>
+[‣YourTube 바로가기](https://yourtube-app.netlify.app/){: target="\_blank"}
 
 **처음 방문하는 사용자에게 간략하게 사용법을 안내해주고 쿠키를 통해 재방문시 표시되지 않도록 함**
 
@@ -56,10 +56,8 @@
 - 채널 추가 - 채널을 추가하면 채널의 최신 동영상을 가져옴
 - 재생목록 추가 - public으로 설정된 재생목록만 가져올 수 있고, url을 붙여넣으면 재생목록 ID를 찾아 추가함
 - 네모에 비디오 갯수가 모자랄 경우에 영상 추가 버튼이 보임
-- 영상 추가 - 영상을 키워드로 검색하거나 원하는 영상의 url로 직접 영상을 추가 할 수 있음
-  [<a href="" target="_blank">‣url에서 id가져오기 상세</a>]
-- 영상을 키워드로 검색하면 스크롤시에 nextPageToken을 이용해서 계속해서 목록을 받아와 무한스크롤
-  [<a href="" target="_blank">‣무한스크롤 상세</a>]
+- 영상 추가 - 영상을 키워드로 검색하거나 원하는 영상의 url로 직접 영상을 추가 할 수 있음 [[‣url에서 id가져오기 상세]()]
+- 영상을 키워드로 검색하면 스크롤시에 nextPageToken을 이용해서 계속해서 목록을 받아와 무한스크롤 [[‣무한스크롤 상세]()]
 
 <br>
 
@@ -70,12 +68,10 @@
 **네모는 드래그로 이동과 리사이징 가능해 마음대로 페이지를 꾸밀수 있음**
 
 - 페이지는 column(가로) 10개로 이루어진 그리드
-- 네모는 우측하단 버튼을 드래그하여 리사이징, grid-column,grid-row의 span 값이 변경됨
-  [<a href="https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-resizing-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0grid-template%EC%9D%B4%EC%9A%A9" target="_blank">‣리사이징 상세</a>]
+- 네모는 우측하단 버튼을 드래그하여 리사이징, grid-column,grid-row의 span 값이 변경됨 [[‣리사이징 상세](https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-resizing-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0grid-template%EC%9D%B4%EC%9A%A9)]
 - 네모 안에 표시될 영상 갯수는 가로 세로 span값에 의해 결정됨
 - grid 방식으로 정렬 되어 있어 가로로 긴 네모, 세로로 긴 네모들이 어우러지게 배치
-- 제목을 드래그하여 재생목록의 배치 순서를 변경 가능
-  [<a href="https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-drop-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0" target="_blank">‣드래그앤드랍 상세</a>]
+- 제목을 드래그하여 재생목록의 배치 순서를 변경 가능 [[‣드래그앤드랍 상세](https://velog.io/@dowon938/react-dnd-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-drag-drop-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)]
 - 드랍영역은 각각 네모의 좌,우에 배치하여 순서가 더 자연스럽게 변경
 - 드랍영역은 드래깅될 때만 z-index값을 높여서 다른 인터렉션에 방해 되지 않도록 처리
 
