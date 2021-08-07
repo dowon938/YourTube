@@ -29,20 +29,20 @@ const AddNemo = ({
     if (modalOn === 'channel')
       youtube.search(value).then((channels) => setList(channels));
     if (modalOn === 'playList') {
-      const playlistIdFromUrl =
-        value.split('list=').length > 0 ? value.split('list=')[1].split('&')[0] : false;
-      if (!playlistIdFromUrl) {
+      const playlistIdFromURI =
+        value.split('?list=').length > 0 ? value.split('?list=')[1].split('&')[0] : false;
+      if (!playlistIdFromURI) {
         console.log('List Id가 발견되지 않았습니다.');
         return;
       }
-      addPlayList(playlistIdFromUrl, nemo).then(setModalOn(false));
+      addPlayList(playlistIdFromURI, nemo).then(setModalOn(false));
     }
     if (modalOn === 'video') {
-      const videoIdFromUrl =
-        value.split('v=').length > 1 ? value.split('v=')[1].split('&')[0] : false;
-      console.log(videoIdFromUrl);
-      if (videoIdFromUrl) addVideo(videoIdFromUrl, nemo);
-      if (!videoIdFromUrl)
+      const videoIdFromURI =
+        value.split('?v=').length > 1 ? value.split('?v=')[1].split('&')[0] : false;
+      console.log(videoIdFromURI);
+      if (videoIdFromURI) addVideo(videoIdFromURI, nemo);
+      if (!videoIdFromURI)
         youtube.searchVideo(value).then((videos) => {
           setSearchQ(value);
           setNextPageTok(videos.nextPageToken);
