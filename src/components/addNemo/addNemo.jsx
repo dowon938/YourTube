@@ -62,8 +62,6 @@ const AddNemo = ({
     }, 1000);
   };
   const modalScroll = _.debounce(() => {
-    if (!list) return;
-    if (modalOn !== 'video') return;
     const { scrollHeight, scrollTop, clientHeight } = modalRef.current;
     console.log(scrollHeight, scrollTop, clientHeight);
     if (scrollHeight - 10 < scrollTop + clientHeight) loadMore();
